@@ -1,0 +1,85 @@
+/* ============================================================
+   German layout adjustments
+   Activated by JS hooks in masterPage.js (`lang-de` on Page)
+   and Research.azbrr.js (`compact-de` on #section1, #group6, #group7).
+   ============================================================ */
+
+/* ---------- DESKTOP & UP (German) ---------- */
+.compact-de {
+  height: auto !important;
+  min-height: max-content !important;
+  overflow: visible !important;
+}
+
+.compact-de p,
+.compact-de [data-testid="richTextElement"] {
+  font-size: 0.9em !important;
+  line-height: 1.45 !important;
+}
+
+.compact-de button,
+.compact-de [role="button"] {
+  font-size: 0.85em !important;
+  padding: 0.4em 0.8em !important;
+  white-space: nowrap;
+}
+
+.lang-de p { line-height: 1.45; }
+
+/* ---------- TABLET (German, 751–1000px) ---------- */
+@media (max-width: 1000px) {
+  .compact-de p,
+  .compact-de [data-testid="richTextElement"] {
+    font-size: 0.85em !important;
+    line-height: 1.4 !important;
+  }
+  .compact-de button,
+  .compact-de [role="button"] {
+    font-size: 0.8em !important;
+    padding: 0.35em 0.7em !important;
+  }
+}
+
+/* ---------- MOBILE (German, ≤750px) ---------- */
+@media (max-width: 750px) {
+  .compact-de {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0.75rem !important;
+  }
+  .compact-de p,
+  .compact-de [data-testid="richTextElement"] {
+    font-size: 0.82em !important;
+    line-height: 1.35 !important;
+    word-break: break-word;
+    hyphens: auto;
+  }
+  .compact-de :is(h1, h2, h3, h4) {
+    font-size: 0.88em !important;
+    line-height: 1.2 !important;
+    word-break: break-word;
+    hyphens: auto;
+  }
+  .compact-de button,
+  .compact-de [role="button"] {
+    font-size: 0.78em !important;
+    padding: 0.3em 0.6em !important;
+    white-space: normal;
+    word-break: break-word;
+    hyphens: auto;
+  }
+  .compact-de [data-testid*="repeater"],
+  .compact-de [class*="tagList"],
+  .compact-de [class*="chips"] {
+    flex-wrap: wrap !important;
+    gap: 0.4rem !important;
+  }
+}
+
+/* ---------- VERY NARROW MOBILE (German, ≤400px) ---------- */
+@media (max-width: 400px) {
+  .compact-de p,
+  .compact-de [data-testid="richTextElement"] {
+    font-size: 0.78em !important;
+  }
+}
