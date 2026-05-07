@@ -83,3 +83,72 @@
     font-size: 0.78em !important;
   }
 }
+
+/* ============================================================
+   Animations
+   ============================================================ */
+
+/* ---- Smooth language switch (eases sizes when .compact-de applies) ---- */
+.compact-de,
+.compact-de p,
+.compact-de [data-testid="richTextElement"],
+.compact-de button,
+.compact-de [role="button"] {
+  transition: font-size 0.35s ease, padding 0.35s ease,
+              line-height 0.35s ease, height 0.35s ease;
+}
+
+/* ---- Tag pill hover (Areas of Interest, etc.) ---- */
+.tag-host button,
+.tag-host [role="button"] {
+  transition: transform 0.2s ease, background-color 0.2s ease,
+              box-shadow 0.2s ease, font-size 0.35s ease, padding 0.35s ease;
+  will-change: transform;
+}
+.tag-host button:hover,
+.tag-host [role="button"]:hover {
+  transform: translateY(-1px) scale(1.04);
+  box-shadow: 0 2px 8px rgba(177, 145, 81, 0.28);
+}
+.tag-host button:active,
+.tag-host [role="button"]:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ---- Timeline fade/slide in on scroll ---- */
+.fade-in-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.fade-in-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+/* ---- Hero / page entrance on load ---- */
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-enter {
+  animation: hero-fade-up 0.7s ease both;
+}
+
+/* ---- Respect users who prefer reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-scroll,
+  .fade-in-scroll.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .hero-enter { animation: none !important; }
+  .tag-host button,
+  .tag-host [role="button"],
+  .tag-host button:hover,
+  .tag-host [role="button"]:hover {
+    transition: none !important;
+    transform: none !important;
+  }
+}

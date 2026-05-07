@@ -3,8 +3,12 @@
 import { multilingual } from 'wix-window-frontend';
 
 $w.onReady(function () {
+    const page = $w("Page");
+
     if (multilingual.isEnabled) {
         const code = (multilingual.currentLanguage || 'en').toLowerCase();
-        $w("Page").customClassList.add(`lang-${code}`);
+        page.customClassList.add(`lang-${code}`);
     }
+
+    page.customClassList.add('hero-enter');
 });
