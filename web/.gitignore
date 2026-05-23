@@ -1,0 +1,9 @@
+node_modules
+.next
+.env
+*.db
+*.db-journal
+media
+.DS_Store
+next-env.d.ts
+src/app/(payload)/admin/importMap.js

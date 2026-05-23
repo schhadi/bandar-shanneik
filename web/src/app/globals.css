@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: #f5efe4;
+    --color-primary: #1f3a2f;
+    --color-accent: #b5985a;
+    --color-topbar: #8b1f6e;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: #1a1f1c;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    color: var(--color-primary);
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-page px-6 lg:px-12;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition;
+  }
+  .btn-primary {
+    @apply btn bg-forest text-cream-50 hover:bg-forest-dark;
+  }
+  .btn-outline {
+    @apply btn border border-gold text-gold hover:bg-gold hover:text-white;
+  }
+  .btn-plain {
+    @apply text-forest underline-offset-4 hover:underline;
+  }
+
+  .card {
+    @apply rounded-2xl border border-gold/40 bg-cream-50/60 p-7;
+  }
+
+  .tag {
+    @apply inline-flex items-center rounded-full border border-gold/50 px-4 py-1.5 text-sm text-gold-dark;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.7s ease-out both;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
