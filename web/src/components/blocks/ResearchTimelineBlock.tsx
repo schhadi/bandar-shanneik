@@ -1,77 +1,91 @@
-import { Icon } from '../Icon'
+import { Reveal } from '../Reveal'
 
 const kindLabel: Record<string, string> = {
-  'peer-reviewed': 'PEER-REVIEWED',
-  'book-chapter': 'BOOK CHAPTER',
-  'legal-article': 'LEGAL ARTICLE',
-  'working-paper': 'WORKING PAPER',
-  other: 'PUBLICATION',
+  'peer-reviewed': 'Peer-reviewed',
+  'book-chapter': 'Book chapter',
+  'legal-article': 'Legal article',
+  'working-paper': 'Working paper',
+  other: 'Publication',
 }
 
-export function ResearchTimelineBlock({ block }: { block: any }) {
-  let entries: Array<{
-    year: string
-    kind: string
-    title: string
-    venue?: string
-    status?: string
-  }> = []
+type Entry = {
+  year: string
+  kind: string
+  title: string
+  venue?: string
+  status?: string
+}
 
+function entriesFromBlock(block: any): Entry[] {
   if (block.mode === 'manual') {
-    entries = (block.manualItems || []).map((m: any) => ({
+    return (block.manualItems || []).map((m: any) => ({
       year: m.year,
       kind: m.kind || 'other',
       title: m.title,
       venue: m.venue,
       status: m.status,
     }))
-  } else {
-    const pubs: any[] = block.publications || []
-    entries = pubs
-      .filter((p) => typeof p === 'object' && p)
-      .map((p: any) => ({
-        year: p.year,
-        kind: p.kind || 'other',
-        title: p.title,
-        venue: p.venue,
-        status: p.status,
-      }))
   }
+  const pubs: any[] = block.publications || []
+  return pubs
+    .filter((p) => typeof p === 'object' && p)
+    .map((p: any) => ({
+      year: p.year,
+      kind: p.kind || 'other',
+      title: p.title,
+      venue: p.venue,
+      status: p.status,
+    }))
+}
 
+export function ResearchTimelineBlock({ block }: { block: any }) {
+  const entries = entriesFromBlock(block)
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h3 className="font-serif text-2xl text-forest">{block.heading || 'Selected Publications'}</h3>
-      </div>
-      <div className="mt-2 h-px w-full bg-gold/40" />
-      <ol className="relative mt-8 space-y-10 border-l-2 border-gold/50 pl-8">
+      <Reveal>
+        <div className="mb-8 flex items-baseline justify-between border-b border-line pb-3">
+          <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-bone/60">
+            {block.heading || 'Selected Publications'}
+          </h3>
+          <span className="font-mono text-[11px] text-bone/30">
+            {entries.length.toString().padStart(2, '0')}
+          </span>
+        </div>
+      </Reveal>
+      <ul>
         {entries.map((e, i) => (
-          <li key={i} className="relative">
-            <span className="absolute -left-[39px] top-1 inline-block h-5 w-5 rounded-full border-2 border-gold bg-cream-50" />
-            <div className="inline-flex rounded-lg border border-gold/50 px-3 py-1 text-xs text-gold-dark">
-              {e.year}
-            </div>
-            <div className="mt-3 text-xs font-medium tracking-widest text-gold">
-              {kindLabel[e.kind] || 'PUBLICATION'}
-            </div>
-            <h4 className="mt-1 font-serif text-lg leading-snug text-forest">{e.title}</h4>
-            {(e.venue || e.status) && (
-              <div className="mt-2 text-sm text-forest/70">
-                {e.venue && <span className="font-medium text-forest">{e.venue}</span>}
-                {e.venue && e.status && ' '}
-                {e.status && <span>- {e.status}</span>}
+          <Reveal
+            as="li"
+            key={i}
+            delay={((i % 3) + 1) as 1 | 2 | 3}
+            className="group grid grid-cols-12 gap-6 border-b border-line py-8 transition-colors hover:bg-ink-800/40"
+          >
+            <div className="col-span-2 font-mono text-sm text-accent">{e.year}</div>
+            <div className="col-span-10">
+              <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">
+                {kindLabel[e.kind] || 'Publication'}
               </div>
-            )}
-          </li>
+              <h4 className="font-display text-2xl font-light leading-snug transition-colors group-hover:text-accent md:text-3xl">
+                {e.title}
+              </h4>
+              {(e.venue || e.status) && (
+                <div className="mt-3 text-sm text-bone/60">
+                  {e.venue && <span className="text-bone/80">{e.venue}</span>}
+                  {e.venue && e.status && ' — '}
+                  {e.status && <span className="italic">{e.status}</span>}
+                </div>
+              )}
+            </div>
+          </Reveal>
         ))}
-      </ol>
+      </ul>
     </div>
   )
 }
 
 export function ResearchTimelineSection({ block }: { block: any }) {
   return (
-    <section className="container-page py-16">
+    <section className="container-page border-t border-line py-28">
       <ResearchTimelineBlock block={block} />
     </section>
   )

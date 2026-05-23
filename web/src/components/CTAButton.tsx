@@ -1,8 +1,7 @@
 import Link from 'next/link'
-import { Icon } from './Icon'
+import clsx from 'clsx'
 import { resolveHref, type LinkData } from '@/lib/resolveLink'
 import type { Locale } from '@/lib/i18n'
-import clsx from 'clsx'
 
 export function CTAButton({ link, locale }: { link: LinkData; locale: Locale }) {
   if (!link?.label) return null
@@ -16,12 +15,19 @@ export function CTAButton({ link, locale }: { link: LinkData; locale: Locale }) 
     'btn-plain': variant === 'plain',
   })
 
-  const inner = (
-    <>
-      {link.icon && link.icon !== 'none' ? <Icon name={link.icon} className="h-4 w-4" /> : null}
-      <span>{link.label}</span>
-    </>
-  )
+  const arrow = link.newTab ? '↗' : '→'
+
+  const inner =
+    variant === 'plain' ? (
+      <span className="inline-flex items-center gap-2">
+        {link.label} <span className="text-accent">{arrow}</span>
+      </span>
+    ) : (
+      <>
+        <span className="btn-label">{link.label}</span>
+        <span className="btn-arrow">{arrow}</span>
+      </>
+    )
 
   if (link.type === 'external') {
     return (

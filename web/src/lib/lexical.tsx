@@ -28,14 +28,14 @@ function renderNode(node: Node, key: React.Key): React.ReactNode {
       return renderText(node, key)
     case 'paragraph':
       return (
-        <p key={key} className="mb-4 leading-relaxed text-forest/80">
+        <p key={key} className="mb-4 leading-relaxed text-bone/80">
           {children}
         </p>
       )
     case 'heading': {
       const Tag = (node.tag || 'h2') as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
       return (
-        <Tag key={key} className="mb-4 mt-8 font-serif text-3xl">
+        <Tag key={key} className="mb-4 mt-8 font-display text-3xl font-light">
           {children}
         </Tag>
       )
@@ -43,7 +43,7 @@ function renderNode(node: Node, key: React.Key): React.ReactNode {
     case 'list': {
       const Tag = node.listType === 'number' ? 'ol' : 'ul'
       return (
-        <Tag key={key} className="mb-4 ml-6 list-disc space-y-1 text-forest/80">
+        <Tag key={key} className="mb-4 ml-6 list-disc space-y-1 text-bone/80">
           {children}
         </Tag>
       )
@@ -57,7 +57,7 @@ function renderNode(node: Node, key: React.Key): React.ReactNode {
           href={node.fields?.url || node.url || '#'}
           target={node.fields?.newTab ? '_blank' : undefined}
           rel={node.fields?.newTab ? 'noopener noreferrer' : undefined}
-          className="text-gold-dark underline"
+          className="text-accent underline"
         >
           {children}
         </a>
@@ -66,7 +66,7 @@ function renderNode(node: Node, key: React.Key): React.ReactNode {
       return <br key={key} />
     case 'quote':
       return (
-        <blockquote key={key} className="my-6 border-l-4 border-gold pl-4 italic text-forest/70">
+        <blockquote key={key} className="my-6 border-l-2 border-accent pl-4 italic text-bone/70">
           {children}
         </blockquote>
       )

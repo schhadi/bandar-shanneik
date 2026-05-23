@@ -230,13 +230,47 @@ async function seed() {
 
   await upsertPage('contact', 'Contact', [
     {
-      blockType: 'contact',
+      blockType: 'contactForm',
       heading: 'Get in touch',
       intro:
-        'For inquiries about legal consultancy or research collaboration, please reach out directly.',
+        'For inquiries about legal consultancy or research collaboration, share a few details and Bandar will be in touch within two working days.',
       email: 'contact.shanneik@gmail.com',
+      submitLabel: 'Send message',
+      successMessage:
+        'Thank you. Your message has been received — Bandar will reply directly.',
+      showSubject: true,
     },
   ])
+
+  // Look up page IDs so we can wire the nav links to them
+  async function pageId(slug: string) {
+    const r = await payload.find({
+      collection: 'pages',
+      where: { slug: { equals: slug } },
+      limit: 1,
+    })
+    return r.docs[0]?.id
+  }
+  const aboutId = await pageId('about')
+  const legalId = await pageId('legal')
+  const researchId = await pageId('research')
+  const contactId = await pageId('contact')
+
+  // Hero CTAs now point to real pages
+  const homeBlocksWithLinks = [
+    {
+      ...homeBlocks[0],
+      ctas: [
+        {
+          link: { label: 'Legal', type: 'internal', page: legalId, variant: 'primary', icon: 'scale' },
+        },
+        {
+          link: { label: 'Research', type: 'internal', page: researchId, variant: 'outline', icon: 'book' },
+        },
+      ],
+    },
+  ]
+  await upsertPage('home', 'Home', homeBlocksWithLinks)
 
   // Globals
   await payload.updateGlobal({
@@ -245,10 +279,10 @@ async function seed() {
       logoText: 'Bandar Shanneik',
       showLanguageSwitcher: true,
       nav: [
-        { link: { label: 'About', type: 'internal', variant: 'plain' } },
-        { link: { label: 'Legal', type: 'internal', variant: 'plain' } },
-        { link: { label: 'Research', type: 'internal', variant: 'plain' } },
-        { link: { label: 'Contact', type: 'internal', variant: 'plain' } },
+        { link: { label: 'About', type: 'internal', page: aboutId, variant: 'plain' } },
+        { link: { label: 'Legal', type: 'internal', page: legalId, variant: 'plain' } },
+        { link: { label: 'Research', type: 'internal', page: researchId, variant: 'plain' } },
+        { link: { label: 'Contact', type: 'internal', page: contactId, variant: 'plain' } },
       ],
     } as any,
   })
@@ -274,18 +308,14 @@ async function seed() {
         {
           heading: 'Explore',
           links: [
-            { link: { label: 'About', type: 'internal', variant: 'plain' } },
-            { link: { label: 'Legal', type: 'internal', variant: 'plain' } },
-            { link: { label: 'Research', type: 'internal', variant: 'plain' } },
-            { link: { label: 'Contact', type: 'internal', variant: 'plain' } },
+            { link: { label: 'About', type: 'internal', page: aboutId, variant: 'plain' } },
+            { link: { label: 'Legal', type: 'internal', page: legalId, variant: 'plain' } },
+            { link: { label: 'Research', type: 'internal', page: researchId, variant: 'plain' } },
+            { link: { label: 'Contact', type: 'internal', page: contactId, variant: 'plain' } },
           ],
         },
       ],
-      bottomLinks: [
-        { link: { label: 'Legal Notice', type: 'internal', variant: 'plain' } },
-        { link: { label: 'Privacy Policy', type: 'internal', variant: 'plain' } },
-        { link: { label: 'Terms of Use', type: 'internal', variant: 'plain' } },
-      ],
+      bottomLinks: [],
       copyright: '© 2026 Bandar Shanneik. All rights reserved.',
     } as any,
   })

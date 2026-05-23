@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { LOCALES, type Locale, dict } from '@/lib/i18n'
-import { Icon } from './Icon'
 
 export function LanguageSwitcher({ locale }: { locale: Locale }) {
   const router = useRouter()
@@ -22,25 +21,25 @@ export function LanguageSwitcher({ locale }: { locale: Locale }) {
       <button
         type="button"
         onClick={() => setOpen((s) => !s)}
-        className="inline-flex items-center gap-2 rounded-full border border-forest/20 px-4 py-2 text-sm text-forest hover:border-forest/40"
+        className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-bone/80 hover:text-bone"
         aria-haspopup="listbox"
         aria-expanded={open}
       >
-        {dict[locale].languageNames[locale]}
-        <Icon name="chevron-down" className="h-4 w-4" />
+        {locale}
+        <span className="text-accent/70">↓</span>
       </button>
       {open && (
         <ul
           role="listbox"
-          className="absolute right-0 mt-2 w-32 overflow-hidden rounded-xl border border-forest/10 bg-cream-50 shadow-lg"
+          className="absolute right-0 mt-3 w-32 overflow-hidden border border-line bg-ink-800/95 backdrop-blur"
         >
           {LOCALES.map((code) => (
             <li key={code}>
               <button
                 type="button"
                 onClick={() => switchTo(code)}
-                className={`w-full px-4 py-2 text-left text-sm hover:bg-cream-100 ${
-                  code === locale ? 'font-medium text-forest' : 'text-forest/70'
+                className={`w-full px-4 py-3 text-left font-mono text-[11px] uppercase tracking-[0.25em] transition-colors hover:bg-ink-700 ${
+                  code === locale ? 'text-accent' : 'text-bone/70'
                 }`}
               >
                 {dict[locale].languageNames[code]}

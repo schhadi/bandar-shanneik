@@ -10,6 +10,7 @@ import { ResearchTimelineSection, ResearchTimelineBlock } from './ResearchTimeli
 import { ResearchProfileCardBlock } from './ResearchProfileCardBlock'
 import { TagBoxesBlock } from './TagBoxesBlock'
 import { ContactBlock } from './ContactBlock'
+import { ContactFormBlock } from './ContactFormBlock'
 
 type Block = { blockType: string; [k: string]: any }
 
@@ -32,10 +33,10 @@ export function BlockRenderer({ blocks, locale }: { blocks: Block[]; locale: Loc
       }
       if (sidebars.length > 0) {
         out.push(
-          <section key={i} className="container-page py-16">
-            <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr]">
+          <section key={i} className="container-page border-t border-line py-28">
+            <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr]">
               <ResearchTimelineBlock block={b} />
-              <div className="space-y-6">
+              <div className="space-y-6 lg:pt-12">
                 {sidebars.map((s, k) =>
                   s.blockType === 'researchProfileCard' ? (
                     <ResearchProfileCardBlock key={k} block={s} />
@@ -84,6 +85,9 @@ export function BlockRenderer({ blocks, locale }: { blocks: Block[]; locale: Loc
         break
       case 'contact':
         out.push(<ContactBlock key={i} block={b} />)
+        break
+      case 'contactForm':
+        out.push(<ContactFormBlock key={i} block={b} />)
         break
     }
     i++

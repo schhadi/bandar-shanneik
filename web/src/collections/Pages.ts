@@ -13,6 +13,7 @@ import {
   ResearchProfileCard,
   TagBoxes,
   Contact,
+  ContactForm,
 } from '../blocks'
 
 export const Pages: CollectionConfig = {
@@ -72,6 +73,7 @@ export const Pages: CollectionConfig = {
         ResearchProfileCard,
         TagBoxes,
         Contact,
+        ContactForm,
       ],
     },
   ],
