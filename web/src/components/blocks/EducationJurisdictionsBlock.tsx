@@ -1,4 +1,5 @@
 import { Reveal } from '../Reveal'
+import { SplitText } from '../SplitText'
 
 export function EducationJurisdictionsBlock({ block }: { block: any }) {
   return (
@@ -7,11 +8,9 @@ export function EducationJurisdictionsBlock({ block }: { block: any }) {
         <div className="eyebrow mb-12">03 / Credentials</div>
       </Reveal>
 
-      <Reveal>
-        <h2 className="mb-20 font-display text-6xl font-light leading-[0.9] tracking-display md:text-8xl">
-          {block.heading || 'Education & Jurisdictions'}
-        </h2>
-      </Reveal>
+      <h2 className="mb-20 font-display text-6xl font-light leading-[0.9] tracking-display md:text-8xl">
+        <SplitText text={block.heading || 'Education & Jurisdictions'} splitBy="word" delayStep={70} />
+      </h2>
 
       <div className="grid gap-16 md:grid-cols-12">
         {/* Education timeline */}

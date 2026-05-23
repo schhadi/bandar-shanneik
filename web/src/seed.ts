@@ -148,7 +148,6 @@ async function seed() {
     {
       blockType: 'ctaBanner',
       heading: 'Need Legal Advice?',
-      subtext: 'Contact Bandar to discuss legal matters',
       background: 'forest',
       cta: [
         { link: { label: 'Contact Bandar', type: 'internal', variant: 'outline' } },

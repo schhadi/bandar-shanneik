@@ -1,6 +1,7 @@
 import { Reveal } from '../Reveal'
 import { ContactForm } from '../ContactForm'
 import { MediaImage } from '../Media'
+import { SplitText } from '../SplitText'
 
 export function ContactFormBlock({ block }: { block: any }) {
   const hasImage = Boolean(block.image)
@@ -12,16 +13,14 @@ export function ContactFormBlock({ block }: { block: any }) {
           <Reveal>
             <div className="eyebrow mb-10">→ Contact</div>
           </Reveal>
-          <Reveal delay={1}>
-            <h2 className="font-display text-6xl font-light leading-[0.9] tracking-display md:text-7xl">
-              {block.heading?.split(' ').map((w: string, i: number, arr: string[]) => (
-                <span key={i} className={i === arr.length - 1 ? 'italic text-accent' : ''}>
-                  {w}
-                  {i < arr.length - 1 ? ' ' : ''}
-                </span>
-              )) || 'Get in touch'}
-            </h2>
-          </Reveal>
+          <h2 className="font-display text-6xl font-light leading-[0.9] tracking-display md:text-7xl">
+            <SplitText
+              text={block.heading || 'Get in touch'}
+              splitBy="char"
+              delayStep={28}
+              accentLastWord
+            />
+          </h2>
           {block.intro && (
             <Reveal delay={2}>
               <p className="mt-8 max-w-md text-base leading-relaxed text-bone/70">{block.intro}</p>
@@ -41,12 +40,14 @@ export function ContactFormBlock({ block }: { block: any }) {
             </Reveal>
           )}
           {hasImage && (
-            <Reveal delay={3} className="mt-12 hidden overflow-hidden md:block">
-              <MediaImage
-                media={block.image}
-                className="h-[440px] w-full object-cover grayscale transition-all duration-700 hover:grayscale-0"
-                sizes="(min-width: 768px) 35vw, 100vw"
-              />
+            <Reveal delay={3} className="mt-12 hidden md:block">
+              <div className="img-zoom overflow-hidden">
+                <MediaImage
+                  media={block.image}
+                  className="h-[440px] w-full object-cover grayscale transition-all duration-700 hover:grayscale-0"
+                  sizes="(min-width: 768px) 35vw, 100vw"
+                />
+              </div>
               <div className="mt-3 flex justify-between font-mono text-[10px] uppercase tracking-[0.25em] text-bone/40">
                 <span>Bandar Shanneik</span>
                 <span>Senior Counsel</span>

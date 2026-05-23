@@ -1,4 +1,5 @@
 import { Reveal } from '../Reveal'
+import { SplitText } from '../SplitText'
 
 export function PracticeAreasBlock({ block }: { block: any }) {
   const items: any[] = block.items || []

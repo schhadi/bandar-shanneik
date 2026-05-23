@@ -1,4 +1,5 @@
 import { Reveal } from '../Reveal'
+import { SplitText } from '../SplitText'
 
 export function ServiceCardsBlock({ block }: { block: any }) {
   const cards: any[] = block.cards || []
@@ -9,15 +10,15 @@ export function ServiceCardsBlock({ block }: { block: any }) {
         <div className="md:col-span-5">
           <Reveal>
             <div className="eyebrow mb-8">04 / Services</div>
-            <h2 className="font-display text-6xl font-light leading-[0.9] tracking-display md:text-8xl">
-              {block.heading?.split(' ').map((w: string, i: number, arr: string[]) => (
-                <span key={i} className={i === arr.length - 1 ? 'italic text-accent' : ''}>
-                  {w}
-                  {i < arr.length - 1 ? ' ' : ''}
-                </span>
-              )) || 'Legal Services'}
-            </h2>
           </Reveal>
+          <h2 className="font-display text-6xl font-light leading-[0.9] tracking-display md:text-8xl">
+            <SplitText
+              text={block.heading || 'Legal Services'}
+              splitBy="word"
+              delayStep={70}
+              accentLastWord
+            />
+          </h2>
         </div>
         <div className="md:col-span-6 md:col-start-7 md:pt-8">
           {block.intro && (
