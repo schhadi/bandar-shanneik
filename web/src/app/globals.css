@@ -226,6 +226,27 @@
   clip-path: inset(0 0 0 0);
 }
 
+/* Scroll indicator — accent dash sliding down a hairline */
+@keyframes scroll-indicator-dash {
+  0% {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(420%);
+    opacity: 0;
+  }
+}
+.scroll-indicator-dash {
+  animation: scroll-indicator-dash 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
 /* Marquee */
 .marquee {
   display: flex;
@@ -291,7 +312,8 @@
     transform: none !important;
     clip-path: none !important;
   }
-  .marquee__track {
+  .marquee__track,
+  .scroll-indicator-dash {
     animation: none !important;
   }
   html {

@@ -38,7 +38,7 @@ export function HeroBlock({ block, locale }: { block: any; locale: Locale }) {
             <div className="overflow-hidden">
               <MediaImage
                 media={block.image}
-                className="h-[42vh] max-h-[460px] w-full object-cover grayscale transition-all duration-700 hover:grayscale-0 md:h-[55vh]"
+                className="h-[42vh] max-h-[480px] w-full object-contain object-right grayscale transition-all duration-700 hover:grayscale-0 md:h-[58vh] md:max-h-none"
                 priority
                 sizes="(min-width: 768px) 42vw, 100vw"
               />

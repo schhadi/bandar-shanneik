@@ -14,7 +14,7 @@ export function BackgroundBlock({ block, locale }: { block: any; locale: Locale 
             {block.image && (
               <MediaImage
                 media={block.image}
-                className="h-auto w-full object-cover grayscale transition-all duration-700 hover:grayscale-0"
+                className="h-auto w-full object-contain grayscale transition-all duration-700 hover:grayscale-0"
                 sizes="(min-width: 768px) 40vw, 100vw"
                 priority
               />
