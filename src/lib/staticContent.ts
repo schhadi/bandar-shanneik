@@ -50,6 +50,13 @@ const lexical = (text: string) => ({
   },
 })
 
+const portrait = {
+  url: '/media/b0137a0d-de85-49a1-a8fe-6a94186ec2c5.JPG',
+  alt: 'Portrait of Bandar Shanneik',
+  width: 1080,
+  height: 1608,
+}
+
 export const header: StaticHeader = {
   logoText: 'Bandar Shanneik',
   showLanguageSwitcher: true,
@@ -134,6 +141,7 @@ const pages: Record<string, StaticPage> = {
         title: 'Bandar Shanneik',
         body:
           'Bandar Shanneik provides cross-border legal consultancy for companies, investors and private clients across real estate, corporate, commercial and governance matters. With a legal background spanning Germany, the Middle East, and Europe, he offers precise, practical and commercially aware advice in German, Arabic and English.',
+        image: portrait,
         imageStyle: 'rounded',
         ctas: [
           { link: { label: 'Legal', type: 'internal', page: { slug: 'legal' }, variant: 'primary', icon: 'scale' } },
@@ -160,6 +168,7 @@ const pages: Record<string, StaticPage> = {
         body: lexical(
           'Bandar Shanneik is a Senior Legal Consultant and fully qualified German lawyer whose work sits at the intersection of European legal training and Middle Eastern commercial practice. He advises companies, investors and private clients on corporate and commercial matters, contracts, mergers and acquisitions, arbitration, real estate, tax and employment law. Fluent in German, Arabic and English, he supports clients navigating cross-border legal questions with clarity, discretion and a practical understanding of both legal detail and commercial context.',
         ),
+        image: portrait,
         cta: [
           {
             link: {
