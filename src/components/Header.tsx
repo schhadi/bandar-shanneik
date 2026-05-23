@@ -1,10 +1,15 @@
 import Link from 'next/link'
+import { getPayload } from '@/lib/payload'
 import type { Locale } from '@/lib/i18n'
-import { header } from '@/lib/staticContent'
+import { header as staticHeader } from '@/lib/staticContent'
 import { resolveHref } from '@/lib/resolveLink'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
-export function SiteHeader({ locale }: { locale: Locale }) {
+export async function SiteHeader({ locale }: { locale: Locale }) {
+  const payload = await getPayload().catch(() => null)
+  const header = (await payload?.findGlobal({ slug: 'header', locale, depth: 2 }).catch(() => null)) || staticHeader
+  const navItems: any[] = (header as any)?.nav || []
+
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md">
       <div className="border-b border-line bg-ink/80">
@@ -14,11 +19,11 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] text-bone"
           >
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-            <span>{header.logoText}</span>
+            <span>{header.logoText || staticHeader.logoText}</span>
           </Link>
 
           <nav className="hidden items-center gap-10 md:flex">
-            {header.nav.map((item, i) => {
+            {navItems.map((item, i) => {
               const link = item?.link
               if (!link?.label) return null
               const href = resolveHref(link, locale)
@@ -37,7 +42,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           </nav>
 
           <div className="flex items-center gap-4">
-            {header.showLanguageSwitcher && <LanguageSwitcher locale={locale} />}
+            {(header.showLanguageSwitcher ?? true) && <LanguageSwitcher locale={locale} />}
           </div>
         </div>
       </div>

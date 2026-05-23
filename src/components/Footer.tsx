@@ -1,9 +1,14 @@
 import Link from 'next/link'
+import { getPayload } from '@/lib/payload'
 import type { Locale } from '@/lib/i18n'
-import { footer } from '@/lib/staticContent'
+import { footer as staticFooter } from '@/lib/staticContent'
 import { resolveHref } from '@/lib/resolveLink'
 
-export function SiteFooter({ locale }: { locale: Locale }) {
+export async function SiteFooter({ locale }: { locale: Locale }) {
+  const payload = await getPayload().catch(() => null)
+  const footer = (await payload?.findGlobal({ slug: 'footer', locale, depth: 2 }).catch(() => null)) || staticFooter
+  const columns: any[] = (footer as any)?.columns || []
+
   return (
     <footer className="relative border-t border-line">
       <div className="container-page py-16">
@@ -12,19 +17,19 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           <div className="md:col-span-4">
             <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] text-bone">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-              <span>{footer.brandName}</span>
+              <span>{footer.brandName || staticFooter.brandName}</span>
             </div>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-bone/55">{footer.tagline}</p>
           </div>
 
           {/* Link columns */}
-          {footer.columns.map((col, i) => (
+          {columns.map((col, i) => (
             <div key={i} className="md:col-span-2">
               <div className="mb-4 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/35">
                 {col.heading}
               </div>
               <ul className="space-y-2">
-                {col.links.map((entry, j) => {
+                {(col.links || []).map((entry: any, j: number) => {
                   const link = entry?.link
                   if (!link?.label) return null
                   const href = resolveHref(link, locale)

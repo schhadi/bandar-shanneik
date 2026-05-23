@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import { getPayload } from '@/lib/payload'
 import { isLocale, type Locale } from '@/lib/i18n'
 import { getStaticPage } from '@/lib/staticContent'
 import { BlockRenderer } from '@/components/blocks'
@@ -9,7 +10,22 @@ type Args = {
 }
 
 async function fetchPage(locale: Locale, slug: string) {
-  return getStaticPage(locale, slug)
+  const fallback = getStaticPage(locale, slug)
+
+  try {
+    const payload = await getPayload()
+    const result = await payload.find({
+      collection: 'pages',
+      locale,
+      depth: 2,
+      limit: 1,
+      where: { slug: { equals: slug } },
+    })
+
+    return result.docs[0] || fallback
+  } catch {
+    return fallback
+  }
 }
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
@@ -18,9 +34,11 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const slugStr = (slug?.join('/') || 'home')
   const page = await fetchPage(locale, slugStr)
   if (!page) return {}
+  const seo: any = (page as any).seo || {}
+  const fallbackDescription = 'description' in page ? page.description : undefined
   return {
-    title: page.title,
-    description: page.description,
+    title: seo.title || page.title,
+    description: seo.description || fallbackDescription,
   }
 }
 
@@ -30,5 +48,6 @@ export default async function Page({ params }: Args) {
   const slugStr = (slug?.join('/') || 'home')
   const page = await fetchPage(locale, slugStr)
   if (!page) notFound()
-  return <BlockRenderer blocks={page.blocks} locale={locale} />
+  const blocks: any[] = (page as any).blocks || []
+  return <BlockRenderer blocks={blocks} locale={locale} />
 }

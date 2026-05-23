@@ -50,7 +50,8 @@ const lexical = (text: string) => ({
   },
 })
 
-const portrait = {
+export const portrait = {
+  filename: 'b0137a0d-de85-49a1-a8fe-6a94186ec2c5.JPG',
   url: '/media/b0137a0d-de85-49a1-a8fe-6a94186ec2c5.JPG',
   alt: 'Portrait of Bandar Shanneik',
   width: 1080,
@@ -107,7 +108,7 @@ export const footer: StaticFooter = {
   copyright: '© 2026 Bandar Shanneik. All rights reserved.',
 }
 
-const publications = [
+export const staticPublications = [
   {
     year: '2027',
     kind: 'peer-reviewed',
@@ -130,7 +131,7 @@ const publications = [
   },
 ]
 
-const pages: Record<string, StaticPage> = {
+export const staticPages: Record<string, StaticPage> = {
   home: {
     title: 'Bandar Shanneik',
     description:
@@ -271,7 +272,7 @@ const pages: Record<string, StaticPage> = {
         blockType: 'researchTimeline',
         heading: 'Selected Publications',
         mode: 'manual',
-        manualItems: publications,
+        manualItems: staticPublications,
       },
       {
         blockType: 'researchProfileCard',
@@ -313,5 +314,5 @@ const pages: Record<string, StaticPage> = {
 }
 
 export function getStaticPage(_locale: Locale, slug: string): StaticPage | null {
-  return pages[slug] ?? null
+  return staticPages[slug] ?? null
 }

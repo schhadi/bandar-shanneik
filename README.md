@@ -98,6 +98,15 @@ DATABASE_URI="postgres://..." npm run migrate
 DATABASE_URI="postgres://..." npm run seed
 ```
 
+On Vercel, you can also seed the live Payload database with the built-in starter content:
+
+```bash
+curl -X POST "https://bandar-shanneik.vercel.app/api/seed-static-content" \
+  -H "Authorization: Bearer YOUR_SEED_SECRET_OR_PAYLOAD_SECRET"
+```
+
+This copies the same starter pages, header, footer and portrait reference into Payload so they can be edited in `/admin`. For production media uploads, configure persistent object storage before relying on uploaded files; Vercel serverless storage is not persistent.
+
 ## Project layout
 
 ```
