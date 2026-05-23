@@ -1,6 +1,7 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { buildConfig } from 'payload'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
@@ -12,9 +13,11 @@ import { Submissions } from './collections/Submissions'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
 import { SiteSettings } from './globals/SiteSettings'
+import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const databaseUri = process.env.DATABASE_URI || process.env.POSTGRES_URL
 
 export default buildConfig({
   admin: {
@@ -38,10 +41,17 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URI || 'file:./payload.db',
-    },
-  }),
+  db: databaseUri
+    ? postgresAdapter({
+        pool: {
+          connectionString: databaseUri,
+        },
+        prodMigrations: migrations,
+      })
+    : sqliteAdapter({
+        client: {
+          url: 'file:./payload.db',
+        },
+      }),
   sharp: (await import('sharp')).default,
 })

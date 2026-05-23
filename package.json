@@ -9,10 +9,12 @@
     "start": "next start",
     "lint": "next lint",
     "generate:types": "payload generate:types",
+    "migrate": "payload migrate",
     "payload": "payload",
     "seed": "tsx src/seed.ts"
   },
   "dependencies": {
+    "@payloadcms/db-postgres": "^3.84.1",
     "@payloadcms/db-sqlite": "^3.0.0",
     "@payloadcms/next": "^3.0.0",
     "@payloadcms/richtext-lexical": "^3.0.0",

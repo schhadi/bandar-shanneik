@@ -8,7 +8,7 @@ service cards, tag lists, CTA banners, research timeline, etc.
 
 - **Next.js 15** (App Router, React 19)
 - **Payload 3** (self-hosted; admin lives at `/admin`)
-- **SQLite** via `@payloadcms/db-sqlite` — zero external service to set up
+- **SQLite** locally and **Postgres** in production via Payload database adapters
 - **Tailwind CSS** for styling
 - **EN/DE localisation** (every text field is translatable)
 
@@ -88,8 +88,15 @@ For production you’ll want to:
 
 1. Set `PAYLOAD_SECRET` to a long random string.
 2. Set `NEXT_PUBLIC_SERVER_URL` to your public URL.
-3. Choose a host with a persistent disk (the SQLite file and uploaded media live on disk). Fly.io, Railway, or a VPS work well.
-4. Or swap `@payloadcms/db-sqlite` for `@payloadcms/db-postgres` in `payload.config.ts` and provide `DATABASE_URI`.
+3. Set `DATABASE_URI` to a hosted Postgres connection string. Vercel Postgres, Neon, Supabase, Railway Postgres, or another managed Postgres service will work.
+4. Do not use the local `payload.db` SQLite file on Vercel. It is only a local development fallback.
+
+After creating the hosted database, initialize it and seed content with the same connection string:
+
+```bash
+DATABASE_URI="postgres://..." npm run migrate
+DATABASE_URI="postgres://..." npm run seed
+```
 
 ## Project layout
 
