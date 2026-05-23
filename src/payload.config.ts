@@ -4,6 +4,7 @@ import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -17,7 +18,15 @@ import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-const databaseUri = process.env.DATABASE_URI || process.env.POSTGRES_URL
+
+// Vercel-Neon integration auto-sets POSTGRES_URL. Accept either DATABASE_URI (manual) or POSTGRES_URL.
+const databaseUri =
+  process.env.DATABASE_URI ||
+  process.env.POSTGRES_URL ||
+  process.env.DATABASE_URL
+
+// Vercel Blob token is set automatically when you enable Blob storage on the project.
+const blobToken = process.env.BLOB_READ_WRITE_TOKEN
 
 export default buildConfig({
   admin: {
@@ -53,5 +62,18 @@ export default buildConfig({
           url: 'file:./payload.db',
         },
       }),
+  // Only register the Blob plugin when the token is present.
+  // - On Vercel (with Blob enabled): files go to Vercel Blob, served from blob.vercel-storage.com.
+  // - Locally without the token: files fall back to ./media on disk.
+  plugins: blobToken
+    ? [
+        vercelBlobStorage({
+          collections: {
+            media: true,
+          },
+          token: blobToken,
+        }),
+      ]
+    : [],
   sharp: (await import('sharp')).default,
 })

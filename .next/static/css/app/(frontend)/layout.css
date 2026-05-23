@@ -950,9 +950,6 @@ video {
 .z-\[1\] {
   z-index: 1;
 }
-.z-\[55\] {
-  z-index: 55;
-}
 .z-\[60\] {
   z-index: 60;
 }
@@ -1520,9 +1517,6 @@ video {
 .tracking-\[0\.3em\] {
   letter-spacing: 0.3em;
 }
-.tracking-\[0\.4em\] {
-  letter-spacing: 0.4em;
-}
 .tracking-display {
   letter-spacing: -0.025em;
 }
@@ -1579,9 +1573,6 @@ video {
 }
 .text-ink\/65 {
   color: rgb(245 239 228 / 0.65);
-}
-.text-ink\/70 {
-  color: rgb(245 239 228 / 0.7);
 }
 .underline {
   text-decoration-line: underline;
@@ -1711,24 +1702,6 @@ video {
 }
 .animated-line.is-visible {
   transform: scaleX(1) scaleY(1);
-}
-
-/* Page enter curtain */
-.page-enter {
-  animation: page-enter 1.3s cubic-bezier(0.83, 0, 0.17, 1) forwards;
-}
-.page-enter-mark {
-  animation: page-enter-mark 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-@keyframes page-enter {
-  0% { clip-path: inset(0 0 0 0); }
-  100% { clip-path: inset(0 0 100% 0); }
-}
-@keyframes page-enter-mark {
-  0% { opacity: 0; letter-spacing: 1em; }
-  40% { opacity: 1; letter-spacing: 0.4em; }
-  85% { opacity: 1; }
-  100% { opacity: 0; letter-spacing: 0.4em; }
 }
 
 /* Floating accent dots */
@@ -1931,9 +1904,7 @@ video {
   .marquee__track,
   .scroll-indicator-dash,
   .floating-dot,
-  .split-text__inner,
-  .page-enter,
-  .page-enter-mark {
+  .split-text__inner {
     animation: none !important;
     transition: none !important;
     transform: none !important;

@@ -4,3 +4,24 @@ node_modules/
 .idea/
 .wix/
 jsconfig.json
+
+# Next.js
+.next/
+out/
+
+# env files
+.env
+.env.local
+.env.*.local
+
+# local database & media
+payload.db
+payload.db-journal
+*.db
+media/
+
+# Payload generated import map (regenerated on every dev start)
+src/app/(payload)/admin/importMap.js
+
+# OS
+.DS_Store
