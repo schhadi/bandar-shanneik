@@ -1,6 +1,6 @@
-import type { Field } from 'payload'
+import type { GroupField } from 'payload'
 
-export const linkField = (overrides?: Partial<Field>): Field => ({
+export const linkField = (overrides?: Partial<GroupField>): GroupField => ({
   name: 'link',
   type: 'group',
   fields: [

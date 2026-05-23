@@ -11,7 +11,9 @@ type Node = {
   url?: string
 }
 
-function renderText(node: Node, key: React.Key) {
+type RenderKey = string | number
+
+function renderText(node: Node, key: RenderKey) {
   let element: React.ReactNode = node.text ?? ''
   const fmt = node.format ?? 0
   if (fmt & 1) element = <strong key={`b-${key}`}>{element}</strong>
@@ -21,7 +23,7 @@ function renderText(node: Node, key: React.Key) {
   return <React.Fragment key={key}>{element}</React.Fragment>
 }
 
-function renderNode(node: Node, key: React.Key): React.ReactNode {
+function renderNode(node: Node, key: RenderKey): React.ReactNode {
   const children = node.children?.map((c, i) => renderNode(c, i))
   switch (node.type) {
     case 'text':
