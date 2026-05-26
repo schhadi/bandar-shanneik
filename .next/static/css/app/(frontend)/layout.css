@@ -946,6 +946,9 @@ video {
 .bottom-0 {
   bottom: 0px;
 }
+.top-1\/2 {
+  top: 50%;
+}
 .isolate {
   isolation: isolate;
 }
@@ -972,6 +975,9 @@ video {
 }
 .z-\[60\] {
   z-index: 60;
+}
+.z-\[100\] {
+  z-index: 100;
 }
 .col-span-1 {
   grid-column: span 1 / span 1;
@@ -1166,6 +1172,9 @@ video {
 .w-4 {
   width: 1rem;
 }
+.w-3 {
+  width: 0.75rem;
+}
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -1221,6 +1230,10 @@ video {
 }
 .translate-y-\[5px\] {
   --tw-translate-y: 5px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.-translate-y-1\/2 {
+  --tw-translate-y: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .rotate-180 {
@@ -1390,6 +1403,9 @@ video {
 .border-ink\/15 {
   border-color: rgb(245 239 228 / 0.15);
 }
+.border-bone-50\/15 {
+  border-color: rgb(44 81 66 / 0.15);
+}
 .bg-accent {
   --tw-bg-opacity: 1;
   background-color: rgb(181 152 90 / var(--tw-bg-opacity, 1));
@@ -1429,6 +1445,10 @@ video {
 }
 .bg-ink\/95 {
   background-color: rgb(245 239 228 / 0.95);
+}
+.bg-bone-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(44 81 66 / var(--tw-bg-opacity, 1));
 }
 .object-contain {
   -o-object-fit: contain;
@@ -1705,6 +1725,19 @@ video {
 .text-ink\/80 {
   color: rgb(245 239 228 / 0.8);
 }
+.text-bone-50 {
+  --tw-text-opacity: 1;
+  color: rgb(44 81 66 / var(--tw-text-opacity, 1));
+}
+.text-bone-50\/40 {
+  color: rgb(44 81 66 / 0.4);
+}
+.text-bone-50\/55 {
+  color: rgb(44 81 66 / 0.55);
+}
+.text-bone-50\/80 {
+  color: rgb(44 81 66 / 0.8);
+}
 .underline {
   text-decoration-line: underline;
 }
@@ -1720,6 +1753,12 @@ video {
 }
 .opacity-80 {
   opacity: 0.8;
+}
+.opacity-\[0\.06\] {
+  opacity: 0.06;
+}
+.mix-blend-overlay {
+  mix-blend-mode: overlay;
 }
 .outline {
   outline-style: solid;
