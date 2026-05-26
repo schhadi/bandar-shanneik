@@ -25,3 +25,5 @@ src/app/(payload)/admin/importMap.js
 
 # OS
 .DS_Store
+.vercel
+.env*
