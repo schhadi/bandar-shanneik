@@ -51,6 +51,8 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
           <div className="flex items-center gap-2 md:gap-4">
             {(header.showLanguageSwitcher ?? true) && <LanguageSwitcher locale={locale} />}
             <MobileNav
+              locale={locale}
+              logoText={header.logoText || staticHeader.logoText}
               links={navItems
                 .map((item) => {
                   const link = item?.link

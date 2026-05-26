@@ -6,7 +6,15 @@ import { usePathname } from 'next/navigation'
 
 type NavLink = { href: string; label: string; newTab?: boolean }
 
-export function MobileNav({ links }: { links: NavLink[] }) {
+export function MobileNav({
+  links,
+  logoText,
+  locale,
+}: {
+  links: NavLink[]
+  logoText: string
+  locale: string
+}) {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
 
@@ -36,18 +44,18 @@ export function MobileNav({ links }: { links: NavLink[] }) {
         aria-expanded={open}
         aria-controls="mobile-nav"
         onClick={() => setOpen((v) => !v)}
-        className="relative z-50 flex h-10 w-10 items-center justify-center md:hidden"
+        className="relative z-[60] -mr-2 flex h-10 w-10 items-center justify-center md:hidden"
       >
         <span className="sr-only">Toggle menu</span>
-        <span className="relative block h-3 w-6">
+        <span className="relative block h-2.5 w-6">
           <span
-            className={`absolute left-0 top-0 block h-px w-6 bg-bone transition-transform duration-300 ${
-              open ? 'translate-y-[6px] rotate-45' : ''
+            className={`absolute left-0 top-0 block h-px w-6 origin-center bg-bone transition-all duration-500 ease-[cubic-bezier(0.83,0,0.17,1)] ${
+              open ? 'translate-y-[5px] rotate-45' : ''
             }`}
           />
           <span
-            className={`absolute bottom-0 left-0 block h-px w-6 bg-bone transition-transform duration-300 ${
-              open ? '-translate-y-[6px] -rotate-45' : ''
+            className={`absolute bottom-0 left-0 block h-px origin-center bg-bone transition-all duration-500 ease-[cubic-bezier(0.83,0,0.17,1)] ${
+              open ? 'w-6 -translate-y-[5px] -rotate-45' : 'w-4'
             }`}
           />
         </span>
@@ -58,29 +66,71 @@ export function MobileNav({ links }: { links: NavLink[] }) {
         role="dialog"
         aria-modal="true"
         aria-hidden={!open}
-        className={`fixed inset-0 z-40 bg-ink/95 backdrop-blur-md transition-opacity duration-300 md:hidden ${
-          open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+        className={`fixed inset-0 z-50 bg-ink transition-[clip-path] duration-700 ease-[cubic-bezier(0.83,0,0.17,1)] md:hidden ${
+          open
+            ? '[clip-path:circle(150%_at_calc(100%-2.5rem)_2.5rem)]'
+            : '[clip-path:circle(0%_at_calc(100%-2.5rem)_2.5rem)]'
         }`}
       >
-        <nav className="flex h-full flex-col items-start justify-center gap-2 px-8">
-          {links.map((link, i) => (
-            <Link
-              key={`${link.href}-${i}`}
-              href={link.href}
-              target={link.newTab ? '_blank' : undefined}
-              onClick={() => setOpen(false)}
-              className="group flex w-full items-baseline gap-4 border-b border-line/30 py-5 font-display text-4xl text-bone transition-colors hover:text-accent"
+        <div className="flex h-full flex-col">
+          <div className="border-b border-line">
+            <div className="container-page flex items-center justify-between py-5">
+              <span className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] text-bone">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+                <span>{logoText}</span>
+              </span>
+            </div>
+          </div>
+
+          <nav className="container-page flex flex-1 flex-col justify-center gap-1 py-12">
+            {links.map((link, i) => (
+              <Link
+                key={`${link.href}-${i}`}
+                href={link.href}
+                target={link.newTab ? '_blank' : undefined}
+                onClick={() => setOpen(false)}
+                style={{ transitionDelay: open ? `${150 + i * 70}ms` : '0ms' }}
+                className={`group flex items-baseline gap-5 border-b border-line/40 py-5 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  open ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+                }`}
+              >
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent/80">
+                  0{i + 1}
+                </span>
+                <span className="flex-1 font-display text-[clamp(2.5rem,12vw,4rem)] font-light leading-[0.95] tracking-tightest text-bone transition-colors duration-300 group-hover:text-accent">
+                  {link.label}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="font-mono text-[10px] uppercase tracking-[0.3em] text-bone/35 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent"
+                >
+                  →
+                </span>
+              </Link>
+            ))}
+          </nav>
+
+          <div className="border-t border-line">
+            <div
+              className="container-page flex flex-col gap-3 py-6 font-mono text-[10px] uppercase tracking-[0.25em] text-bone/45"
+              style={{ transitionDelay: open ? `${150 + links.length * 70}ms` : '0ms' }}
             >
-              <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent/70">
-                0{i + 1}
-              </span>
-              <span className="flex-1">{link.label}</span>
-              <span aria-hidden="true" className="text-accent/40 transition-transform group-hover:translate-x-1">
-                →
-              </span>
-            </Link>
-          ))}
-        </nav>
+              <div className="flex items-center justify-between">
+                <span>/{locale.toUpperCase()}</span>
+                <span className="flex items-center gap-2">
+                  <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+                  Available
+                </span>
+              </div>
+              <a
+                href="mailto:contact.shanneik@gmail.com"
+                className="text-bone/70 transition-colors hover:text-accent"
+              >
+                contact.shanneik@gmail.com
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )
