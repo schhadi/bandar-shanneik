@@ -1387,6 +1387,9 @@ video {
 .border-topbar\/40 {
   border-color: rgb(139 31 110 / 0.4);
 }
+.border-ink\/15 {
+  border-color: rgb(245 239 228 / 0.15);
+}
 .bg-accent {
   --tw-bg-opacity: 1;
   background-color: rgb(181 152 90 / var(--tw-bg-opacity, 1));
@@ -1695,6 +1698,12 @@ video {
 }
 .text-accent\/80 {
   color: rgb(181 152 90 / 0.8);
+}
+.text-ink\/40 {
+  color: rgb(245 239 228 / 0.4);
+}
+.text-ink\/80 {
+  color: rgb(245 239 228 / 0.8);
 }
 .underline {
   text-decoration-line: underline;
