@@ -57,9 +57,8 @@ export default buildConfig({
     ? postgresAdapter({
         pool: {
           connectionString: databaseUri,
-          connectionTimeoutMillis: 10_000,
-          idleTimeoutMillis: 10_000,
-          max: 1,
+          connectionTimeoutMillis: 30_000,
+          max: 10,
         },
         // Only run migrations from the seed/CLI, never inside serverless functions.
         // Running them on cold start can hang requests for the full 300s function timeout.
