@@ -23,8 +23,13 @@ export function MediaImage({
   priority?: boolean
 }) {
   if (!media || typeof media === 'string') return null
+  if (!media.url) return null
+  // Payload's default upload handler serves at /api/media/file/<name>, which has no
+  // persistent disk on Vercel serverless. The same files are bundled in /public/media,
+  // so rewrite to the static asset and drop any Payload-appended "-N" dedupe suffix.
   const url = media.url
-  if (!url) return null
+    .replace(/^\/api\/media\/file\//, '/media/')
+    .replace(/-\d+(\.[^./]+)$/, '$1')
   const width = media.width || 1200
   const height = media.height || 1200
   return (
