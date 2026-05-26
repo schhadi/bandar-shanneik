@@ -7,7 +7,8 @@ import { resolveHref } from '@/lib/resolveLink'
 export async function SiteFooter({ locale }: { locale: Locale }) {
   const payload = await getPayload().catch(() => null)
   const footer = (await payload?.findGlobal({ slug: 'footer', locale, depth: 2 }).catch(() => null)) || staticFooter
-  const columns: any[] = (footer as any)?.columns || []
+  const cmsColumns: any[] = (footer as any)?.columns || []
+  const columns: any[] = cmsColumns.length ? cmsColumns : staticFooter.columns
 
   return (
     <footer className="relative border-t border-line">

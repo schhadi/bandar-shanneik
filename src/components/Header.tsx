@@ -8,7 +8,8 @@ import { LanguageSwitcher } from './LanguageSwitcher'
 export async function SiteHeader({ locale }: { locale: Locale }) {
   const payload = await getPayload().catch(() => null)
   const header = (await payload?.findGlobal({ slug: 'header', locale, depth: 2 }).catch(() => null)) || staticHeader
-  const navItems: any[] = (header as any)?.nav || []
+  const cmsNav: any[] = (header as any)?.nav || []
+  const navItems: any[] = cmsNav.length ? cmsNav : staticHeader.nav
 
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md">
