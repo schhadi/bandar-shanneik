@@ -11,11 +11,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(frontend)/not-found.js"
     ],
-    "/(frontend)/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(frontend)/page.js"
-    ],
     "/(frontend)/[locale]/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",

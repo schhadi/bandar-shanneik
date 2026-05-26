@@ -1,15 +1,28 @@
+import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getPayload } from '@/lib/payload'
-import { isLocale, type Locale } from '@/lib/i18n'
-import { getStaticPage } from '@/lib/staticContent'
+import { isLocale, LOCALES, type Locale } from '@/lib/i18n'
+import { getStaticPage, staticPages } from '@/lib/staticContent'
 import { BlockRenderer } from '@/components/blocks'
+
+export const revalidate = 300
+
+export function generateStaticParams() {
+  const slugs = Object.keys(staticPages)
+  return LOCALES.flatMap((locale) =>
+    slugs.map((slug) => ({
+      locale,
+      slug: slug === 'home' ? [] : [slug],
+    })),
+  )
+}
 
 type Args = {
   params: Promise<{ locale: string; slug?: string[] }>
 }
 
-async function fetchPage(locale: Locale, slug: string) {
+const fetchPage = cache(async (locale: Locale, slug: string) => {
   const fallback = getStaticPage(locale, slug)
 
   try {
@@ -26,7 +39,7 @@ async function fetchPage(locale: Locale, slug: string) {
   } catch {
     return fallback
   }
-}
+})
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { locale, slug } = await params

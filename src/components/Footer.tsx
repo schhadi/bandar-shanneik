@@ -1,12 +1,17 @@
+import { cache } from 'react'
 import Link from 'next/link'
 import { getPayload } from '@/lib/payload'
 import type { Locale } from '@/lib/i18n'
 import { footer as staticFooter } from '@/lib/staticContent'
 import { resolveHref } from '@/lib/resolveLink'
 
-export async function SiteFooter({ locale }: { locale: Locale }) {
+const fetchFooter = cache(async (locale: Locale) => {
   const payload = await getPayload().catch(() => null)
-  const footer = (await payload?.findGlobal({ slug: 'footer', locale, depth: 2 }).catch(() => null)) || staticFooter
+  return (await payload?.findGlobal({ slug: 'footer', locale, depth: 2 }).catch(() => null)) || staticFooter
+})
+
+export async function SiteFooter({ locale }: { locale: Locale }) {
+  const footer = await fetchFooter(locale)
   const cmsColumns: any[] = (footer as any)?.columns || []
   const columns: any[] = cmsColumns.length ? cmsColumns : staticFooter.columns
 
