@@ -5,6 +5,7 @@ import type { Locale } from '@/lib/i18n'
 import { header as staticHeader } from '@/lib/staticContent'
 import { resolveHref } from '@/lib/resolveLink'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { MobileNav } from './MobileNav'
 
 const fetchHeader = cache(async (locale: Locale) => {
   const payload = await getPayload().catch(() => null)
@@ -47,8 +48,17 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
             })}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             {(header.showLanguageSwitcher ?? true) && <LanguageSwitcher locale={locale} />}
+            <MobileNav
+              links={navItems
+                .map((item) => {
+                  const link = item?.link
+                  if (!link?.label) return null
+                  return { href: resolveHref(link, locale), label: link.label, newTab: link.newTab }
+                })
+                .filter(Boolean) as { href: string; label: string; newTab?: boolean }[]}
+            />
           </div>
         </div>
       </div>

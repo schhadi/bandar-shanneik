@@ -31,15 +31,15 @@ export function HeroBlock({ block, locale }: { block: any; locale: Locale }) {
           </h1>
         </div>
 
-        <div className="md:col-span-5">
+        <div className="-mx-4 md:mx-0 md:col-span-5">
           {block.image && (
             <Tilt max={5}>
               <div className="img-zoom overflow-hidden">
                 <MediaImage
                   media={block.image}
-                  className="h-[42vh] max-h-[480px] w-full object-contain object-right grayscale transition-all duration-700 hover:grayscale-0 md:h-[58vh] md:max-h-none"
+                  className="mx-auto h-[50vh] max-h-[420px] w-full max-w-[320px] object-cover object-center grayscale transition-all duration-700 hover:grayscale-0 md:h-[58vh] md:max-h-none md:max-w-none md:object-contain md:object-right"
                   priority
-                  sizes="(min-width: 768px) 42vw, 100vw"
+                  sizes="(min-width: 768px) 42vw, 80vw"
                 />
               </div>
             </Tilt>
