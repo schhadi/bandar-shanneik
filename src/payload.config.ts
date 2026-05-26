@@ -19,9 +19,12 @@ import { migrations } from './migrations'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-// Vercel-Neon integration auto-sets POSTGRES_URL. Accept either DATABASE_URI (manual) or POSTGRES_URL.
+// Prefer the direct (non-pooling) URL on Vercel/Neon. The pooled URL goes through PgBouncer
+// in transaction mode, which hangs Payload/Drizzle prepared statements.
 const databaseUri =
   process.env.DATABASE_URI ||
+  process.env.POSTGRES_URL_NON_POOLING ||
+  process.env.DATABASE_URL_UNPOOLED ||
   process.env.POSTGRES_URL ||
   process.env.DATABASE_URL
 
