@@ -6,7 +6,10 @@ import { isLocale, LOCALES, type Locale } from '@/lib/i18n'
 import { getStaticPage, staticPages } from '@/lib/staticContent'
 import { BlockRenderer } from '@/components/blocks'
 
-export const revalidate = 300
+// Pages are statically cached indefinitely and invalidated on demand by
+// Payload afterChange/afterDelete hooks (see src/lib/revalidate.ts).
+export const revalidate = false
+export const dynamicParams = true
 
 export function generateStaticParams() {
   const slugs = Object.keys(staticPages)

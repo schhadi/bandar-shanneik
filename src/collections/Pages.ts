@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
+import { revalidateOnChange, revalidateOnDelete } from '../lib/revalidate'
 import {
   Hero,
   RichText,
@@ -29,6 +30,10 @@ export const Pages: CollectionConfig = {
     create: authenticated,
     update: authenticated,
     delete: authenticated,
+  },
+  hooks: {
+    afterChange: [revalidateOnChange],
+    afterDelete: [revalidateOnDelete],
   },
   fields: [
     {

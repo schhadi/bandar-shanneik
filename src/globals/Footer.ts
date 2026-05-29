@@ -1,12 +1,16 @@
 import type { GlobalConfig } from 'payload'
 import { authenticated } from '../access/authenticated'
 import { linkField } from '../fields/link'
+import { revalidateGlobalOnChange } from '../lib/revalidate'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
   access: {
     read: () => true,
     update: authenticated,
+  },
+  hooks: {
+    afterChange: [revalidateGlobalOnChange],
   },
   fields: [
     {
