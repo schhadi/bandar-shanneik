@@ -19,7 +19,7 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
   const navItems: any[] = cmsNav.length ? cmsNav : staticHeader.nav
 
   return (
-    <header className="sticky top-0 z-40 bg-ink/90 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 border-b border-line bg-ink/85 backdrop-blur">
       <div className="container-page flex items-center justify-between py-5">
         <Link href={`/${locale}`} className="font-display text-lg tracking-tight text-bone">
           {header.logoText || staticHeader.logoText}

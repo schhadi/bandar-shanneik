@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import type { BasePayload } from 'payload'
 
-import { footer, header, portrait, staticPages } from './staticContent'
+import { header, portrait, staticPages } from './staticContent'
 
 type PayloadClient = BasePayload
 
@@ -161,11 +161,6 @@ export async function seedStaticContent(payload: PayloadClient) {
   await payload.updateGlobal({
     slug: 'header',
     data: resolveLinksDeep(header, pageIDs) as any,
-  })
-
-  await payload.updateGlobal({
-    slug: 'footer',
-    data: resolveLinksDeep(footer, pageIDs) as any,
   })
 
   return {

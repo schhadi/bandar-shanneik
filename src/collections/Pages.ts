@@ -2,20 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 import { revalidateOnChange, revalidateOnDelete } from '../lib/revalidate'
-import {
-  Hero,
-  RichText,
-  Background,
-  EducationJurisdictions,
-  ServiceCards,
-  PracticeAreas,
-  CTABanner,
-  ResearchTimeline,
-  ResearchProfileCard,
-  TagBoxes,
-  Contact,
-  ContactForm,
-} from '../blocks'
+import { Hero, ContactForm } from '../blocks'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -66,20 +53,7 @@ export const Pages: CollectionConfig = {
       name: 'blocks',
       type: 'blocks',
       labels: { singular: 'Block', plural: 'Blocks' },
-      blocks: [
-        Hero,
-        RichText,
-        Background,
-        EducationJurisdictions,
-        ServiceCards,
-        PracticeAreas,
-        CTABanner,
-        ResearchTimeline,
-        ResearchProfileCard,
-        TagBoxes,
-        Contact,
-        ContactForm,
-      ],
+      blocks: [Hero, ContactForm],
     },
   ],
 }

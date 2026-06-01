@@ -17,13 +17,6 @@ export type StaticLink = {
   variant?: 'outline' | 'plain' | 'primary'
 }
 
-type StaticFooter = {
-  brandName: string
-  columns: Array<{ heading: string; links: Array<{ link: StaticLink }> }>
-  copyright: string
-  tagline: string
-}
-
 type StaticHeader = {
   logoText: string
   nav: Array<{ link: StaticLink }>
@@ -53,14 +46,6 @@ export const header: StaticHeader = {
     { link: { label: 'Research', type: 'internal', page: { slug: 'research' }, variant: 'plain' } },
     { link: { label: 'Contact', type: 'internal', page: { slug: 'contact' }, variant: 'plain' } },
   ],
-}
-
-// Footer is no longer rendered, but the global is kept so the CMS shape stays valid.
-export const footer: StaticFooter = {
-  brandName: 'Bandar Shanneik',
-  tagline: '',
-  columns: [],
-  copyright: '© 2026 Bandar Shanneik.',
 }
 
 export const staticPublications = [
@@ -97,6 +82,21 @@ export const staticPages: Record<string, StaticPage> = {
           'Working across German, English and Emirati law — and at the intersection of law, migration and society.',
         image: portrait,
         linkedin: LINKEDIN_URL,
+        practice: {
+          label: 'Practice',
+          role: 'Senior Counsel',
+          org: 'Daburon & Partners',
+          orgUrl: DABURON_URL,
+          meta: 'Germany · England & Wales · UAE',
+        },
+        research: {
+          label: 'Research',
+          role: 'Research Fellow',
+          org: 'SOAS University of London',
+          orgUrl: SOAS_URL,
+          projectLabel: 'RELI-GENE project',
+          projectUrl: RELIGENE_URL,
+        },
       },
     ],
   },
@@ -133,7 +133,7 @@ export const staticPages: Record<string, StaticPage> = {
           ],
         },
         cvLabel: 'Download CV',
-        cvUrl: '#',
+        cvUrl: '/cv.pdf',
       },
     ],
   },

@@ -137,24 +137,3 @@
     color: var(--fg-dim);
   }
 }
-
-/*
- * Animation components (Reveal / SplitText) are still present in the tree but
- * neutralised here: everything loads and sits still — no parallax, fades or
- * movement. Kept as no-ops so nothing renders invisible.
- */
-.reveal,
-.clip-reveal,
-.split-text,
-.split-text__inner {
-  opacity: 1 !important;
-  transform: none !important;
-  clip-path: none !important;
-  transition: none !important;
-  animation: none !important;
-}
-.split-text__char,
-.split-text__word {
-  display: inline;
-  overflow: visible;
-}
