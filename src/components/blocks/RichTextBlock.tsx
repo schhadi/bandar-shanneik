@@ -1,21 +1,24 @@
 import { RichTextRenderer } from '@/lib/lexical'
-import { Reveal } from '../Reveal'
 
 export function RichTextBlock({ block }: { block: any }) {
   const centered = block.alignment === 'center'
   return (
-    <section className="container-page border-t border-line py-28">
-      <div className={centered ? 'mx-auto max-w-3xl text-center' : 'grid gap-12 md:grid-cols-12'}>
+    <section className="container-page py-24 md:py-32">
+      <div className={centered ? 'mx-auto max-w-3xl text-center' : 'grid gap-12 md:grid-cols-12 md:gap-16'}>
         {block.heading && (
-          <Reveal className={centered ? '' : 'md:col-span-4'}>
-            <h2 className="font-display text-5xl font-light leading-[0.95] tracking-display md:text-7xl">
-              {block.heading}
-            </h2>
-          </Reveal>
+          <div className={centered ? '' : 'md:col-span-4'}>
+            <h2 className="text-3xl font-medium leading-tight md:text-4xl">{block.heading}</h2>
+          </div>
         )}
-        <Reveal delay={1} className={centered ? 'mt-8' : 'text-lg leading-relaxed text-bone/75 md:col-span-7 md:col-start-6'}>
+        <div
+          className={
+            centered
+              ? 'mt-6 text-base leading-relaxed text-bone/80'
+              : 'text-base leading-relaxed text-bone/80 md:col-span-7 md:col-start-6'
+          }
+        >
           <RichTextRenderer data={block.content} />
-        </Reveal>
+        </div>
       </div>
     </section>
   )

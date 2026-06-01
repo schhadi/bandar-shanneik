@@ -1,70 +1,37 @@
-import { Reveal } from '../Reveal'
 import { ContactForm } from '../ContactForm'
-import { MediaImage } from '../Media'
-import { SplitText } from '../SplitText'
 
 export function ContactFormBlock({ block }: { block: any }) {
-  const hasImage = Boolean(block.image)
   return (
-    <section className="container-page border-t border-line py-28">
-      <div className="grid gap-12 md:grid-cols-12">
-        {/* Left: heading + intro + direct email + optional portrait */}
+    <section className="container-page py-24 md:py-32">
+      <div className="grid gap-12 md:grid-cols-12 md:gap-16">
         <div className="md:col-span-5">
-          <Reveal>
-            <div className="eyebrow mb-10">→ Contact</div>
-          </Reveal>
-          <h2 className="font-display text-6xl font-light leading-[0.9] tracking-display md:text-7xl">
-            <SplitText
-              text={block.heading || 'Get in touch'}
-              splitBy="char"
-              delayStep={28}
-              accentLastWord
-            />
+          <h2 className="text-4xl font-medium leading-tight md:text-5xl">
+            {block.heading || 'Get in touch'}
           </h2>
           {block.intro && (
-            <Reveal delay={2}>
-              <p className="mt-8 max-w-md text-base leading-relaxed text-bone/70">{block.intro}</p>
-            </Reveal>
+            <p className="mt-6 max-w-md text-base leading-relaxed text-bone/80">{block.intro}</p>
           )}
           {block.email && (
-            <Reveal delay={3} className="mt-10 border-t border-line pt-6">
-              <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/45">
+            <div className="mt-8">
+              <div className="mb-1 text-sm uppercase tracking-wider text-bone/60">
                 Or write directly
               </div>
               <a
                 href={`mailto:${block.email}`}
-                className="link-underline font-display text-2xl text-bone hover:text-accent"
+                className="link-underline text-lg text-bone"
               >
                 {block.email}
               </a>
-            </Reveal>
-          )}
-          {hasImage && (
-            <Reveal delay={3} className="mt-12 hidden md:block">
-              <div className="img-zoom overflow-hidden">
-                <MediaImage
-                  media={block.image}
-                  className="h-[440px] w-full object-cover grayscale transition-all duration-700 hover:grayscale-0"
-                  sizes="(min-width: 768px) 35vw, 100vw"
-                />
-              </div>
-              <div className="mt-3 flex justify-between font-mono text-[10px] uppercase tracking-[0.25em] text-bone/40">
-                <span>Bandar Shanneik</span>
-                <span>Senior Counsel</span>
-              </div>
-            </Reveal>
+            </div>
           )}
         </div>
 
-        {/* Right: form */}
         <div className="md:col-span-6 md:col-start-7">
-          <Reveal delay={1}>
-            <ContactForm
-              successMessage={block.successMessage}
-              submitLabel={block.submitLabel}
-              showSubject={block.showSubject ?? true}
-            />
-          </Reveal>
+          <ContactForm
+            successMessage={block.successMessage}
+            submitLabel={block.submitLabel}
+            showSubject={block.showSubject ?? true}
+          />
         </div>
       </div>
     </section>

@@ -21,25 +21,24 @@ export function LanguageSwitcher({ locale }: { locale: Locale }) {
       <button
         type="button"
         onClick={() => setOpen((s) => !s)}
-        className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-bone/80 hover:text-bone"
+        className="text-sm text-bone/70 hover:text-accent"
         aria-haspopup="listbox"
         aria-expanded={open}
       >
-        {locale}
-        <span className="text-accent/70">↓</span>
+        {locale.toUpperCase()}
       </button>
       {open && (
         <ul
           role="listbox"
-          className="absolute right-0 mt-3 w-32 overflow-hidden border border-line bg-ink-800/95 backdrop-blur"
+          className="absolute right-0 mt-2 w-32 border border-line bg-ink"
         >
           {LOCALES.map((code) => (
             <li key={code}>
               <button
                 type="button"
                 onClick={() => switchTo(code)}
-                className={`w-full px-4 py-3 text-left font-mono text-[11px] uppercase tracking-[0.25em] transition-colors hover:bg-ink-700 ${
-                  code === locale ? 'text-accent' : 'text-bone/70'
+                className={`w-full px-4 py-2 text-left text-sm hover:bg-ink-800 ${
+                  code === locale ? 'text-accent' : 'text-bone/80'
                 }`}
               >
                 {dict[locale].languageNames[code]}

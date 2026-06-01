@@ -37,7 +37,7 @@ function renderNode(node: Node, key: RenderKey): React.ReactNode {
     case 'heading': {
       const Tag = (node.tag || 'h2') as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
       return (
-        <Tag key={key} className="mb-4 mt-8 font-display text-3xl font-light">
+        <Tag key={key} className="mb-4 mt-8 text-2xl font-medium tracking-tight">
           {children}
         </Tag>
       )

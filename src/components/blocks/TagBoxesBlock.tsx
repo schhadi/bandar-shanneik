@@ -1,21 +1,13 @@
-import { Reveal } from '../Reveal'
-
 export function TagBoxesBlock({ block }: { block: any }) {
   const items: any[] = block.items || []
   return (
-    <Reveal>
-      <div className="border border-line p-8">
-        <div className="mb-6 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">
-          {block.heading || 'Areas of Interest'}
-        </div>
-        <ul className="flex flex-wrap gap-2">
-          {items.map((t, i) => (
-            <li key={i} className="tag transition-colors hover:border-accent hover:text-accent">
-              {t.label}
-            </li>
-          ))}
-        </ul>
+    <div>
+      <div className="mb-3 text-sm uppercase tracking-wider text-bone/60">
+        {block.heading || 'Areas of Interest'}
       </div>
-    </Reveal>
+      <div className="text-base text-bone/80">
+        {items.map((t) => t.label).join(' · ')}
+      </div>
+    </div>
   )
 }

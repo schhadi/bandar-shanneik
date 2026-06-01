@@ -63,7 +63,7 @@ export const header: StaticHeader = {
   showLanguageSwitcher: true,
   nav: [
     { link: { label: 'About', type: 'internal', page: { slug: 'about' }, variant: 'plain' } },
-    { link: { label: 'Legal', type: 'internal', page: { slug: 'legal' }, variant: 'plain' } },
+    { link: { label: 'Expertise', type: 'internal', page: { slug: 'legal' }, variant: 'plain' } },
     { link: { label: 'Research', type: 'internal', page: { slug: 'research' }, variant: 'plain' } },
     { link: { label: 'Contact', type: 'internal', page: { slug: 'contact' }, variant: 'plain' } },
   ],
@@ -71,41 +71,9 @@ export const header: StaticHeader = {
 
 export const footer: StaticFooter = {
   brandName: 'Bandar Shanneik',
-  tagline: 'Cross-border legal consultancy across the Middle East and Europe',
-  columns: [
-    {
-      heading: 'Contact',
-      links: [
-        {
-          link: {
-            label: 'contact.shanneik@gmail.com',
-            type: 'external',
-            url: 'mailto:contact.shanneik@gmail.com',
-            variant: 'plain',
-          },
-        },
-      ],
-    },
-    {
-      heading: 'Connect',
-      links: [
-        {
-          link: {
-            label: 'LinkedIn',
-            type: 'external',
-            url: 'https://linkedin.com/',
-            newTab: true,
-            variant: 'plain',
-          },
-        },
-      ],
-    },
-    {
-      heading: 'Explore',
-      links: header.nav,
-    },
-  ],
-  copyright: '© 2026 Bandar Shanneik. All rights reserved.',
+  tagline: '',
+  columns: [],
+  copyright: '',
 }
 
 export const staticPublications = [

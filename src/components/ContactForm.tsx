@@ -25,7 +25,6 @@ export function ContactForm({
 
     const form = e.currentTarget
     const data = new FormData(form)
-    // Honeypot: bots tend to fill every visible/hidden field.
     if (data.get('website')) {
       setStatus('success')
       form.reset()
@@ -72,15 +71,12 @@ export function ContactForm({
 
   if (status === 'success') {
     return (
-      <div className="border border-line p-10">
-        <div className="mb-4 font-mono text-[10px] uppercase tracking-[0.3em] text-accent">
-          → Message sent
-        </div>
-        <p className="font-display text-3xl font-light leading-tight text-bone">{successMessage}</p>
+      <div>
+        <p className="text-xl leading-snug text-bone">{successMessage}</p>
         <button
           type="button"
           onClick={() => setStatus('idle')}
-          className="link-underline mt-8 inline-block font-mono text-[11px] uppercase tracking-[0.25em] text-bone/60 hover:text-bone"
+          className="link-underline mt-6 inline-block text-sm text-bone/70 hover:text-bone"
         >
           Send another
         </button>
@@ -89,8 +85,7 @@ export function ContactForm({
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8" noValidate>
-      {/* Honeypot */}
+    <form onSubmit={onSubmit} className="space-y-6" noValidate>
       <input
         type="text"
         name="website"
@@ -100,7 +95,7 @@ export function ContactForm({
         className="absolute left-[-9999px] h-0 w-0 opacity-0"
       />
 
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         <label className="field">
           <span className="field-label">Name *</span>
           <input
@@ -139,21 +134,18 @@ export function ContactForm({
           required
           rows={5}
           className="field-textarea"
-          placeholder="Tell me about your matter…"
+          placeholder="A few details about your enquiry…"
         />
       </label>
 
       {status === 'error' && (
-        <div className="border border-topbar/40 bg-topbar/5 p-4 text-sm text-bone">{errorMessage}</div>
+        <div className="border border-line p-4 text-sm text-bone">{errorMessage}</div>
       )}
 
       <div className="flex items-center justify-between pt-2">
-        <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-bone/40">
-          * Required fields
-        </p>
-        <button type="submit" disabled={status === 'loading'} className="btn-primary disabled:opacity-50">
-          <span className="btn-label">{status === 'loading' ? 'Sending…' : submitLabel}</span>
-          <span className="btn-arrow">→</span>
+        <p className="text-xs text-bone/60">* Required fields</p>
+        <button type="submit" disabled={status === 'loading'} className="btn-outline disabled:opacity-50">
+          {status === 'loading' ? 'Sending…' : submitLabel}
         </button>
       </div>
     </form>

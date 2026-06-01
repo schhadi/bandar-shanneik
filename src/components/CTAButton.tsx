@@ -9,36 +9,22 @@ export function CTAButton({ link, locale }: { link: LinkData; locale: Locale }) 
   const target = link.newTab ? '_blank' : undefined
   const rel = link.newTab ? 'noopener noreferrer' : undefined
   const variant = link.variant || 'primary'
-  const className = clsx({
-    'btn-primary': variant === 'primary',
-    'btn-outline': variant === 'outline',
-    'btn-plain': variant === 'plain',
-  })
-
-  const arrow = link.newTab ? '↗' : '→'
-
-  const inner =
-    variant === 'plain' ? (
-      <span className="inline-flex items-center gap-2">
-        {link.label} <span className="text-accent">{arrow}</span>
-      </span>
-    ) : (
-      <>
-        <span className="btn-label">{link.label}</span>
-        <span className="btn-arrow">{arrow}</span>
-      </>
-    )
+  const className = clsx(
+    variant === 'plain'
+      ? 'link-underline text-sm text-bone'
+      : 'btn-outline',
+  )
 
   if (link.type === 'external') {
     return (
       <a href={href} target={target} rel={rel} className={className}>
-        {inner}
+        {link.label}
       </a>
     )
   }
   return (
     <Link href={href} target={target} rel={rel} className={className}>
-      {inner}
+      {link.label}
     </Link>
   )
 }
