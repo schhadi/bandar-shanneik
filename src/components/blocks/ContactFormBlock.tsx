@@ -1,70 +1,57 @@
-import { Reveal } from '../Reveal'
 import { ContactForm } from '../ContactForm'
-import { MediaImage } from '../Media'
-import { SplitText } from '../SplitText'
 
 export function ContactFormBlock({ block }: { block: any }) {
-  const hasImage = Boolean(block.image)
   return (
-    <section className="container-page border-t border-line py-28">
-      <div className="grid gap-12 md:grid-cols-12">
-        {/* Left: heading + intro + direct email + optional portrait */}
+    <section className="container-page py-20 md:py-28">
+      <div className="grid gap-12 md:grid-cols-12 md:gap-16">
+        {/* Left: heading + intro + professional note + direct email */}
         <div className="md:col-span-5">
-          <Reveal>
-            <div className="eyebrow mb-10">→ Contact</div>
-          </Reveal>
-          <h2 className="font-display text-6xl font-light leading-[0.9] tracking-display md:text-7xl">
-            <SplitText
-              text={block.heading || 'Get in touch'}
-              splitBy="char"
-              delayStep={28}
-              accentLastWord
-            />
-          </h2>
+          <h1 className="font-display text-[clamp(2.5rem,7vw,4.5rem)] font-normal leading-[1] tracking-tight text-bone">
+            {block.heading || 'Contact'}
+          </h1>
           {block.intro && (
-            <Reveal delay={2}>
-              <p className="mt-8 max-w-md text-base leading-relaxed text-bone/70">{block.intro}</p>
-            </Reveal>
+            <p className="mt-6 max-w-md text-xl leading-relaxed text-bone/75">{block.intro}</p>
           )}
+
+          {block.professionalLabel && (
+            <p className="mt-8 max-w-md text-base leading-relaxed text-bone/70">
+              {block.professionalPrefix ? `${block.professionalPrefix} ` : ''}
+              {block.professionalUrl ? (
+                <a
+                  href={block.professionalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="a-accent"
+                >
+                  {block.professionalLabel}
+                </a>
+              ) : (
+                block.professionalLabel
+              )}
+              {block.professionalSuffix}
+            </p>
+          )}
+
           {block.email && (
-            <Reveal delay={3} className="mt-10 border-t border-line pt-6">
-              <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/45">
-                Or write directly
-              </div>
+            <div className="mt-10">
+              <div className="text-sm text-bone/45">Or write directly</div>
               <a
                 href={`mailto:${block.email}`}
-                className="link-underline font-display text-2xl text-bone hover:text-accent"
+                className="link-underline mt-1 inline-block font-display text-2xl text-bone hover:text-accent"
               >
                 {block.email}
               </a>
-            </Reveal>
-          )}
-          {hasImage && (
-            <Reveal delay={3} className="mt-12 hidden md:block">
-              <div className="img-zoom overflow-hidden">
-                <MediaImage
-                  media={block.image}
-                  className="h-[440px] w-full object-cover grayscale transition-all duration-700 hover:grayscale-0"
-                  sizes="(min-width: 768px) 35vw, 100vw"
-                />
-              </div>
-              <div className="mt-3 flex justify-between font-mono text-[10px] uppercase tracking-[0.25em] text-bone/40">
-                <span>Bandar Shanneik</span>
-                <span>Senior Counsel</span>
-              </div>
-            </Reveal>
+            </div>
           )}
         </div>
 
         {/* Right: form */}
         <div className="md:col-span-6 md:col-start-7">
-          <Reveal delay={1}>
-            <ContactForm
-              successMessage={block.successMessage}
-              submitLabel={block.submitLabel}
-              showSubject={block.showSubject ?? true}
-            />
-          </Reveal>
+          <ContactForm
+            successMessage={block.successMessage}
+            submitLabel={block.submitLabel}
+            showSubject={block.showSubject ?? true}
+          />
         </div>
       </div>
     </section>

@@ -55,25 +55,13 @@ export function MobileNav({
       }`}
       style={{
         background:
-          'radial-gradient(120% 80% at 100% 0%, #2C5142 0%, #18302A 55%, #0F2520 100%)',
+          'radial-gradient(120% 80% at 100% 0%, #2F5A48 0%, #214135 55%, #16271F 100%)',
       }}
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
-      />
-
       <div className="relative flex h-full flex-col text-ink">
         <div className="border-b border-ink/15">
           <div className="container-page flex items-center justify-between py-5">
-            <span className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] text-ink">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-              <span>{logoText}</span>
-            </span>
+            <span className="font-display text-lg text-ink">{logoText}</span>
             <button
               type="button"
               aria-label="Close menu"
@@ -100,39 +88,28 @@ export function MobileNav({
                 open ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
               }`}
             >
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">
-                0{i + 1}
-              </span>
-              <span className="flex-1 font-display text-[clamp(2.5rem,12vw,4rem)] font-light leading-[0.95] tracking-tightest text-ink transition-colors duration-300 group-hover:text-accent">
+              <span className="flex-1 font-display text-[clamp(2.25rem,11vw,3.5rem)] font-light leading-[1.05] text-ink transition-colors duration-300 group-hover:text-bone/60">
                 {link.label}
-              </span>
-              <span
-                aria-hidden="true"
-                className="font-mono text-[10px] uppercase tracking-[0.3em] text-ink/40 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent"
-              >
-                →
               </span>
             </Link>
           ))}
         </nav>
 
         <div className="border-t border-ink/15">
-          <div
-            className="container-page flex flex-col gap-3 py-6 font-mono text-[10px] uppercase tracking-[0.25em] text-ink/55"
-            style={{ transitionDelay: open ? `${150 + links.length * 70}ms` : '0ms' }}
-          >
-            <div className="flex items-center justify-between">
-              <span>/{locale.toUpperCase()}</span>
-              <span className="flex items-center gap-2">
-                <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
-                Available
-              </span>
-            </div>
+          <div className="container-page flex items-center justify-between gap-3 py-6 text-sm text-ink/70">
             <a
               href="mailto:contact.shanneik@gmail.com"
-              className="text-ink/80 transition-colors hover:text-accent"
+              className="transition-colors hover:text-bone/60"
             >
               contact.shanneik@gmail.com
+            </a>
+            <a
+              href="https://www.linkedin.com/in/bandar-shanneik"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-bone/60"
+            >
+              LinkedIn
             </a>
           </div>
         </div>

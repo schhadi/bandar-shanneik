@@ -30,25 +30,11 @@ type StaticHeader = {
   showLanguageSwitcher: boolean
 }
 
-const lexical = (text: string) => ({
-  root: {
-    type: 'root',
-    format: '',
-    indent: 0,
-    version: 1,
-    direction: 'ltr',
-    children: [
-      {
-        type: 'paragraph',
-        version: 1,
-        format: '',
-        indent: 0,
-        direction: 'ltr',
-        children: [{ type: 'text', text, format: 0, mode: 'normal', style: '', detail: 0, version: 1 }],
-      },
-    ],
-  },
-})
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/bandar-shanneik'
+export const DABURON_URL = 'https://daburon-partners.com'
+export const DABURON_CONTACT_URL = 'https://daburon-partners.com/en/home'
+export const RELIGENE_URL = 'https://religene.eu/'
+export const SOAS_URL = 'https://www.soas.ac.uk'
 
 export const portrait = {
   filename: 'b0137a0d-de85-49a1-a8fe-6a94186ec2c5.JPG',
@@ -63,71 +49,37 @@ export const header: StaticHeader = {
   showLanguageSwitcher: true,
   nav: [
     { link: { label: 'About', type: 'internal', page: { slug: 'about' }, variant: 'plain' } },
-    { link: { label: 'Legal', type: 'internal', page: { slug: 'legal' }, variant: 'plain' } },
+    { link: { label: 'Expertise', type: 'internal', page: { slug: 'expertise' }, variant: 'plain' } },
     { link: { label: 'Research', type: 'internal', page: { slug: 'research' }, variant: 'plain' } },
     { link: { label: 'Contact', type: 'internal', page: { slug: 'contact' }, variant: 'plain' } },
   ],
 }
 
+// Footer is no longer rendered, but the global is kept so the CMS shape stays valid.
 export const footer: StaticFooter = {
   brandName: 'Bandar Shanneik',
-  tagline: 'Cross-border legal consultancy across the Middle East and Europe',
-  columns: [
-    {
-      heading: 'Contact',
-      links: [
-        {
-          link: {
-            label: 'contact.shanneik@gmail.com',
-            type: 'external',
-            url: 'mailto:contact.shanneik@gmail.com',
-            variant: 'plain',
-          },
-        },
-      ],
-    },
-    {
-      heading: 'Connect',
-      links: [
-        {
-          link: {
-            label: 'LinkedIn',
-            type: 'external',
-            url: 'https://linkedin.com/',
-            newTab: true,
-            variant: 'plain',
-          },
-        },
-      ],
-    },
-    {
-      heading: 'Explore',
-      links: header.nav,
-    },
-  ],
-  copyright: '© 2026 Bandar Shanneik. All rights reserved.',
+  tagline: '',
+  columns: [],
+  copyright: '© 2026 Bandar Shanneik.',
 }
 
 export const staticPublications = [
   {
     year: '2027',
-    kind: 'peer-reviewed',
     title: 'Who Counts as a Family in Europe: Polygamous Refugees and the Boundaries of Recognition',
     venue: 'Journal of Law and Society',
     status: 'in prep.',
   },
   {
     year: '2026',
-    kind: 'book-chapter',
     title: 'Forced Divorce: Syrian Refugees and the Act to Combat Child Marriage in Germany',
     venue: 'Politics of Marriage and Gender: Global Issues in Local Contexts (Rutgers University Press)',
     status: 'in print',
   },
   {
     year: '2022',
-    kind: 'legal-article',
-    title: 'Der Immobilienerwerb in den Vereinigten',
-    venue: 'immo aktuell 4(6), 316-320',
+    title: 'Der Immobilienerwerb in den Vereinigten Arabischen Emiraten',
+    venue: 'immo aktuell 4(6), 316–320',
   },
 ]
 
@@ -135,175 +87,113 @@ export const staticPages: Record<string, StaticPage> = {
   home: {
     title: 'Bandar Shanneik',
     description:
-      'Cross-border legal consultancy for companies, investors and private clients across the Middle East and Europe.',
+      'Bandar Shanneik is a lawyer and legal scholar working across German, English and UAE law, and researching law, migration and society.',
     blocks: [
       {
         blockType: 'hero',
-        title: 'Bandar Shanneik',
-        body:
-          'Bandar Shanneik provides cross-border legal consultancy for companies, investors and private clients across real estate, corporate, commercial and governance matters. With a legal background spanning Germany, the Middle East, and Europe, he offers precise, practical and commercially aware advice in German, Arabic and English.',
+        name: 'Bandar Shanneik',
+        descriptor: 'Lawyer & Academic',
+        tagline:
+          'Working across German, English and Emirati law — and at the intersection of law, migration and society.',
         image: portrait,
-        imageStyle: 'rounded',
-        ctas: [
-          { link: { label: 'Legal', type: 'internal', page: { slug: 'legal' }, variant: 'primary', icon: 'scale' } },
-          {
-            link: {
-              label: 'Research',
-              type: 'internal',
-              page: { slug: 'research' },
-              variant: 'outline',
-              icon: 'book',
-            },
-          },
-        ],
+        linkedin: LINKEDIN_URL,
       },
     ],
   },
   about: {
     title: 'About',
-    description: 'Background, education, jurisdictions and languages for Bandar Shanneik.',
+    description: 'The legal and academic profile of Bandar Shanneik.',
     blocks: [
       {
-        blockType: 'background',
-        heading: 'Background',
-        body: lexical(
-          'Bandar Shanneik is a Senior Legal Consultant and fully qualified German lawyer whose work sits at the intersection of European legal training and Middle Eastern commercial practice. He advises companies, investors and private clients on corporate and commercial matters, contracts, mergers and acquisitions, arbitration, real estate, tax and employment law. Fluent in German, Arabic and English, he supports clients navigating cross-border legal questions with clarity, discretion and a practical understanding of both legal detail and commercial context.',
-        ),
-        image: portrait,
-        cta: [
-          {
-            link: {
-              label: 'Download CV',
-              type: 'external',
-              url: '#',
-              variant: 'outline',
-              icon: 'download',
-            },
-          },
-        ],
-      },
-      {
-        blockType: 'educationJurisdictions',
-        heading: 'Education & Jurisdictions',
-        education: [
-          {
-            institution: 'Vrije Universiteit Amsterdam (Netherlands)',
-            detail:
-              "Master of Laws (LL.M.) in 'International Business Law: Commercial Transactions' (cum laude; Valedictorian)",
-          },
-          {
-            institution: 'Julius-Maximilians-Universität, Würzburg (Germany)',
-            detail:
-              'Diploma in law, specialising in European and International Economic Transactions and Legal Relations',
-          },
-          { institution: 'San Diego State University, San Diego (USA)' },
-        ],
-        jurisdictions: [
-          { name: 'Germany', icon: 'bank' },
-          { name: 'England and Wales', icon: 'wig' },
-          { name: 'United Arab Emirates', icon: 'skyline' },
-        ],
-        languages: [{ name: 'German' }, { name: 'Arabic' }, { name: 'English' }],
+        blockType: 'profileColumns',
+        intro:
+          'Two parallel identities — a practising lawyer and a legal scholar — informing one another across European and Middle Eastern contexts.',
+        legal: {
+          heading: 'Legal',
+          body:
+            'Bandar is a fully qualified German lawyer whose work sits at the intersection of European legal training and Middle Eastern commercial practice. He advises on corporate and commercial matters, real estate, arbitration and governance, bringing clarity and discretion to cross-border questions and a practical feel for the commercial context behind them.',
+          affiliationLabel: 'Senior Counsel, Daburon & Partners',
+          affiliationUrl: DABURON_URL,
+          jurisdictions: ['Germany', 'England & Wales', 'United Arab Emirates'],
+          languages: ['German', 'Arabic', 'English'],
+        },
+        academic: {
+          heading: 'Academic',
+          body:
+            'Bandar’s research examines how legal frameworks shape, and are shaped by, migration, marriage, gender and family recognition. He is drawn to the places where comparative law meets lived experience, and to the protection of rights in contexts of displacement and social change.',
+          affiliationLabel: 'Research Fellow, SOAS University of London',
+          affiliationUrl: SOAS_URL,
+          projectLabel: 'RELI-GENE project',
+          projectUrl: RELIGENE_URL,
+          researchAreas: [
+            'Comparative Law',
+            'Migration & Refugee Law',
+            'Gender & Family Recognition',
+            'Human Rights',
+          ],
+        },
+        cvLabel: 'Download CV',
+        cvUrl: '#',
       },
     ],
   },
-  legal: {
-    title: 'Legal',
-    description: 'Legal services and practice areas.',
+  expertise: {
+    title: 'Expertise',
+    description:
+      'Bandar Shanneik’s areas of legal expertise across corporate, commercial, real estate, arbitration and governance matters.',
     blocks: [
       {
-        blockType: 'serviceCards',
-        heading: 'Legal Services',
+        blockType: 'expertise',
+        heading: 'Legal Expertise',
         intro:
-          'Cross-border legal consultancy for commercial matters, investments, real estate, governance and disputes. The work is practical, discreet and structured around the commercial context behind each legal question.',
-        cards: [
-          {
-            title: 'Corporate & Commercial',
-            body:
-              'Advice on contracts, company structures, commercial negotiations and governance questions across jurisdictions.',
-          },
-          {
-            title: 'Real Estate & Investment',
-            body:
-              'Support for private clients, investors and companies navigating real estate transactions and investment matters.',
-          },
-          {
-            title: 'Disputes & Arbitration',
-            body:
-              'Strategic legal support for cross-border disputes, arbitration-related work and risk assessment.',
-          },
+          'Bandar’s legal background spans corporate and commercial matters, real estate, arbitration and governance across German, English and UAE law.',
+        affiliationPrefix: 'He is Senior Counsel at',
+        affiliationLabel: 'Daburon & Partners',
+        affiliationUrl: DABURON_URL,
+        areas: [
+          'Corporate Law',
+          'Commercial Contracts',
+          'Mergers & Acquisitions',
+          'Real Estate',
+          'Arbitration',
+          'Governance',
+          'Employment Law',
+          'Tax',
         ],
-      },
-      {
-        blockType: 'practiceAreas',
-        heading: 'Practice Areas',
-        items: [
-          { label: 'Corporate Law' },
-          { label: 'Commercial Contracts' },
-          { label: 'Mergers & Acquisitions' },
-          { label: 'Real Estate' },
-          { label: 'Arbitration' },
-          { label: 'Governance' },
-          { label: 'Employment Law' },
-          { label: 'Tax' },
-        ],
-      },
-      {
-        blockType: 'ctaBanner',
-        heading: 'Need Legal Advice?',
-        background: 'forest',
-        cta: [{ link: { label: 'Contact Bandar', type: 'internal', page: { slug: 'contact' }, variant: 'outline' } }],
       },
     ],
   },
   research: {
     title: 'Research',
-    description: 'Research and publications by Bandar Shanneik.',
+    description:
+      'Research and publications by Bandar Shanneik, Research Fellow at SOAS University of London.',
     blocks: [
       {
-        blockType: 'richText',
-        heading: 'Research & Publications',
-        content: lexical(
-          'Research at the intersection of comparative law, migration, marriage, gender, family recognition and human rights.',
-        ),
-        alignment: 'center',
-      },
-      {
-        blockType: 'researchTimeline',
-        heading: 'Selected Publications',
-        mode: 'manual',
-        manualItems: staticPublications,
-      },
-      {
-        blockType: 'researchProfileCard',
-        heading: 'Research Profile',
-        role: 'Research Fellow',
+        blockType: 'research',
+        heading: 'Research',
+        positionPrefix: 'Research Fellow, SOAS University of London — affiliated with the ',
+        positionLinkLabel: 'RELI-GENE project',
+        positionLinkUrl: RELIGENE_URL,
+        positionSuffix:
+          ', an ERC Consolidator Grant project led by Prof. Yafa Shanneik.',
         body:
-          'My research examines how legal frameworks shape and are shaped by migration, marriage, gender and family recognition. I focus on cross-border legal challenges and the protection of rights in contexts of displacement, diversity and social change.',
-      },
-      {
-        blockType: 'tagBoxes',
-        heading: 'Areas of Interest',
-        items: [
-          { label: 'Comparative Law' },
-          { label: 'Migration Law' },
-          { label: 'Gender & Equality' },
-          { label: 'Refugee Law' },
-          { label: 'Human Rights' },
-          { label: 'Family Recognition' },
-        ],
+          'My research examines how legal frameworks shape, and are shaped by, migration, marriage, gender and family recognition. I focus on cross-border legal challenges and the protection of rights in contexts of displacement, diversity and social change. Working comparatively across German, English and Islamic legal traditions, I am interested in how families are recognised — or refused recognition — as they move between jurisdictions.',
+        publications: staticPublications,
       },
     ],
   },
   contact: {
     title: 'Contact',
-    description: 'Contact Bandar Shanneik for legal consultancy or research collaboration.',
+    description: 'Get in touch with Bandar Shanneik for research collaboration or general enquiries.',
     blocks: [
       {
         blockType: 'contactForm',
-        heading: 'Get in touch',
-        intro:
-          'For inquiries about legal consultancy or research collaboration, share a few details and Bandar will be in touch within two working days.',
+        heading: 'Contact',
+        intro: 'For research collaboration or general enquiries, get in touch.',
+        professionalPrefix: 'For professional legal matters, Bandar is Senior Counsel at',
+        professionalLabel: 'Daburon & Partners',
+        professionalUrl: DABURON_CONTACT_URL,
+        professionalSuffix: '; enquiries are handled through the firm.',
         email: 'contact.shanneik@gmail.com',
         submitLabel: 'Send message',
         successMessage: 'Thank you. Your message has been received — Bandar will reply directly.',

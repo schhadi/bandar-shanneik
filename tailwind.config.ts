@@ -6,37 +6,39 @@ const config: Config = {
     extend: {
       colors: {
         // Token aliases (kept stable so we don't rewrite every component).
-        // ink = page background family (cream)
+        // ink = page background family (warm paper)
         ink: {
-          DEFAULT: '#F5EFE4',
-          900: '#F5EFE4',
-          800: '#EFE7D6',
-          700: '#E5DCC5',
-          600: '#D6CBB0',
+          DEFAULT: '#FBFAF6',
+          900: '#FBFAF6',
+          800: '#F4F2EA',
+          700: '#ECE9DE',
+          600: '#E2DECF',
         },
-        // bone = foreground text (forest)
+        // bone = foreground text (near-black)
         bone: {
-          DEFAULT: '#1F3A2F',
-          50: '#2C5142',
-          100: '#1F3A2F',
-          200: '#15281F',
-          300: '#0E1B14',
+          DEFAULT: '#1A1A17',
+          50: '#3C3C36',
+          100: '#1A1A17',
+          200: '#121210',
+          300: '#0A0A08',
         },
         sand: {
-          DEFAULT: '#A89B7E',
-          dim: '#6E6754',
+          DEFAULT: '#8A8678',
+          dim: '#6E6B5F',
         },
         gold: {
-          DEFAULT: '#B5985A',
-          dim: '#8E743D',
+          DEFAULT: '#2F5A48',
+          dim: '#264a3b',
         },
-        accent: '#B5985A',
-        topbar: '#8B1F6E',
+        // Single accent — a deep, warm green
+        accent: '#2F5A48',
+        topbar: '#2F5A48',
       },
       fontFamily: {
+        // Single typeface throughout the site.
         display: ['var(--font-display)', 'Fraunces', 'Georgia', 'serif'],
-        sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],
+        sans: ['var(--font-display)', 'Fraunces', 'Georgia', 'serif'],
+        mono: ['var(--font-display)', 'Fraunces', 'Georgia', 'serif'],
       },
       letterSpacing: {
         tightest: '-0.04em',
