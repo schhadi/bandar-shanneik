@@ -1,16 +1,9 @@
 import type { Block } from 'payload'
-import { linkField } from '../fields/link'
 
 export const Hero: Block = {
   slug: 'hero',
   labels: { singular: 'Hero', plural: 'Heroes' },
   fields: [
-    {
-      name: 'eyebrow',
-      type: 'text',
-      localized: true,
-      admin: { description: 'Optional small label above the title.' },
-    },
     {
       name: 'title',
       type: 'text',
@@ -18,9 +11,10 @@ export const Hero: Block = {
       required: true,
     },
     {
-      name: 'body',
-      type: 'textarea',
+      name: 'descriptor',
+      type: 'text',
       localized: true,
+      admin: { description: 'Short line set under the name.' },
     },
     {
       name: 'image',
@@ -28,21 +22,9 @@ export const Hero: Block = {
       relationTo: 'media',
     },
     {
-      name: 'imageStyle',
-      type: 'select',
-      defaultValue: 'rounded',
-      options: [
-        { label: 'Rounded corners', value: 'rounded' },
-        { label: 'Sharp corners', value: 'sharp' },
-        { label: 'Circle', value: 'circle' },
-      ],
-    },
-    {
-      name: 'ctas',
-      type: 'array',
-      labels: { singular: 'Button', plural: 'Buttons' },
-      maxRows: 3,
-      fields: [linkField()],
+      name: 'linkedinUrl',
+      type: 'text',
+      admin: { description: 'Optional override for the LinkedIn link.' },
     },
   ],
 }

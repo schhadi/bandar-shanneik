@@ -102,28 +102,13 @@ export const staticPublications = [
 export const staticPages: Record<string, StaticPage> = {
   home: {
     title: 'Bandar Shanneik',
-    description:
-      'Cross-border legal consultancy for companies, investors and private clients across the Middle East and Europe.',
+    description: 'Bandar Shanneik — legal expert and academic.',
     blocks: [
       {
         blockType: 'hero',
         title: 'Bandar Shanneik',
-        body:
-          'Bandar Shanneik provides cross-border legal consultancy for companies, investors and private clients across real estate, corporate, commercial and governance matters. With a legal background spanning Germany, the Middle East, and Europe, he offers precise, practical and commercially aware advice in German, Arabic and English.',
+        descriptor: 'Legal expert & academic.',
         image: portrait,
-        imageStyle: 'rounded',
-        ctas: [
-          { link: { label: 'Legal', type: 'internal', page: { slug: 'legal' }, variant: 'primary', icon: 'scale' } },
-          {
-            link: {
-              label: 'Research',
-              type: 'internal',
-              page: { slug: 'research' },
-              variant: 'outline',
-              icon: 'book',
-            },
-          },
-        ],
       },
     ],
   },

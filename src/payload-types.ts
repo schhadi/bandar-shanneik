@@ -198,28 +198,16 @@ export interface Page {
   blocks?:
     | (
         | {
-            /**
-             * Optional small label above the title.
-             */
-            eyebrow?: string | null;
             title: string;
-            body?: string | null;
+            /**
+             * Short line set under the name.
+             */
+            descriptor?: string | null;
             image?: (number | null) | Media;
-            imageStyle?: ('rounded' | 'sharp' | 'circle') | null;
-            ctas?:
-              | {
-                  link: {
-                    label: string;
-                    type?: ('internal' | 'external') | null;
-                    page?: (number | null) | Page;
-                    url?: string | null;
-                    newTab?: boolean | null;
-                    icon?: ('none' | 'scale' | 'book' | 'arrow' | 'download') | null;
-                    variant?: ('primary' | 'outline' | 'plain') | null;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
+            /**
+             * Optional override for the LinkedIn link.
+             */
+            linkedinUrl?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
@@ -632,27 +620,10 @@ export interface PagesSelect<T extends boolean = true> {
         hero?:
           | T
           | {
-              eyebrow?: T;
               title?: T;
-              body?: T;
+              descriptor?: T;
               image?: T;
-              imageStyle?: T;
-              ctas?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          label?: T;
-                          type?: T;
-                          page?: T;
-                          url?: T;
-                          newTab?: T;
-                          icon?: T;
-                          variant?: T;
-                        };
-                    id?: T;
-                  };
+              linkedinUrl?: T;
               id?: T;
               blockName?: T;
             };
