@@ -11,6 +11,11 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(frontend)/not-found.js"
     ],
+    "/(frontend)/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(frontend)/page.js"
+    ],
     "/(frontend)/[locale]/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -20,11 +25,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(frontend)/[locale]/[[...slug]]/page.js"
-    ],
-    "/(payload)/api/[...slug]/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(payload)/api/[...slug]/route.js"
     ]
   }
 }

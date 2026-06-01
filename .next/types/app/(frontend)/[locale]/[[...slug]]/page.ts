@@ -1,4 +1,4 @@
-// File: /Users/pr-at-lt400/Documents/GitHub/bandar-shanneik/src/app/(frontend)/[locale]/[[...slug]]/page.tsx
+// File: /Users/hadischarbrodt/repos/website/bandar-shanneik/src/app/(frontend)/[locale]/[[...slug]]/page.tsx
 import * as entry from '../../../../../../src/app/(frontend)/[locale]/[[...slug]]/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
