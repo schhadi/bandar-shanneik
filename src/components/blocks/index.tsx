@@ -1,6 +1,7 @@
 import type { Locale } from '@/lib/i18n'
 import { HeroBlock } from './HeroBlock'
 import { RichTextBlock } from './RichTextBlock'
+import { AboutTwoColumnBlock } from './AboutTwoColumnBlock'
 import { BackgroundBlock } from './BackgroundBlock'
 import { EducationJurisdictionsBlock } from './EducationJurisdictionsBlock'
 import { ServiceCardsBlock } from './ServiceCardsBlock'
@@ -23,6 +24,8 @@ export function BlockRenderer({ blocks, locale }: { blocks: Block[]; locale: Loc
             return <HeroBlock key={i} block={b} locale={locale} />
           case 'richText':
             return <RichTextBlock key={i} block={b} />
+          case 'aboutTwoColumn':
+            return <AboutTwoColumnBlock key={i} block={b} />
           case 'background':
             return <BackgroundBlock key={i} block={b} locale={locale} />
           case 'educationJurisdictions':

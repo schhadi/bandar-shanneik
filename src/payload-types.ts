@@ -235,6 +235,48 @@ export interface Page {
             blockType: 'richText';
           }
         | {
+            legal?: {
+              heading?: string | null;
+              body?: string | null;
+              role?: string | null;
+              firmName?: string | null;
+              firmUrl?: string | null;
+              jurisdictions?:
+                | {
+                    name: string;
+                    id?: string | null;
+                  }[]
+                | null;
+              languages?:
+                | {
+                    name: string;
+                    id?: string | null;
+                  }[]
+                | null;
+              /**
+               * URL or path to CV file.
+               */
+              cvUrl?: string | null;
+            };
+            academic?: {
+              heading?: string | null;
+              body?: string | null;
+              role?: string | null;
+              institution?: string | null;
+              projectName?: string | null;
+              projectUrl?: string | null;
+              researchAreas?:
+                | {
+                    name: string;
+                    id?: string | null;
+                  }[]
+                | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'aboutTwoColumn';
+          }
+        | {
             heading?: string | null;
             body?: {
               root: {
@@ -633,6 +675,50 @@ export interface PagesSelect<T extends boolean = true> {
               heading?: T;
               content?: T;
               alignment?: T;
+              id?: T;
+              blockName?: T;
+            };
+        aboutTwoColumn?:
+          | T
+          | {
+              legal?:
+                | T
+                | {
+                    heading?: T;
+                    body?: T;
+                    role?: T;
+                    firmName?: T;
+                    firmUrl?: T;
+                    jurisdictions?:
+                      | T
+                      | {
+                          name?: T;
+                          id?: T;
+                        };
+                    languages?:
+                      | T
+                      | {
+                          name?: T;
+                          id?: T;
+                        };
+                    cvUrl?: T;
+                  };
+              academic?:
+                | T
+                | {
+                    heading?: T;
+                    body?: T;
+                    role?: T;
+                    institution?: T;
+                    projectName?: T;
+                    projectUrl?: T;
+                    researchAreas?:
+                      | T
+                      | {
+                          name?: T;
+                          id?: T;
+                        };
+                  };
               id?: T;
               blockName?: T;
             };

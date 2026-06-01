@@ -5,6 +5,7 @@ import { revalidateOnChange, revalidateOnDelete } from '../lib/revalidate'
 import {
   Hero,
   RichText,
+  AboutTwoColumn,
   Background,
   EducationJurisdictions,
   ServiceCards,
@@ -69,6 +70,7 @@ export const Pages: CollectionConfig = {
       blocks: [
         Hero,
         RichText,
+        AboutTwoColumn,
         Background,
         EducationJurisdictions,
         ServiceCards,

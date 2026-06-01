@@ -1,5 +1,6 @@
 export { Hero } from './Hero'
 export { RichText } from './RichText'
+export { AboutTwoColumn } from './AboutTwoColumn'
 export { Background } from './Background'
 export { EducationJurisdictions } from './EducationJurisdictions'
 export { ServiceCards } from './ServiceCards'

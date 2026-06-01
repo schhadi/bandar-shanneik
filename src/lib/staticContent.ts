@@ -114,49 +114,40 @@ export const staticPages: Record<string, StaticPage> = {
   },
   about: {
     title: 'About',
-    description: 'Background, education, jurisdictions and languages for Bandar Shanneik.',
+    description: 'Bandar Shanneik — two parallel identities: legal practice and academic research.',
     blocks: [
       {
-        blockType: 'background',
-        heading: 'Background',
-        body: lexical(
-          'Bandar Shanneik is a Senior Legal Consultant and fully qualified German lawyer whose work sits at the intersection of European legal training and Middle Eastern commercial practice. He advises companies, investors and private clients on corporate and commercial matters, contracts, mergers and acquisitions, arbitration, real estate, tax and employment law. Fluent in German, Arabic and English, he supports clients navigating cross-border legal questions with clarity, discretion and a practical understanding of both legal detail and commercial context.',
-        ),
-        image: portrait,
-        cta: [
-          {
-            link: {
-              label: 'Download CV',
-              type: 'external',
-              url: '#',
-              variant: 'outline',
-              icon: 'download',
-            },
-          },
-        ],
-      },
-      {
-        blockType: 'educationJurisdictions',
-        heading: 'Education & Jurisdictions',
-        education: [
-          {
-            institution: 'Vrije Universiteit Amsterdam (Netherlands)',
-            detail:
-              "Master of Laws (LL.M.) in 'International Business Law: Commercial Transactions' (cum laude; Valedictorian)",
-          },
-          {
-            institution: 'Julius-Maximilians-Universität, Würzburg (Germany)',
-            detail:
-              'Diploma in law, specialising in European and International Economic Transactions and Legal Relations',
-          },
-          { institution: 'San Diego State University, San Diego (USA)' },
-        ],
-        jurisdictions: [
-          { name: 'Germany', icon: 'bank' },
-          { name: 'England and Wales', icon: 'wig' },
-          { name: 'United Arab Emirates', icon: 'skyline' },
-        ],
-        languages: [{ name: 'German' }, { name: 'Arabic' }, { name: 'English' }],
+        blockType: 'aboutTwoColumn',
+        legal: {
+          heading: 'Legal',
+          body:
+            'Bandar Shanneik is a fully qualified German lawyer whose practice spans corporate and commercial matters, real estate, arbitration and governance. He advises companies, investors and private clients across the German, English and Emirati legal systems with a practical, commercially aware approach.',
+          role: 'Senior Counsel',
+          firmName: 'Daburon & Partners',
+          firmUrl: 'https://daburon-partners.com',
+          jurisdictions: [
+            { name: 'Germany' },
+            { name: 'England & Wales' },
+            { name: 'United Arab Emirates' },
+          ],
+          languages: [{ name: 'German' }, { name: 'Arabic' }, { name: 'English' }],
+          cvUrl: '#',
+        },
+        academic: {
+          heading: 'Academic',
+          body:
+            'His research examines how legal frameworks shape and are shaped by migration, marriage, gender and family recognition — with a focus on cross-border challenges and the protection of rights in contexts of displacement, diversity and social change.',
+          role: 'Research Fellow',
+          institution: 'SOAS University of London',
+          projectName: 'RELI-GENE',
+          projectUrl: 'https://religene.eu',
+          researchAreas: [
+            { name: 'Comparative law' },
+            { name: 'Migration' },
+            { name: 'Gender & family recognition' },
+            { name: 'Human rights' },
+          ],
+        },
       },
     ],
   },
