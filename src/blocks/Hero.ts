@@ -14,7 +14,13 @@ export const Hero: Block = {
       name: 'descriptor',
       type: 'text',
       localized: true,
-      admin: { description: 'Short line set under the name.' },
+      admin: { description: 'Short role line set under the name (shown as a small eyebrow).' },
+    },
+    {
+      name: 'subheading',
+      type: 'textarea',
+      localized: true,
+      admin: { description: 'Supporting subheading sentence shown below the descriptor.' },
     },
     {
       name: 'image',

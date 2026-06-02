@@ -32,7 +32,7 @@ export function ResearchTimelineBlock({ block }: { block: any }) {
   const entries = entriesFromBlock(block)
   return (
     <div>
-      <h3 className="mb-6 text-sm uppercase tracking-wider text-bone/55">
+      <h3 className="mb-6 text-sm uppercase tracking-wider text-accent">
         {block.heading || 'Selected Publications'}
       </h3>
       <ul className="space-y-3">

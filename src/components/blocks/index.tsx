@@ -2,11 +2,13 @@ import type { Locale } from '@/lib/i18n'
 import { HeroBlock } from './HeroBlock'
 import { RichTextBlock } from './RichTextBlock'
 import { AboutTwoColumnBlock } from './AboutTwoColumnBlock'
+import { AboutIntroBlock } from './AboutIntroBlock'
 import { BackgroundBlock } from './BackgroundBlock'
 import { EducationJurisdictionsBlock } from './EducationJurisdictionsBlock'
 import { ServiceCardsBlock } from './ServiceCardsBlock'
 import { PracticeAreasBlock } from './PracticeAreasBlock'
 import { ExpertiseBlock } from './ExpertiseBlock'
+import { SpeakingBlock } from './SpeakingBlock'
 import { CTABannerBlock } from './CTABannerBlock'
 import { ResearchTimelineSection } from './ResearchTimelineBlock'
 import { ResearchIntroBlock } from './ResearchIntroBlock'
@@ -26,6 +28,8 @@ export function BlockRenderer({ blocks, locale }: { blocks: Block[]; locale: Loc
             return <HeroBlock key={i} block={b} locale={locale} />
           case 'richText':
             return <RichTextBlock key={i} block={b} />
+          case 'aboutIntro':
+            return <AboutIntroBlock key={i} block={b} />
           case 'aboutTwoColumn':
             return <AboutTwoColumnBlock key={i} block={b} locale={locale} />
           case 'background':
@@ -38,6 +42,8 @@ export function BlockRenderer({ blocks, locale }: { blocks: Block[]; locale: Loc
             return <PracticeAreasBlock key={i} block={b} />
           case 'expertise':
             return <ExpertiseBlock key={i} block={b} locale={locale} />
+          case 'speaking':
+            return <SpeakingBlock key={i} block={b} />
           case 'ctaBanner':
             return <CTABannerBlock key={i} block={b} locale={locale} />
           case 'researchTimeline':

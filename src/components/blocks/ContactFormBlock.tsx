@@ -36,7 +36,7 @@ export function ContactFormBlock({ block, locale }: { block: any; locale: Locale
           )}
           {block.email && (
             <div className="mt-6">
-              <div className="mb-1 text-sm uppercase tracking-wider text-bone/60">
+              <div className="mb-1 text-sm uppercase tracking-wider text-accent">
                 {l.orWriteDirectly}
               </div>
               <a

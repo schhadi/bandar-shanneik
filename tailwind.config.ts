@@ -17,8 +17,8 @@ const config: Config = {
           100: '#111111',
           200: '#0A0A0A',
         },
-        // warm grey accent — used sparingly on links/hover
-        accent: '#8C8275',
+        // deep teal / petrol accent — subheadings, links, hovers
+        accent: '#0E6E63',
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],

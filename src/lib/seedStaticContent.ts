@@ -2,12 +2,14 @@ import fs from 'fs'
 import path from 'path'
 import type { BasePayload } from 'payload'
 
-import { footer, header as headerSource, localize, portrait, staticPages } from './staticContent'
+import { footer, header as headerSource, localize, portrait, speakingImage, staticPages } from './staticContent'
 import { DEFAULT_LOCALE, LOCALES, type Locale } from './i18n'
 
 type PayloadClient = BasePayload
 
 type PageIDs = Record<string, number | string>
+type MediaIDs = Record<string, number | string>
+type MediaSpec = { filename: string; url: string; alt: string; width: number; height: number }
 
 // Default locale first, then the rest. The default-locale write creates the
 // array rows; later locales reuse those rows' ids so their localized values
@@ -17,26 +19,26 @@ const ORDERED_LOCALES: Locale[] = [
   ...LOCALES.filter((l) => l !== DEFAULT_LOCALE),
 ]
 
-async function ensurePortrait(payload: PayloadClient) {
+async function ensureMedia(payload: PayloadClient, spec: MediaSpec) {
   const existing = await payload.find({
     collection: 'media',
     limit: 1,
-    where: { filename: { equals: portrait.filename } },
+    where: { filename: { equals: spec.filename } },
   })
 
   if (existing.docs[0]) {
     return existing.docs[0].id
   }
 
-  const filePath = path.join(process.cwd(), 'public', 'media', portrait.filename)
+  const filePath = path.join(process.cwd(), 'public', 'media', spec.filename)
   const staticMediaData = {
-    alt: portrait.alt,
-    filename: portrait.filename,
+    alt: spec.alt,
+    filename: spec.filename,
     filesize: fs.existsSync(filePath) ? fs.statSync(filePath).size : undefined,
-    height: portrait.height,
+    height: spec.height,
     mimeType: 'image/jpeg',
-    url: portrait.url,
-    width: portrait.width,
+    url: spec.url,
+    width: spec.width,
   }
 
   if (!fs.existsSync(filePath)) {
@@ -51,11 +53,11 @@ async function ensurePortrait(payload: PayloadClient) {
   const media = await payload
     .create({
       collection: 'media',
-      data: { alt: portrait.alt },
+      data: { alt: spec.alt },
       file: {
         data: fileBuffer,
         mimetype: 'image/jpeg',
-        name: portrait.filename,
+        name: spec.filename,
         size: fileBuffer.length,
       },
     })
@@ -115,14 +117,19 @@ function resolveLinksDeep(value: any, pageIDs: PageIDs): any {
   return next
 }
 
-function blockForPayload(block: any, pageIDs: PageIDs, portraitID: number | string | null) {
+function blockForPayload(block: any, pageIDs: PageIDs, mediaIds: MediaIDs) {
   const next = resolveLinksDeep(clone(block), pageIDs)
 
-  if (
-    portraitID &&
+  // A block that carries a media spec object (e.g. { filename, url, ... }) gets
+  // resolved to that media's id. Otherwise the portrait-led blocks default to
+  // the portrait.
+  if (next.image && typeof next.image === 'object' && next.image.filename) {
+    next.image = mediaIds[next.image.filename] ?? null
+  } else if (
+    mediaIds[portrait.filename] &&
     (next.blockType === 'hero' || next.blockType === 'background' || next.blockType === 'contactForm')
   ) {
-    next.image = portraitID
+    next.image = mediaIds[portrait.filename]
   }
 
   return next
@@ -148,17 +155,13 @@ async function ensurePage(payload: PayloadClient, slug: string, pageIDs: PageIDs
   pageIDs[slug] = created.id
 }
 
-async function seedPages(
-  payload: PayloadClient,
-  pageIDs: PageIDs,
-  portraitID: number | string | null,
-) {
+async function seedPages(payload: PayloadClient, pageIDs: PageIDs, mediaIds: MediaIDs) {
   for (const slug of Object.keys(staticPages)) {
     let previousBlocks: any[] | null = null
 
     for (const locale of ORDERED_LOCALES) {
       const page = localize<any>(staticPages[slug], locale)
-      const blocks = page.blocks.map((b: any) => blockForPayload(b, pageIDs, portraitID))
+      const blocks = page.blocks.map((b: any) => blockForPayload(b, pageIDs, mediaIds))
       if (previousBlocks) copyIds(blocks, previousBlocks)
 
       await payload.update({
@@ -209,9 +212,11 @@ export async function seedStaticContent(payload: PayloadClient) {
     await ensurePage(payload, slug, pageIDs)
   }
 
-  const portraitID = await ensurePortrait(payload)
+  const mediaIds: MediaIDs = {}
+  mediaIds[portrait.filename] = await ensureMedia(payload, portrait)
+  mediaIds[speakingImage.filename] = await ensureMedia(payload, speakingImage)
 
-  await seedPages(payload, pageIDs, portraitID)
+  await seedPages(payload, pageIDs, mediaIds)
   await seedHeader(payload, pageIDs)
 
   await payload.updateGlobal({
@@ -221,6 +226,6 @@ export async function seedStaticContent(payload: PayloadClient) {
 
   return {
     pages: slugs,
-    portraitID,
+    portraitID: mediaIds[portrait.filename],
   }
 }

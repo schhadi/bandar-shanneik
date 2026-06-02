@@ -28,18 +28,18 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
               {link.label}
             </Link>
           ))}
+        </nav>
+
+        <div className="flex items-center gap-4">
           <a
             href={LINKEDIN_URL}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            className="text-bone/70 hover:text-accent"
+            className="hidden text-bone/70 hover:text-accent md:inline-flex"
           >
             <Icon name="linkedin" className="h-4 w-4" />
           </a>
-        </nav>
-
-        <div className="flex items-center gap-4">
           {showLanguageSwitcher && <LanguageSwitcher locale={locale} />}
           <MobileNav locale={locale} logoText={logoText} linkedinUrl={LINKEDIN_URL} links={nav} />
         </div>

@@ -4,7 +4,7 @@ type Item = { label?: string }
 type Jurisdiction = { name?: string }
 
 function MetaLabel({ children }: { children: React.ReactNode }) {
-  return <div className="mb-2 text-xs uppercase tracking-wider text-bone/55">{children}</div>
+  return <div className="mb-2 text-xs uppercase tracking-wider text-accent">{children}</div>
 }
 
 export function ExpertiseBlock({ block, locale }: { block: any; locale: Locale }) {

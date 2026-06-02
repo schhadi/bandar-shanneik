@@ -200,9 +200,13 @@ export interface Page {
         | {
             title: string;
             /**
-             * Short line set under the name.
+             * Short role line set under the name (shown as a small eyebrow).
              */
             descriptor?: string | null;
+            /**
+             * Supporting subheading sentence shown below the descriptor.
+             */
+            subheading?: string | null;
             image?: (number | null) | Media;
             /**
              * Optional override for the LinkedIn link.
@@ -275,6 +279,17 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'aboutTwoColumn';
+          }
+        | {
+            greeting?: string | null;
+            lead?: string | null;
+            /**
+             * Separate paragraphs with a blank line.
+             */
+            body?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'aboutIntro';
           }
         | {
             heading?: string | null;
@@ -382,6 +397,32 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'expertise';
+          }
+        | {
+            heading?: string | null;
+            intro?: string | null;
+            /**
+             * Optional feature image shown at the top of the page.
+             */
+            image?: (number | null) | Media;
+            groups?:
+              | {
+                  title: string;
+                  items?:
+                    | {
+                        event: string;
+                        location?: string | null;
+                        title: string;
+                        date?: string | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'speaking';
           }
         | {
             heading: string;
@@ -706,6 +747,7 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               title?: T;
               descriptor?: T;
+              subheading?: T;
               image?: T;
               linkedinUrl?: T;
               id?: T;
@@ -761,6 +803,15 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                         };
                   };
+              id?: T;
+              blockName?: T;
+            };
+        aboutIntro?:
+          | T
+          | {
+              greeting?: T;
+              lead?: T;
+              body?: T;
               id?: T;
               blockName?: T;
             };
@@ -859,6 +910,30 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        speaking?:
+          | T
+          | {
+              heading?: T;
+              intro?: T;
+              image?: T;
+              groups?:
+                | T
+                | {
+                    title?: T;
+                    items?:
+                      | T
+                      | {
+                          event?: T;
+                          location?: T;
+                          title?: T;
+                          date?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
               id?: T;

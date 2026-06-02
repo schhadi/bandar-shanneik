@@ -19,7 +19,7 @@ export function ResearchIntroBlock({ block, locale }: { block: any; locale: Loca
     <section className="container-page pb-12 pt-20 md:pb-16 md:pt-28">
       <div className="grid gap-12 md:grid-cols-12 md:gap-16">
         <div className="md:col-span-4">
-          <div className="text-sm uppercase tracking-wider text-bone/55">{l.currentPosition}</div>
+          <div className="text-sm uppercase tracking-wider text-accent">{l.currentPosition}</div>
           <h1 className="mt-3 text-2xl font-medium leading-snug md:text-3xl">
             {position.role}
             {position.role && position.institution ? ',' : ''}
