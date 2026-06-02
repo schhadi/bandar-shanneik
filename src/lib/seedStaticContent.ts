@@ -2,7 +2,15 @@ import fs from 'fs'
 import path from 'path'
 import type { BasePayload } from 'payload'
 
-import { footer, header as headerSource, localize, portrait, speakingImage, staticPages } from './staticContent'
+import {
+  aboutImage,
+  footer,
+  header as headerSource,
+  localize,
+  portrait,
+  speakingImage,
+  staticPages,
+} from './staticContent'
 import { DEFAULT_LOCALE, LOCALES, type Locale } from './i18n'
 
 type PayloadClient = BasePayload
@@ -215,6 +223,7 @@ export async function seedStaticContent(payload: PayloadClient) {
   const mediaIds: MediaIDs = {}
   mediaIds[portrait.filename] = await ensureMedia(payload, portrait)
   mediaIds[speakingImage.filename] = await ensureMedia(payload, speakingImage)
+  mediaIds[aboutImage.filename] = await ensureMedia(payload, aboutImage)
 
   await seedPages(payload, pageIDs, mediaIds)
   await seedHeader(payload, pageIDs)

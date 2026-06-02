@@ -7,6 +7,12 @@ export const AboutIntro: Block = {
     { name: 'greeting', type: 'text', localized: true },
     { name: 'lead', type: 'textarea', localized: true },
     {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      admin: { description: 'Portrait shown beside the greeting.' },
+    },
+    {
       name: 'body',
       type: 'textarea',
       localized: true,

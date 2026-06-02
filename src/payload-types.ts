@@ -284,6 +284,10 @@ export interface Page {
             greeting?: string | null;
             lead?: string | null;
             /**
+             * Portrait shown beside the greeting.
+             */
+            image?: (number | null) | Media;
+            /**
              * Separate paragraphs with a blank line.
              */
             body?: string | null;
@@ -811,6 +815,7 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               greeting?: T;
               lead?: T;
+              image?: T;
               body?: T;
               id?: T;
               blockName?: T;

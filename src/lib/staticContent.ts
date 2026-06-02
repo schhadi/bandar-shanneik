@@ -69,6 +69,14 @@ export const speakingImage = {
   height: 1900,
 }
 
+export const aboutImage = {
+  filename: 'af6a4ed9-3dd5-43ec-a6c3-06e3a1342f1f.JPG',
+  url: '/media/af6a4ed9-3dd5-43ec-a6c3-06e3a1342f1f.JPG',
+  alt: 'Bandar Shanneik at the Sheikh Zayed Grand Mosque',
+  width: 2080,
+  height: 3120,
+}
+
 // Header source (markers for localized nav labels).
 const headerSource = {
   logoText: 'Bandar Shanneik',
@@ -143,6 +151,7 @@ const pagesSource: Record<string, any> = {
     blocks: [
       {
         blockType: 'aboutIntro',
+        image: aboutImage,
         greeting: L('Hallo, ich bin Bandar.', "Hi, I'm Bandar."),
         lead: L(
           'Ich bin internationaler Jurist und Rechtswissenschaftler.',
