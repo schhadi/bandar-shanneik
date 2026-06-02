@@ -18,7 +18,7 @@ export function HeroBlock({ block }: { block: any; locale?: unknown }) {
           {block.image && (
             <MediaImage
               media={block.image}
-              className="h-full w-full object-cover object-center md:object-left"
+              className="h-full w-full object-cover object-[47%_22%]"
               priority
               sizes="(min-width: 768px) 58vw, 92vw"
             />

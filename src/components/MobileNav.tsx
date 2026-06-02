@@ -60,9 +60,9 @@ export function MobileNav({
           type="button"
           aria-label="Close menu"
           onClick={() => setOpen(false)}
-          className="text-sm text-bone hover:text-accent"
+          className="-mr-1 inline-flex h-8 w-8 items-center justify-center text-bone hover:text-accent"
         >
-          Close
+          <Icon name="close" className="h-6 w-6" />
         </button>
       </div>
 
@@ -100,9 +100,9 @@ export function MobileNav({
         aria-expanded={open}
         aria-controls="mobile-nav"
         onClick={() => setOpen(true)}
-        className="text-sm text-bone hover:text-accent md:hidden"
+        className="-mr-1 inline-flex h-8 w-8 items-center justify-center text-bone hover:text-accent md:hidden"
       >
-        Menu
+        <Icon name="menu" className="h-6 w-6" />
       </button>
       {mounted ? createPortal(drawer, document.body) : null}
     </>

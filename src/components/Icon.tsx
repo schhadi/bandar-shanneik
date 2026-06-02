@@ -58,6 +58,18 @@ export function Icon({ name, className = 'h-5 w-5' }: Props) {
           <path d="M4 4h4v4H4V4zM4 10h4v10H4V10zM10 10h4v1.5c.6-.9 1.8-1.8 3.5-1.8 3 0 4.5 2 4.5 5V20h-4v-5c0-1.4-.5-2.3-1.8-2.3-1.2 0-1.9.8-2.2 1.6V20h-4V10z" />
         </svg>
       )
+    case 'menu':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>
+          <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      )
+    case 'close':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>
+          <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      )
     case 'chevron-down':
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>

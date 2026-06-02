@@ -735,6 +735,9 @@ video {
 .mt-8 {
   margin-top: 2rem;
 }
+.-mr-1 {
+  margin-right: -0.25rem;
+}
 .block {
   display: block;
 }
@@ -774,6 +777,9 @@ video {
 .h-full {
   height: 100%;
 }
+.h-6 {
+  height: 1.5rem;
+}
 .min-h-0 {
   min-height: 0px;
 }
@@ -797,6 +803,9 @@ video {
 }
 .w-full {
   width: 100%;
+}
+.w-6 {
+  width: 1.5rem;
 }
 .max-w-2xl {
   max-width: 42rem;
@@ -932,9 +941,9 @@ video {
   -o-object-fit: cover;
      object-fit: cover;
 }
-.object-center {
-  -o-object-position: center;
-     object-position: center;
+.object-\[47\%_22\%\] {
+  -o-object-position: 47% 22%;
+     object-position: 47% 22%;
 }
 .p-4 {
   padding: 1rem;
@@ -1221,11 +1230,6 @@ video {
 
   .md\:gap-20 {
     gap: 5rem;
-  }
-
-  .md\:object-left {
-    -o-object-position: left;
-       object-position: left;
   }
 
   .md\:py-10 {
