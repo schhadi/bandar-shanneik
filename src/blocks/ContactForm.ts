@@ -38,6 +38,16 @@ export const ContactForm: Block = {
       defaultValue: true,
     },
     {
+      name: 'professionalNote',
+      type: 'group',
+      admin: { description: 'Optional note directing professional matters elsewhere.' },
+      fields: [
+        { name: 'intro', type: 'textarea', localized: true },
+        { name: 'linkLabel', type: 'text', localized: true },
+        { name: 'linkUrl', type: 'text' },
+      ],
+    },
+    {
       name: 'image',
       type: 'upload',
       relationTo: 'media',

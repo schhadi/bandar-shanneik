@@ -13,20 +13,20 @@ export function HeroBlock({ block }: { block: any; locale?: unknown }) {
     <section className="container-page flex h-[calc(100svh-69px)] flex-col overflow-hidden">
       <style>{`html, body { overflow: hidden; height: 100svh; }`}</style>
 
-      <div className="grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)_auto] gap-6 py-6 md:grid-cols-12 md:grid-rows-1 md:gap-12 md:py-10">
-        <div className="relative min-h-0 md:col-span-6">
+      <div className="grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)_auto] gap-8 py-6 md:grid-cols-12 md:grid-rows-1 md:gap-16 md:py-10">
+        <div className="relative min-h-0 md:col-span-7">
           {block.image && (
             <MediaImage
               media={block.image}
-              className="h-full w-full object-contain object-left-top md:object-left"
+              className="h-full w-full object-cover object-center md:object-left"
               priority
-              sizes="(min-width: 768px) 50vw, 90vw"
+              sizes="(min-width: 768px) 58vw, 92vw"
             />
           )}
         </div>
 
-        <div className="flex flex-col justify-center md:col-span-6">
-          <h1 className="text-[clamp(2.75rem,9vw,7.5rem)] font-medium leading-[0.95] tracking-tight">
+        <div className="flex flex-col justify-end md:col-span-5 md:justify-center">
+          <h1 className="text-[clamp(2.75rem,8.5vw,7rem)] font-semibold leading-[0.92] tracking-[-0.035em]">
             {nameLines.map((w, i) => (
               <span key={i} className="block">
                 {w}
@@ -34,23 +34,20 @@ export function HeroBlock({ block }: { block: any; locale?: unknown }) {
             ))}
           </h1>
           {descriptor && (
-            <p className="mt-5 max-w-md text-base text-bone/75 md:mt-8 md:text-xl">
+            <p className="mt-6 max-w-sm text-sm leading-relaxed text-bone/55 md:mt-8 md:text-base">
               {descriptor}
             </p>
           )}
+          <a
+            href={linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="mt-8 inline-flex h-8 w-8 items-center justify-center text-bone/45 hover:text-bone"
+          >
+            <Icon name="linkedin" className="h-4 w-4" />
+          </a>
         </div>
-      </div>
-
-      <div className="shrink-0 pb-5 md:pb-6">
-        <a
-          href={linkedinUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-          className="inline-flex h-9 w-9 items-center justify-center text-bone/65 hover:text-accent"
-        >
-          <Icon name="linkedin" className="h-5 w-5" />
-        </a>
       </div>
     </section>
   )

@@ -24,31 +24,34 @@ type StaticFooter = {
   tagline: string
 }
 
-type StaticHeader = {
-  logoText: string
-  nav: Array<{ link: StaticLink }>
-  showLanguageSwitcher: boolean
+// ---------------------------------------------------------------------------
+// Bilingual source of truth.
+//
+// Translatable strings are wrapped in L(de, en). Everything else (URLs, proper
+// nouns, image refs, enum values) is shared across locales. `localize(value,
+// locale)` deep-walks a value and replaces every marker with that locale's
+// string, leaving shared fields untouched. The de/en structures it produces are
+// identical in shape — only string values differ — which is what lets the seed
+// write both locales onto the same array rows. German is the primary locale.
+// ---------------------------------------------------------------------------
+
+type I18nString = { _i18n: true; de: string; en: string }
+const L = (de: string, en: string): I18nString => ({ _i18n: true, de, en })
+
+function isMarker(value: unknown): value is I18nString {
+  return typeof value === 'object' && value !== null && (value as any)._i18n === true
 }
 
-const lexical = (text: string) => ({
-  root: {
-    type: 'root',
-    format: '',
-    indent: 0,
-    version: 1,
-    direction: 'ltr',
-    children: [
-      {
-        type: 'paragraph',
-        version: 1,
-        format: '',
-        indent: 0,
-        direction: 'ltr',
-        children: [{ type: 'text', text, format: 0, mode: 'normal', style: '', detail: 0, version: 1 }],
-      },
-    ],
-  },
-})
+export function localize<T = any>(value: any, locale: Locale): T {
+  if (isMarker(value)) return value[locale] as T
+  if (Array.isArray(value)) return value.map((v) => localize(v, locale)) as T
+  if (value && typeof value === 'object') {
+    const out: Record<string, unknown> = {}
+    for (const [k, v] of Object.entries(value)) out[k] = localize(v, locale)
+    return out as T
+  }
+  return value as T
+}
 
 export const portrait = {
   filename: 'b0137a0d-de85-49a1-a8fe-6a94186ec2c5.JPG',
@@ -58,14 +61,15 @@ export const portrait = {
   height: 1608,
 }
 
-export const header: StaticHeader = {
+// Header source (markers for localized nav labels).
+const headerSource = {
   logoText: 'Bandar Shanneik',
   showLanguageSwitcher: true,
   nav: [
-    { link: { label: 'About', type: 'internal', page: { slug: 'about' }, variant: 'plain' } },
-    { link: { label: 'Expertise', type: 'internal', page: { slug: 'legal' }, variant: 'plain' } },
-    { link: { label: 'Research', type: 'internal', page: { slug: 'research' }, variant: 'plain' } },
-    { link: { label: 'Contact', type: 'internal', page: { slug: 'contact' }, variant: 'plain' } },
+    { link: { label: L('Über mich', 'About'), type: 'internal', page: { slug: 'about' }, variant: 'plain' } },
+    { link: { label: L('Expertise', 'Expertise'), type: 'internal', page: { slug: 'expertise' }, variant: 'plain' } },
+    { link: { label: L('Forschung', 'Research'), type: 'internal', page: { slug: 'research' }, variant: 'plain' } },
+    { link: { label: L('Kontakt', 'Contact'), type: 'internal', page: { slug: 'contact' }, variant: 'plain' } },
   ],
 }
 
@@ -76,20 +80,22 @@ export const footer: StaticFooter = {
   copyright: '',
 }
 
-export const staticPublications = [
+// Publications: real works — titles/venues kept in their original language,
+// only the status flag is localized.
+const publicationsSource = [
   {
     year: '2027',
     kind: 'peer-reviewed',
     title: 'Who Counts as a Family in Europe: Polygamous Refugees and the Boundaries of Recognition',
     venue: 'Journal of Law and Society',
-    status: 'in prep.',
+    status: L('in Vorb.', 'in prep.'),
   },
   {
     year: '2026',
     kind: 'book-chapter',
     title: 'Forced Divorce: Syrian Refugees and the Act to Combat Child Marriage in Germany',
     venue: 'Politics of Marriage and Gender: Global Issues in Local Contexts (Rutgers University Press)',
-    status: 'in print',
+    status: L('im Druck', 'in print'),
   },
   {
     year: '2022',
@@ -99,164 +105,182 @@ export const staticPublications = [
   },
 ]
 
-export const staticPages: Record<string, StaticPage> = {
+const pagesSource: Record<string, any> = {
   home: {
-    title: 'Bandar Shanneik',
-    description: 'Bandar Shanneik — legal expert and academic.',
+    title: L('Bandar Shanneik', 'Bandar Shanneik'),
+    description: L(
+      'Bandar Shanneik — Jurist und Wissenschaftler.',
+      'Bandar Shanneik — legal expert and academic.',
+    ),
     blocks: [
       {
         blockType: 'hero',
-        title: 'Bandar Shanneik',
-        descriptor: 'Legal expert & academic.',
+        title: L('Bandar Shanneik', 'Bandar Shanneik'),
+        descriptor: L('Jurist & Wissenschaftler.', 'Legal expert & academic.'),
         image: portrait,
       },
     ],
   },
   about: {
-    title: 'About',
-    description: 'Bandar Shanneik — two parallel identities: legal practice and academic research.',
+    title: L('Über mich', 'About'),
+    description: L(
+      'Bandar Shanneik — zwei parallele Identitäten: juristische Praxis und akademische Forschung.',
+      'Bandar Shanneik — two parallel identities: legal practice and academic research.',
+    ),
     blocks: [
       {
         blockType: 'aboutTwoColumn',
         legal: {
-          heading: 'Legal',
-          body:
+          heading: L('Recht', 'Legal'),
+          body: L(
+            'Bandar Shanneik ist ein voll qualifizierter deutscher Jurist, dessen Tätigkeit Gesellschafts- und Handelsrecht, Immobilienrecht, Schiedsverfahren und Governance umfasst. Er berät Unternehmen, Investoren und Privatpersonen in der deutschen, englischen und emiratischen Rechtsordnung mit einem praxisnahen, wirtschaftlich orientierten Ansatz.',
             'Bandar Shanneik is a fully qualified German lawyer whose practice spans corporate and commercial matters, real estate, arbitration and governance. He advises companies, investors and private clients across the German, English and Emirati legal systems with a practical, commercially aware approach.',
-          role: 'Senior Counsel',
+          ),
+          role: L('Senior Counsel', 'Senior Counsel'),
           firmName: 'Daburon & Partners',
           firmUrl: 'https://daburon-partners.com',
           jurisdictions: [
-            { name: 'Germany' },
-            { name: 'England & Wales' },
-            { name: 'United Arab Emirates' },
+            { name: L('Deutschland', 'Germany') },
+            { name: L('England & Wales', 'England & Wales') },
+            { name: L('Vereinigte Arabische Emirate', 'United Arab Emirates') },
           ],
-          languages: [{ name: 'German' }, { name: 'Arabic' }, { name: 'English' }],
+          languages: [
+            { name: L('Deutsch', 'German') },
+            { name: L('Arabisch', 'Arabic') },
+            { name: L('Englisch', 'English') },
+          ],
           cvUrl: '#',
         },
         academic: {
-          heading: 'Academic',
-          body:
+          heading: L('Wissenschaft', 'Academic'),
+          body: L(
+            'Seine Forschung untersucht, wie rechtliche Rahmenbedingungen Migration, Ehe, Geschlecht und die Anerkennung von Familien prägen und von ihnen geprägt werden — mit einem Schwerpunkt auf grenzüberschreitenden Herausforderungen und dem Schutz von Rechten in Kontexten von Flucht, Vielfalt und gesellschaftlichem Wandel.',
             'His research examines how legal frameworks shape and are shaped by migration, marriage, gender and family recognition — with a focus on cross-border challenges and the protection of rights in contexts of displacement, diversity and social change.',
-          role: 'Research Fellow',
+          ),
+          role: L('Research Fellow', 'Research Fellow'),
           institution: 'SOAS University of London',
           projectName: 'RELI-GENE',
           projectUrl: 'https://religene.eu',
           researchAreas: [
-            { name: 'Comparative law' },
-            { name: 'Migration' },
-            { name: 'Gender & family recognition' },
-            { name: 'Human rights' },
+            { name: L('Rechtsvergleichung', 'Comparative law') },
+            { name: L('Migration', 'Migration') },
+            { name: L('Geschlecht & Familienanerkennung', 'Gender & family recognition') },
+            { name: L('Menschenrechte', 'Human rights') },
           ],
         },
       },
     ],
   },
-  legal: {
-    title: 'Legal',
-    description: 'Legal services and practice areas.',
+  expertise: {
+    title: L('Expertise', 'Expertise'),
+    description: L(
+      'Juristische Expertise in den Bereichen Gesellschafts- und Handelsrecht, Immobilien, Schiedsverfahren und Governance.',
+      'Areas of legal expertise across corporate, commercial, real estate, arbitration and governance matters.',
+    ),
     blocks: [
       {
-        blockType: 'serviceCards',
-        heading: 'Legal Services',
-        intro:
-          'Cross-border legal consultancy for commercial matters, investments, real estate, governance and disputes. The work is practical, discreet and structured around the commercial context behind each legal question.',
-        cards: [
-          {
-            title: 'Corporate & Commercial',
-            body:
-              'Advice on contracts, company structures, commercial negotiations and governance questions across jurisdictions.',
-          },
-          {
-            title: 'Real Estate & Investment',
-            body:
-              'Support for private clients, investors and companies navigating real estate transactions and investment matters.',
-          },
-          {
-            title: 'Disputes & Arbitration',
-            body:
-              'Strategic legal support for cross-border disputes, arbitration-related work and risk assessment.',
-          },
+        blockType: 'expertise',
+        heading: L('Fachgebiete', 'Areas of Expertise'),
+        intro: L(
+          'Bandars juristischer Hintergrund umfasst Gesellschafts- und Handelsrecht, Immobilienrecht, Schiedsverfahren und Governance im deutschen, englischen und VAE-Recht. Er ist Senior Counsel bei Daburon & Partners.',
+          "Bandar's legal background spans corporate and commercial matters, real estate, arbitration and governance across German, English and UAE law. He is Senior Counsel at Daburon & Partners.",
+        ),
+        jurisdictions: [
+          { name: L('Deutschland', 'Germany') },
+          { name: L('England & Wales', 'England & Wales') },
+          { name: L('Vereinigte Arabische Emirate', 'United Arab Emirates') },
         ],
-      },
-      {
-        blockType: 'practiceAreas',
-        heading: 'Practice Areas',
         items: [
-          { label: 'Corporate Law' },
-          { label: 'Commercial Contracts' },
-          { label: 'Mergers & Acquisitions' },
-          { label: 'Real Estate' },
-          { label: 'Arbitration' },
-          { label: 'Governance' },
-          { label: 'Employment Law' },
-          { label: 'Tax' },
+          { label: L('Gesellschaftsrecht', 'Corporate Law') },
+          { label: L('Handelsverträge', 'Commercial Contracts') },
+          { label: L('Fusionen & Übernahmen', 'Mergers & Acquisitions') },
+          { label: L('Immobilienrecht', 'Real Estate') },
+          { label: L('Schiedsverfahren', 'Arbitration') },
+          { label: L('Governance', 'Governance') },
+          { label: L('Arbeitsrecht', 'Employment Law') },
+          { label: L('Steuerrecht', 'Tax') },
         ],
-      },
-      {
-        blockType: 'ctaBanner',
-        heading: 'Need Legal Advice?',
-        background: 'forest',
-        cta: [{ link: { label: 'Contact Bandar', type: 'internal', page: { slug: 'contact' }, variant: 'outline' } }],
       },
     ],
   },
   research: {
-    title: 'Research',
-    description: 'Research and publications by Bandar Shanneik.',
+    title: L('Forschung', 'Research'),
+    description: L(
+      'Forschung und Publikationen von Bandar Shanneik.',
+      'Research and publications by Bandar Shanneik.',
+    ),
     blocks: [
       {
-        blockType: 'richText',
-        heading: 'Research & Publications',
-        content: lexical(
-          'Research at the intersection of comparative law, migration, marriage, gender, family recognition and human rights.',
+        blockType: 'researchIntro',
+        position: {
+          role: L('Research Fellow', 'Research Fellow'),
+          institution: L('SOAS University of London', 'SOAS University of London'),
+          project: {
+            label: 'RELI-GENE',
+            url: 'https://religene.eu',
+            note: L(
+              'ein vom ERC mit einem Consolidator Grant gefördertes Projekt unter der Leitung von Prof. Yafa Shanneik',
+              'an ERC Consolidator Grant project led by Prof. Yafa Shanneik',
+            ),
+          },
+        },
+        body: L(
+          'Meine Forschung untersucht, wie rechtliche Rahmenbedingungen Migration, Ehe, Geschlecht und die Anerkennung von Familien prägen und von ihnen geprägt werden. Ich konzentriere mich auf grenzüberschreitende rechtliche Herausforderungen und den Schutz von Rechten in Kontexten von Flucht, Vielfalt und gesellschaftlichem Wandel. Die Arbeit verbindet Rechtswissenschaft und gelebte Erfahrung über europäische und nahöstliche Rechtsordnungen hinweg.',
+          'My research examines how legal frameworks shape and are shaped by migration, marriage, gender and family recognition. I focus on cross-border legal challenges and the protection of rights in contexts of displacement, diversity and social change. The work bridges legal scholarship and lived experience across European and Middle Eastern jurisdictions.',
         ),
-        alignment: 'center',
       },
       {
         blockType: 'researchTimeline',
-        heading: 'Selected Publications',
+        heading: L('Ausgewählte Publikationen', 'Selected Publications'),
         mode: 'manual',
-        manualItems: staticPublications,
-      },
-      {
-        blockType: 'researchProfileCard',
-        heading: 'Research Profile',
-        role: 'Research Fellow',
-        body:
-          'My research examines how legal frameworks shape and are shaped by migration, marriage, gender and family recognition. I focus on cross-border legal challenges and the protection of rights in contexts of displacement, diversity and social change.',
-      },
-      {
-        blockType: 'tagBoxes',
-        heading: 'Areas of Interest',
-        items: [
-          { label: 'Comparative Law' },
-          { label: 'Migration Law' },
-          { label: 'Gender & Equality' },
-          { label: 'Refugee Law' },
-          { label: 'Human Rights' },
-          { label: 'Family Recognition' },
-        ],
+        manualItems: publicationsSource,
+        compact: true,
       },
     ],
   },
   contact: {
-    title: 'Contact',
-    description: 'Contact Bandar Shanneik for legal consultancy or research collaboration.',
+    title: L('Kontakt', 'Contact'),
+    description: L(
+      'Kontaktieren Sie Bandar Shanneik für Forschungskooperationen oder allgemeine Anfragen.',
+      'Contact Bandar Shanneik for research collaboration or general enquiries.',
+    ),
     blocks: [
       {
         blockType: 'contactForm',
-        heading: 'Get in touch',
-        intro:
-          'For inquiries about legal consultancy or research collaboration, share a few details and Bandar will be in touch within two working days.',
+        heading: L('Kontakt aufnehmen', 'Get in touch'),
+        intro: L(
+          'Für Forschungskooperationen oder allgemeine Anfragen nehmen Sie gerne Kontakt auf.',
+          'For research collaboration or general enquiries, get in touch.',
+        ),
         email: 'contact.shanneik@gmail.com',
-        submitLabel: 'Send message',
-        successMessage: 'Thank you. Your message has been received — Bandar will reply directly.',
+        submitLabel: L('Nachricht senden', 'Send message'),
+        successMessage: L(
+          'Vielen Dank. Ihre Nachricht ist eingegangen — Bandar wird sich direkt bei Ihnen melden.',
+          'Thank you. Your message has been received — Bandar will reply directly.',
+        ),
         showSubject: true,
+        professionalNote: {
+          intro: L(
+            'Für berufliche Rechtsangelegenheiten wenden Sie sich bitte an',
+            'For professional legal matters, please direct enquiries to',
+          ),
+          linkLabel: L('Daburon & Partners', 'Daburon & Partners'),
+          linkUrl: 'https://daburon-partners.com/en/home',
+        },
       },
     ],
   },
 }
 
-export function getStaticPage(_locale: Locale, slug: string): StaticPage | null {
-  return staticPages[slug] ?? null
+// Exposed for generateStaticParams (slugs) and the seed (per-locale source).
+export const staticPages = pagesSource
+export const header = headerSource
+
+export function getStaticPage(locale: Locale, slug: string): StaticPage | null {
+  const source = pagesSource[slug]
+  return source ? localize<StaticPage>(source, locale) : null
+}
+
+export function getStaticHeader(locale: Locale) {
+  return localize(headerSource, locale)
 }

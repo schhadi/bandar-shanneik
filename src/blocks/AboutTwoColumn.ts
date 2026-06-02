@@ -16,12 +16,12 @@ export const AboutTwoColumn: Block = {
         {
           name: 'jurisdictions',
           type: 'array',
-          fields: [{ name: 'name', type: 'text', required: true }],
+          fields: [{ name: 'name', type: 'text', localized: true, required: true }],
         },
         {
           name: 'languages',
           type: 'array',
-          fields: [{ name: 'name', type: 'text', required: true }],
+          fields: [{ name: 'name', type: 'text', localized: true, required: true }],
         },
         { name: 'cvUrl', type: 'text', admin: { description: 'URL or path to CV file.' } },
       ],
@@ -39,7 +39,7 @@ export const AboutTwoColumn: Block = {
         {
           name: 'researchAreas',
           type: 'array',
-          fields: [{ name: 'name', type: 'text', required: true }],
+          fields: [{ name: 'name', type: 'text', localized: true, required: true }],
         },
       ],
     },

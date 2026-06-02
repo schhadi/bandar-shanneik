@@ -1,11 +1,1 @@
-{
-  "version": 4,
-  "routes": {},
-  "dynamicRoutes": {},
-  "notFoundRoutes": [],
-  "preview": {
-    "previewModeId": "9d27bad81fba9e31a851d6449a911623",
-    "previewModeSigningKey": "0965f1c2205da284997cee76b21b00f26b0af872656ec2acb459fa1257904f10",
-    "previewModeEncryptionKey": "c24ce6a6d4429ce2a7acb77f4fb951777d7356e6d35875580086d58f3585f745"
-  }
-}
+{"version":4,"routes":{"/de":{},"/de/about":{},"/de/expertise":{},"/de/research":{},"/de/contact":{},"/en":{},"/en/about":{},"/en/expertise":{},"/en/research":{},"/en/contact":{}},"dynamicRoutes":{"/[locale]/[[...slug]]":{"fallback":null}},"notFoundRoutes":[],"preview":{"previewModeId":"39190c33a32f57a9c63e4014327408a8","previewModeSigningKey":"7ee67db56f6af28a5f3b06439d83154d5c8a3e26af6db1c1be597daf5c32fd34","previewModeEncryptionKey":"248b25c15ab5046a3f280b08c03773aece747f317f79c091ae0bf26b043c01fa"}}

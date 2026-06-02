@@ -1,6 +1,15 @@
 import { ContactForm } from '../ContactForm'
+import { labels, type Locale } from '@/lib/i18n'
 
-export function ContactFormBlock({ block }: { block: any }) {
+type ProfessionalNote = {
+  intro?: string
+  linkLabel?: string
+  linkUrl?: string
+}
+
+export function ContactFormBlock({ block, locale }: { block: any; locale: Locale }) {
+  const l = labels[locale]
+  const note: ProfessionalNote | undefined = block.professionalNote
   return (
     <section className="container-page py-24 md:py-32">
       <div className="grid gap-12 md:grid-cols-12 md:gap-16">
@@ -11,10 +20,24 @@ export function ContactFormBlock({ block }: { block: any }) {
           {block.intro && (
             <p className="mt-6 max-w-md text-base leading-relaxed text-bone/80">{block.intro}</p>
           )}
+          {note?.linkLabel && note.linkUrl && (
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-bone/65">
+              {note.intro || 'For professional legal matters, please direct enquiries to'}{' '}
+              <a
+                href={note.linkUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-underline text-bone"
+              >
+                {note.linkLabel}
+              </a>
+              .
+            </p>
+          )}
           {block.email && (
             <div className="mt-8">
               <div className="mb-1 text-sm uppercase tracking-wider text-bone/60">
-                Or write directly
+                {l.orWriteDirectly}
               </div>
               <a
                 href={`mailto:${block.email}`}

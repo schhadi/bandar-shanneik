@@ -1,3 +1,5 @@
+import { labels, type Locale } from '@/lib/i18n'
+
 type Column = {
   heading?: string
   body?: string
@@ -27,7 +29,8 @@ function MetaLabel({ children }: { children: React.ReactNode }) {
   return <div className="mb-2 text-xs uppercase tracking-wider text-bone/55">{children}</div>
 }
 
-export function AboutTwoColumnBlock({ block }: { block: any }) {
+export function AboutTwoColumnBlock({ block, locale }: { block: any; locale: Locale }) {
+  const lbl = labels[locale]
   const legal: LegalColumn = block.legal || {}
   const academic: AcademicColumn = block.academic || {}
 
@@ -44,10 +47,10 @@ export function AboutTwoColumnBlock({ block }: { block: any }) {
           <div className="mt-10 space-y-8">
             {(legal.role || legal.firmName) && (
               <div>
-                <MetaLabel>Affiliation</MetaLabel>
+                <MetaLabel>{lbl.affiliation}</MetaLabel>
                 <p className="text-base text-bone">
                   {legal.role}
-                  {legal.role && legal.firmName ? ' at ' : ''}
+                  {legal.role && legal.firmName ? lbl.atConnector : ''}
                   {legal.firmName &&
                     (legal.firmUrl ? (
                       <a
@@ -67,7 +70,7 @@ export function AboutTwoColumnBlock({ block }: { block: any }) {
 
             {legal.jurisdictions && legal.jurisdictions.length > 0 && (
               <div>
-                <MetaLabel>Jurisdictions</MetaLabel>
+                <MetaLabel>{lbl.jurisdictions}</MetaLabel>
                 <p className="text-base text-bone">
                   {legal.jurisdictions.map((j) => j.name).join(' · ')}
                 </p>
@@ -76,7 +79,7 @@ export function AboutTwoColumnBlock({ block }: { block: any }) {
 
             {legal.languages && legal.languages.length > 0 && (
               <div>
-                <MetaLabel>Languages</MetaLabel>
+                <MetaLabel>{lbl.languages}</MetaLabel>
                 <p className="text-base text-bone">
                   {legal.languages.map((l) => l.name).join(' · ')}
                 </p>
@@ -91,7 +94,7 @@ export function AboutTwoColumnBlock({ block }: { block: any }) {
                   rel="noopener noreferrer"
                   className="link-underline text-sm text-bone"
                 >
-                  Download CV →
+                  {lbl.downloadCv}
                 </a>
               </div>
             )}
@@ -108,7 +111,7 @@ export function AboutTwoColumnBlock({ block }: { block: any }) {
           <div className="mt-10 space-y-8">
             {(academic.role || academic.institution) && (
               <div>
-                <MetaLabel>Affiliation</MetaLabel>
+                <MetaLabel>{lbl.affiliation}</MetaLabel>
                 <p className="text-base text-bone">
                   {academic.role}
                   {academic.role && academic.institution ? ', ' : ''}
@@ -119,7 +122,7 @@ export function AboutTwoColumnBlock({ block }: { block: any }) {
 
             {academic.projectName && (
               <div>
-                <MetaLabel>Project</MetaLabel>
+                <MetaLabel>{lbl.project}</MetaLabel>
                 <p className="text-base text-bone">
                   {academic.projectUrl ? (
                     <a
@@ -139,7 +142,7 @@ export function AboutTwoColumnBlock({ block }: { block: any }) {
 
             {academic.researchAreas && academic.researchAreas.length > 0 && (
               <div>
-                <MetaLabel>Research areas</MetaLabel>
+                <MetaLabel>{lbl.researchAreas}</MetaLabel>
                 <p className="text-base text-bone">
                   {academic.researchAreas.map((a) => a.name).join(' · ')}
                 </p>

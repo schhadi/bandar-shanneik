@@ -2,7 +2,7 @@ import { cache } from 'react'
 import Link from 'next/link'
 import { getPayload } from '@/lib/payload'
 import type { Locale } from '@/lib/i18n'
-import { header as staticHeader } from '@/lib/staticContent'
+import { getStaticHeader } from '@/lib/staticContent'
 import { resolveHref } from '@/lib/resolveLink'
 import { Icon } from './Icon'
 import { LanguageSwitcher } from './LanguageSwitcher'
@@ -14,11 +14,12 @@ const fetchHeader = cache(async (locale: Locale) => {
   const payload = await getPayload().catch(() => null)
   return (
     (await payload?.findGlobal({ slug: 'header', locale, depth: 2 }).catch(() => null)) ||
-    staticHeader
+    getStaticHeader(locale)
   )
 })
 
 export async function SiteHeader({ locale }: { locale: Locale }) {
+  const staticHeader = getStaticHeader(locale)
   const header = await fetchHeader(locale)
   const cmsNav: any[] = (header as any)?.nav || []
   const navItems: any[] = cmsNav.length ? cmsNav : staticHeader.nav

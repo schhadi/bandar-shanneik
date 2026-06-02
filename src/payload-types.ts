@@ -92,7 +92,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'de') | ('en' | 'de')[];
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('de' | 'en') | ('de' | 'en')[];
   globals: {
     header: Header;
     footer: Footer;
@@ -103,7 +103,7 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
-  locale: 'en' | 'de';
+  locale: 'de' | 'en';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -365,6 +365,25 @@ export interface Page {
             blockType: 'practiceAreas';
           }
         | {
+            heading?: string | null;
+            intro?: string | null;
+            jurisdictions?:
+              | {
+                  name: string;
+                  id?: string | null;
+                }[]
+              | null;
+            items?:
+              | {
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'expertise';
+          }
+        | {
             heading: string;
             subtext?: string | null;
             background?: ('forest' | 'cream' | 'gold') | null;
@@ -411,6 +430,21 @@ export interface Page {
             blockType: 'researchTimeline';
           }
         | {
+            position?: {
+              role?: string | null;
+              institution?: string | null;
+              project?: {
+                label?: string | null;
+                url?: string | null;
+                note?: string | null;
+              };
+            };
+            body?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'researchIntro';
+          }
+        | {
             heading?: string | null;
             logo?: (number | null) | Media;
             role?: string | null;
@@ -451,6 +485,14 @@ export interface Page {
             successMessage?: string | null;
             submitLabel?: string | null;
             showSubject?: boolean | null;
+            /**
+             * Optional note directing professional matters elsewhere.
+             */
+            professionalNote?: {
+              intro?: string | null;
+              linkLabel?: string | null;
+              linkUrl?: string | null;
+            };
             /**
              * Optional portrait shown beside the form on desktop.
              */
@@ -802,6 +844,26 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        expertise?:
+          | T
+          | {
+              heading?: T;
+              intro?: T;
+              jurisdictions?:
+                | T
+                | {
+                    name?: T;
+                    id?: T;
+                  };
+              items?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         ctaBanner?:
           | T
           | {
@@ -843,6 +905,26 @@ export interface PagesSelect<T extends boolean = true> {
                     status?: T;
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        researchIntro?:
+          | T
+          | {
+              position?:
+                | T
+                | {
+                    role?: T;
+                    institution?: T;
+                    project?:
+                      | T
+                      | {
+                          label?: T;
+                          url?: T;
+                          note?: T;
+                        };
+                  };
+              body?: T;
               id?: T;
               blockName?: T;
             };
@@ -889,6 +971,13 @@ export interface PagesSelect<T extends boolean = true> {
               successMessage?: T;
               submitLabel?: T;
               showSubject?: T;
+              professionalNote?:
+                | T
+                | {
+                    intro?: T;
+                    linkLabel?: T;
+                    linkUrl?: T;
+                  };
               image?: T;
               id?: T;
               blockName?: T;

@@ -6,8 +6,10 @@ import { BackgroundBlock } from './BackgroundBlock'
 import { EducationJurisdictionsBlock } from './EducationJurisdictionsBlock'
 import { ServiceCardsBlock } from './ServiceCardsBlock'
 import { PracticeAreasBlock } from './PracticeAreasBlock'
+import { ExpertiseBlock } from './ExpertiseBlock'
 import { CTABannerBlock } from './CTABannerBlock'
 import { ResearchTimelineSection } from './ResearchTimelineBlock'
+import { ResearchIntroBlock } from './ResearchIntroBlock'
 import { ResearchProfileCardBlock } from './ResearchProfileCardBlock'
 import { TagBoxesBlock } from './TagBoxesBlock'
 import { ContactBlock } from './ContactBlock'
@@ -25,7 +27,7 @@ export function BlockRenderer({ blocks, locale }: { blocks: Block[]; locale: Loc
           case 'richText':
             return <RichTextBlock key={i} block={b} />
           case 'aboutTwoColumn':
-            return <AboutTwoColumnBlock key={i} block={b} />
+            return <AboutTwoColumnBlock key={i} block={b} locale={locale} />
           case 'background':
             return <BackgroundBlock key={i} block={b} locale={locale} />
           case 'educationJurisdictions':
@@ -34,10 +36,14 @@ export function BlockRenderer({ blocks, locale }: { blocks: Block[]; locale: Loc
             return <ServiceCardsBlock key={i} block={b} />
           case 'practiceAreas':
             return <PracticeAreasBlock key={i} block={b} />
+          case 'expertise':
+            return <ExpertiseBlock key={i} block={b} locale={locale} />
           case 'ctaBanner':
             return <CTABannerBlock key={i} block={b} locale={locale} />
           case 'researchTimeline':
             return <ResearchTimelineSection key={i} block={b} />
+          case 'researchIntro':
+            return <ResearchIntroBlock key={i} block={b} locale={locale} />
           case 'researchProfileCard':
             return (
               <section key={i} className="container-page py-16 md:py-24">
@@ -53,7 +59,7 @@ export function BlockRenderer({ blocks, locale }: { blocks: Block[]; locale: Loc
           case 'contact':
             return <ContactBlock key={i} block={b} />
           case 'contactForm':
-            return <ContactFormBlock key={i} block={b} />
+            return <ContactFormBlock key={i} block={b} locale={locale} />
           default:
             return null
         }

@@ -1,0 +1,3001 @@
+From 0ddb4327d873838ec1c892f24b2617e73e259456 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Mon, 1 Jun 2026 23:46:35 +0000
+Subject: [PATCH] Redesign site as minimal academic homepage
+
+Rebuild every page in a clean, minimalist academic style inspired by
+pascalmichaillat.org / michelefinck.eu:
+
+- Single typeface (Fraunces) everywhere; drop Inter & JetBrains Mono
+- Two colours on white: near-black ink + one warm terracotta accent
+- Generous whitespace, narrow readable measure, full-width masthead rule
+- Prominent portrait + dual identity (legal consultant & scholar) in hero
+- Research/publications presented as a clean academic list
+- Remove all decorative motion: floating shapes, custom cursor, scroll
+  indicators, marquee, reveal/split-text/tilt/magnetic animations
+- Simplify header, footer, nav, language switcher, forms and CTAs to
+  quiet text links
+
+Also untrack committed .next build artifacts (already in .gitignore).
+
+https://claude.ai/code/session_01HNBmWJjYd5yb2p3QqVVG6e
+---
+ src/app/(frontend)/[locale]/layout.tsx        |  14 +-
+ src/app/(frontend)/layout.tsx                 |  11 +-
+ src/app/globals.css                           | 423 ++----------------
+ src/components/AnimatedLine.tsx               |  47 --
+ src/components/CTAButton.tsx                  |  29 +-
+ src/components/ContactForm.tsx                |  27 +-
+ src/components/Cursor.tsx                     |  60 ---
+ src/components/FloatingShapes.tsx             |  50 ---
+ src/components/Footer.tsx                     |  94 ++--
+ src/components/Header.tsx                     |  78 ++--
+ src/components/Icon.tsx                       |  70 ---
+ src/components/LanguageSwitcher.tsx           |  55 +--
+ src/components/Magnetic.tsx                   |  64 ---
+ src/components/Marquee.tsx                    |  22 -
+ src/components/MobileNav.tsx                  | 163 +------
+ src/components/Reveal.tsx                     |  41 --
+ src/components/ScrollIndicator.tsx            |  44 --
+ src/components/ScrollProgress.tsx             |  22 -
+ src/components/SplitText.tsx                  |  94 ----
+ src/components/Tilt.tsx                       |  64 ---
+ src/components/blocks/BackgroundBlock.tsx     |  70 +--
+ src/components/blocks/CTABannerBlock.tsx      |  91 +---
+ src/components/blocks/ContactBlock.tsx        |  84 ++--
+ src/components/blocks/ContactFormBlock.tsx    |  83 +---
+ .../blocks/EducationJurisdictionsBlock.tsx    | 116 ++---
+ src/components/blocks/HeroBlock.tsx           |  85 +---
+ src/components/blocks/PracticeAreasBlock.tsx  |  47 +-
+ .../blocks/ResearchProfileCardBlock.tsx       |  24 +-
+ .../blocks/ResearchTimelineBlock.tsx          |  50 +--
+ src/components/blocks/RichTextBlock.tsx       |  18 +-
+ src/components/blocks/ServiceCardsBlock.tsx   |  83 +---
+ src/components/blocks/TagBoxesBlock.tsx       |  22 +-
+ src/components/blocks/index.tsx               | 116 ++---
+ tailwind.config.ts                            |  51 +--
+ 34 files changed, 430 insertions(+), 1982 deletions(-)
+ delete mode 100644 src/components/AnimatedLine.tsx
+ delete mode 100644 src/components/Cursor.tsx
+ delete mode 100644 src/components/FloatingShapes.tsx
+ delete mode 100644 src/components/Icon.tsx
+ delete mode 100644 src/components/Magnetic.tsx
+ delete mode 100644 src/components/Marquee.tsx
+ delete mode 100644 src/components/Reveal.tsx
+ delete mode 100644 src/components/ScrollIndicator.tsx
+ delete mode 100644 src/components/ScrollProgress.tsx
+ delete mode 100644 src/components/SplitText.tsx
+ delete mode 100644 src/components/Tilt.tsx
+
+diff --git a/src/app/(frontend)/[locale]/layout.tsx b/src/app/(frontend)/[locale]/layout.tsx
+index 4bd8051..a87992b 100644
+--- a/src/app/(frontend)/[locale]/layout.tsx
++++ b/src/app/(frontend)/[locale]/layout.tsx
+@@ -1,10 +1,6 @@
+ import { notFound } from 'next/navigation'
+ import { SiteHeader } from '@/components/Header'
+ import { SiteFooter } from '@/components/Footer'
+-import { Cursor } from '@/components/Cursor'
+-import { ScrollProgress } from '@/components/ScrollProgress'
+-import { ScrollIndicator } from '@/components/ScrollIndicator'
+-import { FloatingShapes } from '@/components/FloatingShapes'
+ import { isLocale } from '@/lib/i18n'
+ 
+ export default async function LocaleLayout({
+@@ -17,14 +13,10 @@ export default async function LocaleLayout({
+   const { locale } = await params
+   if (!isLocale(locale)) notFound()
+   return (
+-    <>
+-      <FloatingShapes />
+-      <ScrollProgress />
+-      <ScrollIndicator />
+-      <Cursor />
++    <div id="top" className="flex min-h-screen flex-col">
+       <SiteHeader locale={locale} />
+-      <main className="relative z-10">{children}</main>
++      <main className="flex-1">{children}</main>
+       <SiteFooter locale={locale} />
+-    </>
++    </div>
+   )
+ }
+diff --git a/src/app/(frontend)/layout.tsx b/src/app/(frontend)/layout.tsx
+index 7f72f4c..f4dd459 100644
+--- a/src/app/(frontend)/layout.tsx
++++ b/src/app/(frontend)/layout.tsx
+@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
+ import '../globals.css'
+ 
+ export const metadata: Metadata = {
+-  title: 'Bandar Shanneik — Cross-border legal consultancy',
++  title: 'Bandar Shanneik — Legal consultant & scholar',
+   description:
+-    'Cross-border legal consultancy for companies, investors and private clients across the Middle East and Europe.',
++    'Bandar Shanneik — cross-border legal consultant and legal scholar working across Germany, the Middle East and Europe.',
+ }
+ 
+ export default function FrontendLayout({ children }: { children: React.ReactNode }) {
+@@ -15,13 +15,10 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
+         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+         <link
+           rel="stylesheet"
+-          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
++          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&display=swap"
+         />
+       </head>
+-      <body className="bg-ink text-bone antialiased">
+-        <div className="fixed inset-x-0 top-0 z-50 h-1 bg-topbar" aria-hidden="true" />
+-        {children}
+-      </body>
++      <body className="bg-ink text-bone antialiased">{children}</body>
+     </html>
+   )
+ }
+diff --git a/src/app/globals.css b/src/app/globals.css
+index b5d720d..e9f4f08 100644
+--- a/src/app/globals.css
++++ b/src/app/globals.css
+@@ -2,20 +2,20 @@
+ @tailwind components;
+ @tailwind utilities;
+ 
++/*
++  Minimalist academic design system.
++  One typeface (Fraunces), white canvas, near-black ink, one warm accent.
++  No decorative motion — clarity and whitespace do the work.
++*/
++
+ @layer base {
+   :root {
+-    --font-display: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+-    --font-sans: 'Inter', system-ui, sans-serif;
+-    --font-mono: 'JetBrains Mono', monospace;
++    --font-serif: 'Fraunces', 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+ 
+-    --bg: #f5efe4;
+-    --bg-elev: #efe7d6;
+-    --fg: #1f3a2f;
+-    --fg-dim: #6e6754;
+-    --accent: #b5985a;
+-    --topbar: #8b1f6e;
+-    --line: rgba(31, 58, 47, 0.14);
+-    --line-strong: rgba(31, 58, 47, 0.3);
++    --bg: #ffffff;
++    --fg: #1c1b19; /* warm near-black */
++    --accent: #9a4a2f; /* terracotta */
++    --line: #e6e2da; /* hairline */
+   }
+ 
+   * {
+@@ -23,10 +23,10 @@
+   }
+ 
+   html {
+-    scroll-behavior: smooth;
+     background: var(--bg);
+     color: var(--fg);
+-    font-family: var(--font-sans);
++    font-family: var(--font-serif);
++    font-optical-sizing: auto;
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+     text-rendering: optimizeLegibility;
+@@ -35,415 +35,84 @@
+   body {
+     background: var(--bg);
+     color: var(--fg);
+-    overflow-x: hidden;
++    font-size: 1.0625rem;
++    line-height: 1.65;
++    font-weight: 380;
+   }
+ 
+   ::selection {
+     background: var(--accent);
+-    color: var(--bg);
+-  }
+-
+-  ::-webkit-scrollbar {
+-    width: 8px;
+-  }
+-  ::-webkit-scrollbar-track {
+-    background: var(--bg);
+-  }
+-  ::-webkit-scrollbar-thumb {
+-    background: var(--line-strong);
+-    border-radius: 4px;
++    color: #fff;
+   }
+ 
+   h1,
+   h2,
+   h3,
+   h4 {
+-    font-family: var(--font-display);
+-    font-feature-settings: 'liga' 1, 'dlig' 1, 'ss01' 1;
+-    letter-spacing: -0.025em;
+-    line-height: 0.95;
+-    color: var(--fg);
++    font-family: var(--font-serif);
++    font-weight: 400;
++    letter-spacing: -0.01em;
++    line-height: 1.08;
+     text-wrap: balance;
++    color: var(--fg);
+   }
+ }
+ 
+ @layer components {
++  /* Narrow, centered measure — the page breathes. */
+   .container-page {
+-    @apply mx-auto w-full max-w-page px-6 md:px-10 lg:px-16;
+-  }
+-
+-  /* Section labels: "01 / About" */
+-  .eyebrow {
+-    @apply flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-bone/60;
+-  }
+-  .eyebrow::before {
+-    content: '';
+-    @apply block h-px w-8 bg-bone/30;
+-  }
+-
+-  .display {
+-    font-family: var(--font-display);
+-    font-weight: 300;
+-    font-style: italic;
+-    letter-spacing: -0.03em;
+-    line-height: 0.9;
+-  }
+-
+-  /* Buttons — editorial pill with sliding fill + nudging arrow */
+-  .btn {
+-    @apply relative isolate inline-flex items-center justify-between gap-8 overflow-hidden whitespace-nowrap rounded-full px-7 py-4 font-mono text-[11px] uppercase tracking-[0.25em] transition-colors duration-500 ease-out-expo;
+-  }
+-  .btn-label {
+-    @apply relative z-10 inline-block overflow-hidden;
+-  }
+-  .btn-arrow {
+-    @apply relative z-10 inline-flex items-center font-mono text-base leading-none transition-transform duration-500 ease-out-expo;
+-  }
+-  .btn::before {
+-    content: '';
+-    @apply absolute inset-0 -z-0 origin-bottom scale-y-0 transition-transform duration-700 ease-out-expo;
+-  }
+-  .btn:hover::before {
+-    @apply scale-y-100;
+-  }
+-  .btn:hover .btn-arrow {
+-    @apply translate-x-1;
+-  }
+-
+-  .btn-primary {
+-    @apply btn border border-bone bg-bone text-ink;
+-  }
+-  .btn-primary::before {
+-    background-color: var(--accent);
+-  }
+-  .btn-primary:hover {
+-    @apply border-accent text-ink;
+-  }
+-
+-  .btn-outline {
+-    @apply btn border border-bone/40 text-bone;
+-  }
+-  .btn-outline::before {
+-    background-color: var(--fg);
++    @apply mx-auto w-full max-w-2xl px-6 sm:px-8;
+   }
+-  .btn-outline:hover {
+-    @apply border-bone text-ink;
++  .container-wide {
++    @apply mx-auto w-full max-w-3xl px-6 sm:px-8;
+   }
+ 
+-  .btn-plain {
+-    @apply text-bone underline-offset-4 hover:text-accent hover:underline;
++  /* Quiet section label */
++  .label {
++    @apply mb-6 text-sm italic text-bone/55;
+   }
+ 
+-  /* Animated underline link */
+-  .link-underline {
+-    @apply relative inline-block;
+-  }
+-  .link-underline::after {
+-    content: '';
+-    @apply absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-500 ease-out-expo;
+-  }
+-  .link-underline:hover::after {
+-    @apply origin-left scale-x-100;
++  /* Inline content links: accent, underline on hover */
++  .link {
++    @apply text-accent underline-offset-[3px] decoration-[0.5px] decoration-accent/40 hover:underline;
+   }
+ 
+-  .hairline {
+-    @apply h-px w-full bg-line;
++  /* Text-link with arrow used for CTAs */
++  .link-cta {
++    @apply inline-flex items-baseline gap-1.5 text-accent underline-offset-[3px] decoration-[0.5px] decoration-accent/40 hover:underline;
+   }
+ 
+-  .card {
+-    @apply rounded-none border border-bone/15 bg-ink-800/60 p-8;
+-  }
+-
+-  .tag {
+-    @apply inline-flex items-center rounded-full border border-bone/25 px-4 py-1.5 font-mono text-xs uppercase tracking-widest text-bone/80;
+-  }
+-
+-  /* Form fields */
++  /* Minimal underlined form fields */
+   .field {
+     @apply relative block;
+   }
+   .field-label {
+-    @apply mb-3 block font-mono text-[10px] uppercase tracking-[0.3em] text-bone/55;
++    @apply mb-2 block text-sm italic text-bone/55;
+   }
+   .field-input,
+   .field-textarea {
+-    @apply w-full border-0 border-b border-bone/25 bg-transparent px-0 py-3 font-sans text-base text-bone outline-none transition-colors placeholder:text-bone/30 focus:border-accent;
++    @apply w-full border-0 border-b border-line bg-transparent px-0 py-2 text-base text-bone outline-none transition-colors placeholder:text-bone/30 focus:border-accent;
++    font-family: var(--font-serif);
+   }
+   .field-textarea {
+-    @apply min-h-[120px] resize-y;
++    @apply min-h-[140px] resize-y;
+   }
+ }
+ 
+ @layer utilities {
+-  .bg-line {
+-    background-color: var(--line);
+-  }
+-  .border-line {
+-    border-color: var(--line);
+-  }
+-  .border-line-strong {
+-    border-color: var(--line-strong);
+-  }
+-  .text-fg {
+-    color: var(--fg);
+-  }
+   .text-dim {
+-    color: var(--fg-dim);
+-  }
+-}
+-
+-/* SplitText: letters slide up from below an invisible mask */
+-.split-text {
+-  display: inline;
+-}
+-.split-text__word {
+-  display: inline-block;
+-  vertical-align: top;
+-  white-space: nowrap;
+-}
+-.split-text__char {
+-  display: inline-block;
+-  overflow: hidden;
+-  vertical-align: top;
+-  line-height: 1;
+-}
+-.split-text__inner {
+-  transform: translateY(110%) rotate(2deg);
+-  opacity: 0;
+-  transition:
+-    transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+-    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+-  will-change: transform, opacity;
+-}
+-.split-text.is-visible .split-text__inner {
+-  transform: translateY(0) rotate(0);
+-  opacity: 1;
+-}
+-
+-/* Animated line — draws when in view */
+-.animated-line {
+-  display: block;
+-  transform-origin: left center;
+-  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+-}
+-.animated-line--h {
+-  height: 1px;
+-  width: 100%;
+-  transform: scaleX(0);
+-}
+-.animated-line--v {
+-  width: 1px;
+-  height: 100%;
+-  transform-origin: top center;
+-  transform: scaleY(0);
+-}
+-.animated-line.is-visible {
+-  transform: scaleX(1) scaleY(1);
+-}
+-
+-/* Floating accent dots */
+-.floating-dot {
+-  position: absolute;
+-  display: block;
+-  border-radius: 9999px;
+-  background: var(--accent);
+-  opacity: 0.18;
+-  filter: blur(40px);
+-}
+-.floating-dot--1 {
+-  width: 480px;
+-  height: 480px;
+-  top: -10%;
+-  left: -8%;
+-  animation: float-1 22s ease-in-out infinite;
+-}
+-.floating-dot--2 {
+-  width: 340px;
+-  height: 340px;
+-  top: 30%;
+-  right: -10%;
+-  background: #1f3a2f;
+-  opacity: 0.08;
+-  animation: float-2 28s ease-in-out infinite;
+-}
+-.floating-dot--3 {
+-  width: 220px;
+-  height: 220px;
+-  bottom: 5%;
+-  left: 30%;
+-  animation: float-3 26s ease-in-out infinite;
+-}
+-.floating-dot--4 {
+-  width: 380px;
+-  height: 380px;
+-  bottom: -10%;
+-  right: 20%;
+-  background: #8b1f6e;
+-  opacity: 0.07;
+-  animation: float-4 32s ease-in-out infinite;
+-}
+-@keyframes float-1 {
+-  0%, 100% { transform: translate(0, 0); }
+-  50% { transform: translate(60px, 40px); }
+-}
+-@keyframes float-2 {
+-  0%, 100% { transform: translate(0, 0); }
+-  50% { transform: translate(-80px, 60px); }
+-}
+-@keyframes float-3 {
+-  0%, 100% { transform: translate(0, 0); }
+-  50% { transform: translate(40px, -50px); }
+-}
+-@keyframes float-4 {
+-  0%, 100% { transform: translate(0, 0); }
+-  50% { transform: translate(-50px, -30px); }
+-}
+-
+-/* Marquee per-item subtle scale-in on hover */
+-.marquee:hover .marquee__track {
+-  animation-play-state: paused;
+-}
+-
+-/* Image: subtle zoom on hover */
+-.img-zoom {
+-  overflow: hidden;
+-}
+-.img-zoom > * {
+-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+-}
+-.img-zoom:hover > * {
+-  transform: scale(1.04);
+-}
+-
+-/* Reveal animation */
+-.reveal {
+-  opacity: 0;
+-  transform: translateY(28px);
+-  transition:
+-    opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+-    transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+-  will-change: transform, opacity;
+-}
+-.reveal.is-visible {
+-  opacity: 1;
+-  transform: translateY(0);
+-}
+-.reveal[data-stagger='1'] {
+-  transition-delay: 80ms;
+-}
+-.reveal[data-stagger='2'] {
+-  transition-delay: 160ms;
+-}
+-.reveal[data-stagger='3'] {
+-  transition-delay: 240ms;
+-}
+-.reveal[data-stagger='4'] {
+-  transition-delay: 320ms;
+-}
+-
+-.clip-reveal {
+-  clip-path: inset(0 0 100% 0);
+-  transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+-}
+-.clip-reveal.is-visible {
+-  clip-path: inset(0 0 0 0);
+-}
+-
+-/* Scroll indicator — accent dash sliding down a hairline */
+-@keyframes scroll-indicator-dash {
+-  0% {
+-    transform: translateY(-110%);
+-    opacity: 0;
+-  }
+-  20% {
+-    opacity: 1;
++    color: rgb(28 27 25 / 0.6);
+   }
+-  80% {
+-    opacity: 1;
+-  }
+-  100% {
+-    transform: translateY(420%);
+-    opacity: 0;
+-  }
+-}
+-.scroll-indicator-dash {
+-  animation: scroll-indicator-dash 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+-}
+-
+-/* Marquee */
+-.marquee {
+-  display: flex;
+-  overflow: hidden;
+-  user-select: none;
+-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+-}
+-.marquee__track {
+-  display: flex;
+-  flex-shrink: 0;
+-  gap: 4rem;
+-  animation: marquee 40s linear infinite;
+-  padding-right: 4rem;
+-}
+-@keyframes marquee {
+-  from {
+-    transform: translateX(0);
+-  }
+-  to {
+-    transform: translateX(-100%);
++  .hairline {
++    @apply h-px w-full bg-line;
+   }
+ }
+ 
+-/* Custom cursor (desktop only) — dark for cream theme */
+-@media (hover: hover) and (pointer: fine) {
+-  .cursor-dot,
+-  .cursor-ring {
+-    position: fixed;
+-    top: 0;
+-    left: 0;
+-    pointer-events: none;
+-    z-index: 9999;
+-    border-radius: 9999px;
+-    transform: translate3d(-50%, -50%, 0);
+-  }
+-  .cursor-dot {
+-    width: 6px;
+-    height: 6px;
+-    background: #1f3a2f;
+-    transition: transform 0.15s ease;
+-  }
+-  .cursor-ring {
+-    width: 36px;
+-    height: 36px;
+-    border: 1px solid rgba(31, 58, 47, 0.4);
+-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s, height 0.3s, background 0.3s;
+-  }
+-  .cursor-ring.is-hover {
+-    width: 64px;
+-    height: 64px;
+-    background: rgba(181, 152, 90, 0.18);
+-    border-color: rgba(181, 152, 90, 0.6);
+-  }
+-  body.has-cursor * {
+-    cursor: none !important;
+-  }
++/* Honour reduced-motion (smooth in-page anchor scrolling only) */
++html {
++  scroll-behavior: smooth;
+ }
+-
+ @media (prefers-reduced-motion: reduce) {
+-  .reveal,
+-  .clip-reveal {
+-    opacity: 1 !important;
+-    transform: none !important;
+-    clip-path: none !important;
+-  }
+-  .marquee__track,
+-  .scroll-indicator-dash,
+-  .floating-dot,
+-  .split-text__inner {
+-    animation: none !important;
+-    transition: none !important;
+-    transform: none !important;
+-    opacity: 1 !important;
+-  }
+   html {
+     scroll-behavior: auto;
+   }
+diff --git a/src/components/AnimatedLine.tsx b/src/components/AnimatedLine.tsx
+deleted file mode 100644
+index e84c21b..0000000
+--- a/src/components/AnimatedLine.tsx
++++ /dev/null
+@@ -1,47 +0,0 @@
+-'use client'
+-
+-import { useEffect, useRef } from 'react'
+-import clsx from 'clsx'
+-
+-/** A hairline that draws itself left→right when entering the viewport. */
+-export function AnimatedLine({
+-  className,
+-  direction = 'horizontal',
+-  color = 'currentColor',
+-}: {
+-  className?: string
+-  direction?: 'horizontal' | 'vertical'
+-  color?: string
+-}) {
+-  const ref = useRef<HTMLDivElement>(null)
+-
+-  useEffect(() => {
+-    const el = ref.current
+-    if (!el) return
+-    const io = new IntersectionObserver(
+-      (entries) => {
+-        entries.forEach((e) => {
+-          if (e.isIntersecting) {
+-            e.target.classList.add('is-visible')
+-            io.unobserve(e.target)
+-          }
+-        })
+-      },
+-      { threshold: 0.6 },
+-    )
+-    io.observe(el)
+-    return () => io.disconnect()
+-  }, [])
+-
+-  return (
+-    <div
+-      ref={ref}
+-      className={clsx(
+-        'animated-line',
+-        direction === 'horizontal' ? 'animated-line--h' : 'animated-line--v',
+-        className,
+-      )}
+-      style={{ background: color }}
+-    />
+-  )
+-}
+diff --git a/src/components/CTAButton.tsx b/src/components/CTAButton.tsx
+index cdaf198..20e746b 100644
+--- a/src/components/CTAButton.tsx
++++ b/src/components/CTAButton.tsx
+@@ -1,33 +1,24 @@
+ import Link from 'next/link'
+-import clsx from 'clsx'
+ import { resolveHref, type LinkData } from '@/lib/resolveLink'
+ import type { Locale } from '@/lib/i18n'
+ 
++// A single, quiet link style for every call to action — accent text with a
++// trailing arrow. No buttons, no fills; the typography carries it.
+ export function CTAButton({ link, locale }: { link: LinkData; locale: Locale }) {
+   if (!link?.label) return null
+   const href = resolveHref(link, locale)
+   const target = link.newTab ? '_blank' : undefined
+   const rel = link.newTab ? 'noopener noreferrer' : undefined
+-  const variant = link.variant || 'primary'
+-  const className = clsx({
+-    'btn-primary': variant === 'primary',
+-    'btn-outline': variant === 'outline',
+-    'btn-plain': variant === 'plain',
+-  })
+-
+   const arrow = link.newTab ? '↗' : '→'
+ 
+-  const inner =
+-    variant === 'plain' ? (
+-      <span className="inline-flex items-center gap-2">
+-        {link.label} <span className="text-accent">{arrow}</span>
+-      </span>
+-    ) : (
+-      <>
+-        <span className="btn-label">{link.label}</span>
+-        <span className="btn-arrow">{arrow}</span>
+-      </>
+-    )
++  const inner = (
++    <>
++      <span className="underline-offset-[3px] group-hover:underline">{link.label}</span>
++      <span aria-hidden="true">{arrow}</span>
++    </>
++  )
++
++  const className = 'link-cta group text-base'
+ 
+   if (link.type === 'external') {
+     return (
+diff --git a/src/components/ContactForm.tsx b/src/components/ContactForm.tsx
+index c2bc885..2578196 100644
+--- a/src/components/ContactForm.tsx
++++ b/src/components/ContactForm.tsx
+@@ -72,15 +72,12 @@ export function ContactForm({
+ 
+   if (status === 'success') {
+     return (
+-      <div className="border border-line p-10">
+-        <div className="mb-4 font-mono text-[10px] uppercase tracking-[0.3em] text-accent">
+-          → Message sent
+-        </div>
+-        <p className="font-display text-3xl font-light leading-tight text-bone">{successMessage}</p>
++      <div className="border-t border-line pt-8">
++        <p className="text-2xl leading-snug text-bone">{successMessage}</p>
+         <button
+           type="button"
+           onClick={() => setStatus('idle')}
+-          className="link-underline mt-8 inline-block font-mono text-[11px] uppercase tracking-[0.25em] text-bone/60 hover:text-bone"
++          className="link mt-6 inline-block text-base"
+         >
+           Send another
+         </button>
+@@ -144,16 +141,20 @@ export function ContactForm({
+       </label>
+ 
+       {status === 'error' && (
+-        <div className="border border-topbar/40 bg-topbar/5 p-4 text-sm text-bone">{errorMessage}</div>
++        <p className="text-base italic text-accent">{errorMessage}</p>
+       )}
+ 
+       <div className="flex items-center justify-between pt-2">
+-        <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-bone/40">
+-          * Required fields
+-        </p>
+-        <button type="submit" disabled={status === 'loading'} className="btn-primary disabled:opacity-50">
+-          <span className="btn-label">{status === 'loading' ? 'Sending…' : submitLabel}</span>
+-          <span className="btn-arrow">→</span>
++        <p className="text-sm italic text-bone/45">* Required</p>
++        <button
++          type="submit"
++          disabled={status === 'loading'}
++          className="link-cta group text-base disabled:opacity-50"
++        >
++          <span className="underline-offset-[3px] group-hover:underline">
++            {status === 'loading' ? 'Sending…' : submitLabel}
++          </span>
++          <span aria-hidden="true">→</span>
+         </button>
+       </div>
+     </form>
+diff --git a/src/components/Cursor.tsx b/src/components/Cursor.tsx
+deleted file mode 100644
+index 8c7c346..0000000
+--- a/src/components/Cursor.tsx
++++ /dev/null
+@@ -1,60 +0,0 @@
+-'use client'
+-
+-import { useEffect, useRef } from 'react'
+-
+-export function Cursor() {
+-  const dot = useRef<HTMLDivElement>(null)
+-  const ring = useRef<HTMLDivElement>(null)
+-
+-  useEffect(() => {
+-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+-    document.body.classList.add('has-cursor')
+-
+-    let x = window.innerWidth / 2
+-    let y = window.innerHeight / 2
+-    let rx = x
+-    let ry = y
+-    let raf = 0
+-
+-    const onMove = (e: MouseEvent) => {
+-      x = e.clientX
+-      y = e.clientY
+-      if (dot.current) dot.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`
+-    }
+-
+-    const tick = () => {
+-      rx += (x - rx) * 0.18
+-      ry += (y - ry) * 0.18
+-      if (ring.current) ring.current.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`
+-      raf = requestAnimationFrame(tick)
+-    }
+-
+-    const onOver = (e: MouseEvent) => {
+-      const target = e.target as HTMLElement | null
+-      if (!target) return
+-      if (target.closest('a, button, [data-cursor="hover"]')) {
+-        ring.current?.classList.add('is-hover')
+-      } else {
+-        ring.current?.classList.remove('is-hover')
+-      }
+-    }
+-
+-    window.addEventListener('mousemove', onMove, { passive: true })
+-    window.addEventListener('mouseover', onOver, { passive: true })
+-    raf = requestAnimationFrame(tick)
+-
+-    return () => {
+-      window.removeEventListener('mousemove', onMove)
+-      window.removeEventListener('mouseover', onOver)
+-      cancelAnimationFrame(raf)
+-      document.body.classList.remove('has-cursor')
+-    }
+-  }, [])
+-
+-  return (
+-    <>
+-      <div ref={ring} className="cursor-ring" aria-hidden="true" />
+-      <div ref={dot} className="cursor-dot" aria-hidden="true" />
+-    </>
+-  )
+-}
+diff --git a/src/components/FloatingShapes.tsx b/src/components/FloatingShapes.tsx
+deleted file mode 100644
+index c671d26..0000000
+--- a/src/components/FloatingShapes.tsx
++++ /dev/null
+@@ -1,50 +0,0 @@
+-'use client'
+-
+-import { useEffect, useRef } from 'react'
+-
+-/** Subtle floating accent dots that drift on mousemove + scroll. Decorative only. */
+-export function FloatingShapes() {
+-  const ref = useRef<HTMLDivElement>(null)
+-
+-  useEffect(() => {
+-    const el = ref.current
+-    if (!el) return
+-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+-
+-    let mx = 0,
+-      my = 0,
+-      cx = 0,
+-      cy = 0,
+-      raf = 0
+-    const onMove = (e: MouseEvent) => {
+-      mx = (e.clientX / window.innerWidth - 0.5) * 30
+-      my = (e.clientY / window.innerHeight - 0.5) * 30
+-    }
+-    const tick = () => {
+-      cx += (mx - cx) * 0.05
+-      cy += (my - cy) * 0.05
+-      el.style.transform = `translate3d(${cx.toFixed(1)}px, ${cy.toFixed(1)}px, 0)`
+-      raf = requestAnimationFrame(tick)
+-    }
+-    window.addEventListener('mousemove', onMove, { passive: true })
+-    raf = requestAnimationFrame(tick)
+-    return () => {
+-      window.removeEventListener('mousemove', onMove)
+-      cancelAnimationFrame(raf)
+-    }
+-  }, [])
+-
+-  return (
+-    <div
+-      aria-hidden="true"
+-      className="pointer-events-none fixed inset-0 z-[1] overflow-hidden"
+-    >
+-      <div ref={ref} className="absolute inset-0 will-change-transform">
+-        <span className="floating-dot floating-dot--1" />
+-        <span className="floating-dot floating-dot--2" />
+-        <span className="floating-dot floating-dot--3" />
+-        <span className="floating-dot floating-dot--4" />
+-      </div>
+-    </div>
+-  )
+-}
+diff --git a/src/components/Footer.tsx b/src/components/Footer.tsx
+index 37875f5..02db767 100644
+--- a/src/components/Footer.tsx
++++ b/src/components/Footer.tsx
+@@ -15,72 +15,36 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
+   const cmsColumns: any[] = (footer as any)?.columns || []
+   const columns: any[] = cmsColumns.length ? cmsColumns : staticFooter.columns
+ 
+-  return (
+-    <footer className="relative border-t border-line">
+-      <div className="container-page py-16">
+-        <div className="grid gap-10 md:grid-cols-12">
+-          {/* Brand + tagline */}
+-          <div className="md:col-span-4">
+-            <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] text-bone">
+-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+-              <span>{footer.brandName || staticFooter.brandName}</span>
+-            </div>
+-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-bone/55">{footer.tagline}</p>
+-          </div>
+-
+-          {/* Link columns */}
+-          {columns.map((col, i) => (
+-            <div key={i} className="md:col-span-2">
+-              <div className="mb-4 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/35">
+-                {col.heading}
+-              </div>
+-              <ul className="space-y-2">
+-                {(col.links || []).map((entry: any, j: number) => {
+-                  const link = entry?.link
+-                  if (!link?.label) return null
+-                  const href = resolveHref(link, locale)
+-                  const cn = 'link-underline text-sm text-bone/80 hover:text-accent'
+-                  return (
+-                    <li key={j}>
+-                      {link.type === 'external' ? (
+-                        <a
+-                          href={href}
+-                          target={link.newTab ? '_blank' : undefined}
+-                          rel={link.newTab ? 'noopener noreferrer' : undefined}
+-                          className={cn}
+-                        >
+-                          {link.label}
+-                        </a>
+-                      ) : (
+-                        <Link href={href} className={cn}>
+-                          {link.label}
+-                        </Link>
+-                      )}
+-                    </li>
+-                  )
+-                })}
+-              </ul>
+-            </div>
+-          ))}
++  // Flatten every footer link into one quiet row.
++  const links = columns.flatMap((col: any) => col.links || [])
+ 
+-          {/* Back to top */}
+-          <div className="md:col-span-2 md:col-start-11 md:text-right">
+-            <a
+-              href="#top"
+-              className="link-underline inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/55 hover:text-bone"
+-            >
+-              <span>Back to top</span>
+-              <span className="text-accent">↑</span>
+-            </a>
+-          </div>
+-        </div>
+-
+-        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 font-mono text-[10px] uppercase tracking-[0.25em] text-bone/35 md:flex-row md:items-center md:justify-between">
+-          <div>{footer.copyright}</div>
+-          <div>
+-            /{locale.toUpperCase()} · {new Date().getFullYear()}
+-          </div>
+-        </div>
++  return (
++    <footer className="mt-24 border-t border-line">
++      <div className="container-wide flex flex-col gap-4 py-10 text-[0.95rem] text-bone/55 sm:flex-row sm:items-center sm:justify-between">
++        <div>{footer.copyright || staticFooter.copyright}</div>
++        <nav className="flex flex-wrap items-center gap-x-5 gap-y-2">
++          {links.map((entry: any, j: number) => {
++            const link = entry?.link
++            if (!link?.label) return null
++            const href = resolveHref(link, locale)
++            const cn = 'underline-offset-4 hover:text-accent hover:underline'
++            return link.type === 'external' ? (
++              <a
++                key={j}
++                href={href}
++                target={link.newTab ? '_blank' : undefined}
++                rel={link.newTab ? 'noopener noreferrer' : undefined}
++                className={cn}
++              >
++                {link.label}
++              </a>
++            ) : (
++              <Link key={j} href={href} className={cn}>
++                {link.label}
++              </Link>
++            )
++          })}
++        </nav>
+       </div>
+     </footer>
+   )
+diff --git a/src/components/Header.tsx b/src/components/Header.tsx
+index 77108cc..a531c68 100644
+--- a/src/components/Header.tsx
++++ b/src/components/Header.tsx
+@@ -18,51 +18,45 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
+   const navItems: any[] = cmsNav.length ? cmsNav : staticHeader.nav
+ 
+   return (
+-    <header className="sticky top-0 z-40 backdrop-blur-md">
+-      <div className="border-b border-line bg-ink/80">
+-        <div className="container-page flex items-center justify-between py-5">
+-          <Link
+-            href={`/${locale}`}
+-            className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] text-bone"
+-          >
+-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+-            <span>{header.logoText || staticHeader.logoText}</span>
+-          </Link>
++    <header className="border-b border-line">
++      <div className="container-wide flex items-baseline justify-between gap-6 py-6 md:py-7">
++      <Link href={`/${locale}`} className="text-lg text-bone hover:text-accent">
++        {header.logoText || staticHeader.logoText}
++      </Link>
+ 
+-          <nav className="hidden items-center gap-10 md:flex">
+-            {navItems.map((item, i) => {
++      <div className="relative flex items-baseline gap-5 md:gap-6">
++        <nav className="hidden items-baseline gap-5 sm:flex md:gap-6">
++          {navItems.map((item, i) => {
++            const link = item?.link
++            if (!link?.label) return null
++            const href = resolveHref(link, locale)
++            return (
++              <Link
++                key={i}
++                href={href}
++                target={link.newTab ? '_blank' : undefined}
++                className="text-[0.95rem] text-bone/65 underline-offset-4 hover:text-accent hover:underline"
++              >
++                {link.label}
++              </Link>
++            )
++          })}
++        </nav>
++
++        {(header.showLanguageSwitcher ?? true) && <LanguageSwitcher locale={locale} />}
++
++        <MobileNav
++          locale={locale}
++          logoText={header.logoText || staticHeader.logoText}
++          links={navItems
++            .map((item) => {
+               const link = item?.link
+               if (!link?.label) return null
+-              const href = resolveHref(link, locale)
+-              return (
+-                <Link
+-                  key={i}
+-                  href={href}
+-                  target={link.newTab ? '_blank' : undefined}
+-                  className="link-underline font-mono text-[11px] uppercase tracking-[0.25em] text-bone/80 hover:text-bone"
+-                >
+-                  <span className="text-accent/70">0{i + 1}</span>
+-                  <span className="ml-2">{link.label}</span>
+-                </Link>
+-              )
+-            })}
+-          </nav>
+-
+-          <div className="flex items-center gap-2 md:gap-4">
+-            {(header.showLanguageSwitcher ?? true) && <LanguageSwitcher locale={locale} />}
+-            <MobileNav
+-              locale={locale}
+-              logoText={header.logoText || staticHeader.logoText}
+-              links={navItems
+-                .map((item) => {
+-                  const link = item?.link
+-                  if (!link?.label) return null
+-                  return { href: resolveHref(link, locale), label: link.label, newTab: link.newTab }
+-                })
+-                .filter(Boolean) as { href: string; label: string; newTab?: boolean }[]}
+-            />
+-          </div>
+-        </div>
++              return { href: resolveHref(link, locale), label: link.label, newTab: link.newTab }
++            })
++            .filter(Boolean) as { href: string; label: string; newTab?: boolean }[]}
++        />
++      </div>
+       </div>
+     </header>
+   )
+diff --git a/src/components/Icon.tsx b/src/components/Icon.tsx
+deleted file mode 100644
+index 3937c66..0000000
+--- a/src/components/Icon.tsx
++++ /dev/null
+@@ -1,70 +0,0 @@
+-import React from 'react'
+-
+-type Props = { name: string; className?: string }
+-
+-export function Icon({ name, className = 'h-5 w-5' }: Props) {
+-  switch (name) {
+-    case 'scale':
+-      return (
+-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>
+-          <path d="M12 3v18M5 7h14M5 7l-2 6h4l-2-6zM19 7l-2 6h4l-2-6z" strokeLinecap="round" strokeLinejoin="round" />
+-        </svg>
+-      )
+-    case 'book':
+-      return (
+-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>
+-          <path d="M4 5a2 2 0 012-2h13v18H6a2 2 0 01-2-2V5zM9 3v18" strokeLinecap="round" strokeLinejoin="round" />
+-        </svg>
+-      )
+-    case 'arrow':
+-      return (
+-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>
+-          <path d="M5 12h14M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+-        </svg>
+-      )
+-    case 'download':
+-      return (
+-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>
+-          <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" strokeLinecap="round" strokeLinejoin="round" />
+-        </svg>
+-      )
+-    case 'bank':
+-      return (
+-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>
+-          <path d="M3 10h18L12 3 3 10zM5 10v8M9 10v8M15 10v8M19 10v8M3 21h18" strokeLinecap="round" strokeLinejoin="round" />
+-        </svg>
+-      )
+-    case 'wig':
+-      return (
+-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>
+-          <path d="M6 18c0-6 2.7-10 6-10s6 4 6 10M9 18h6M8 21h8" strokeLinecap="round" strokeLinejoin="round" />
+-        </svg>
+-      )
+-    case 'skyline':
+-      return (
+-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>
+-          <path d="M3 21V11l4-3 4 3v10M11 21V7l5-3 5 3v14M3 21h18" strokeLinecap="round" strokeLinejoin="round" />
+-        </svg>
+-      )
+-    case 'flag':
+-      return (
+-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>
+-          <path d="M5 21V4M5 4h12l-2 4 2 4H5" strokeLinecap="round" strokeLinejoin="round" />
+-        </svg>
+-      )
+-    case 'linkedin':
+-      return (
+-        <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+-          <path d="M4 4h4v4H4V4zM4 10h4v10H4V10zM10 10h4v1.5c.6-.9 1.8-1.8 3.5-1.8 3 0 4.5 2 4.5 5V20h-4v-5c0-1.4-.5-2.3-1.8-2.3-1.2 0-1.9.8-2.2 1.6V20h-4V10z" />
+-        </svg>
+-      )
+-    case 'chevron-down':
+-      return (
+-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className}>
+-          <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+-        </svg>
+-      )
+-    default:
+-      return null
+-  }
+-}
+diff --git a/src/components/LanguageSwitcher.tsx b/src/components/LanguageSwitcher.tsx
+index b3e3b8d..411d19e 100644
+--- a/src/components/LanguageSwitcher.tsx
++++ b/src/components/LanguageSwitcher.tsx
+@@ -1,53 +1,38 @@
+ 'use client'
+ 
+-import { useState } from 'react'
+ import { usePathname, useRouter } from 'next/navigation'
+-import { LOCALES, type Locale, dict } from '@/lib/i18n'
++import { LOCALES, type Locale } from '@/lib/i18n'
+ 
+ export function LanguageSwitcher({ locale }: { locale: Locale }) {
+   const router = useRouter()
+   const pathname = usePathname() || `/${locale}`
+-  const [open, setOpen] = useState(false)
+ 
+   function switchTo(next: Locale) {
++    if (next === locale) return
+     const parts = pathname.split('/').filter(Boolean)
+     parts[0] = next
+     router.push('/' + parts.join('/'))
+-    setOpen(false)
+   }
+ 
+   return (
+-    <div className="relative">
+-      <button
+-        type="button"
+-        onClick={() => setOpen((s) => !s)}
+-        className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-bone/80 hover:text-bone"
+-        aria-haspopup="listbox"
+-        aria-expanded={open}
+-      >
+-        {locale}
+-        <span className="text-accent/70">↓</span>
+-      </button>
+-      {open && (
+-        <ul
+-          role="listbox"
+-          className="absolute right-0 mt-3 w-32 overflow-hidden border border-line bg-ink-800/95 backdrop-blur"
+-        >
+-          {LOCALES.map((code) => (
+-            <li key={code}>
+-              <button
+-                type="button"
+-                onClick={() => switchTo(code)}
+-                className={`w-full px-4 py-3 text-left font-mono text-[11px] uppercase tracking-[0.25em] transition-colors hover:bg-ink-700 ${
+-                  code === locale ? 'text-accent' : 'text-bone/70'
+-                }`}
+-              >
+-                {dict[locale].languageNames[code]}
+-              </button>
+-            </li>
+-          ))}
+-        </ul>
+-      )}
++    <div className="flex items-baseline gap-2 text-[0.95rem]">
++      {LOCALES.map((code, i) => (
++        <span key={code} className="flex items-baseline gap-2">
++          {i > 0 && <span className="text-bone/25">/</span>}
++          <button
++            type="button"
++            onClick={() => switchTo(code)}
++            aria-current={code === locale ? 'true' : undefined}
++            className={
++              code === locale
++                ? 'text-accent'
++                : 'text-bone/45 underline-offset-4 hover:text-accent hover:underline'
++            }
++          >
++            {code.toUpperCase()}
++          </button>
++        </span>
++      ))}
+     </div>
+   )
+ }
+diff --git a/src/components/Magnetic.tsx b/src/components/Magnetic.tsx
+deleted file mode 100644
+index bec6967..0000000
+--- a/src/components/Magnetic.tsx
++++ /dev/null
+@@ -1,64 +0,0 @@
+-'use client'
+-
+-import { useEffect, useRef } from 'react'
+-import clsx from 'clsx'
+-
+-type Props = {
+-  children: React.ReactNode
+-  className?: string
+-  strength?: number // 0..1
+-}
+-
+-/** Wraps a child and pulls it toward the cursor on hover. */
+-export function Magnetic({ children, className, strength = 0.3 }: Props) {
+-  const wrap = useRef<HTMLSpanElement>(null)
+-  const inner = useRef<HTMLSpanElement>(null)
+-
+-  useEffect(() => {
+-    const el = wrap.current
+-    const target = inner.current
+-    if (!el || !target) return
+-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+-
+-    let raf = 0
+-    let tx = 0,
+-      ty = 0,
+-      cx = 0,
+-      cy = 0
+-
+-    const onMove = (e: MouseEvent) => {
+-      const rect = el.getBoundingClientRect()
+-      const x = e.clientX - rect.left - rect.width / 2
+-      const y = e.clientY - rect.top - rect.height / 2
+-      tx = x * strength
+-      ty = y * strength
+-    }
+-    const onLeave = () => {
+-      tx = 0
+-      ty = 0
+-    }
+-    const tick = () => {
+-      cx += (tx - cx) * 0.18
+-      cy += (ty - cy) * 0.18
+-      target.style.transform = `translate3d(${cx.toFixed(2)}px, ${cy.toFixed(2)}px, 0)`
+-      raf = requestAnimationFrame(tick)
+-    }
+-
+-    el.addEventListener('mousemove', onMove)
+-    el.addEventListener('mouseleave', onLeave)
+-    raf = requestAnimationFrame(tick)
+-    return () => {
+-      el.removeEventListener('mousemove', onMove)
+-      el.removeEventListener('mouseleave', onLeave)
+-      cancelAnimationFrame(raf)
+-    }
+-  }, [strength])
+-
+-  return (
+-    <span ref={wrap} className={clsx('inline-block', className)}>
+-      <span ref={inner} className="inline-block will-change-transform">
+-        {children}
+-      </span>
+-    </span>
+-  )
+-}
+diff --git a/src/components/Marquee.tsx b/src/components/Marquee.tsx
+deleted file mode 100644
+index 6bf5c1e..0000000
+--- a/src/components/Marquee.tsx
++++ /dev/null
+@@ -1,22 +0,0 @@
+-type Props = {
+-  items: string[]
+-  separator?: string
+-}
+-
+-export function Marquee({ items, separator = '✦' }: Props) {
+-  const row = (
+-    <div className="marquee__track">
+-      {items.concat(items).map((item, i) => (
+-        <span key={i} className="flex items-center gap-10 font-display text-2xl italic leading-none md:text-3xl">
+-          <span>{item}</span>
+-          <span className="text-accent">{separator}</span>
+-        </span>
+-      ))}
+-    </div>
+-  )
+-  return (
+-    <div className="marquee py-5" aria-hidden="true">
+-      {row}
+-    </div>
+-  )
+-}
+diff --git a/src/components/MobileNav.tsx b/src/components/MobileNav.tsx
+index 371cc0e..d6caa82 100644
+--- a/src/components/MobileNav.tsx
++++ b/src/components/MobileNav.tsx
+@@ -1,163 +1,48 @@
+ 'use client'
+ 
+ import { useEffect, useState } from 'react'
+-import { createPortal } from 'react-dom'
+ import Link from 'next/link'
+ import { usePathname } from 'next/navigation'
+ 
+ type NavLink = { href: string; label: string; newTab?: boolean }
+ 
+-export function MobileNav({
+-  links,
+-  logoText,
+-  locale,
+-}: {
+-  links: NavLink[]
+-  logoText: string
+-  locale: string
+-}) {
++export function MobileNav({ links }: { links: NavLink[]; logoText?: string; locale?: string }) {
+   const [open, setOpen] = useState(false)
+-  const [mounted, setMounted] = useState(false)
+   const pathname = usePathname()
+ 
+-  useEffect(() => {
+-    setMounted(true)
+-  }, [])
+-
+   useEffect(() => {
+     setOpen(false)
+   }, [pathname])
+ 
+-  useEffect(() => {
+-    if (!open) return
+-    const prev = document.body.style.overflow
+-    document.body.style.overflow = 'hidden'
+-    const onKey = (e: KeyboardEvent) => {
+-      if (e.key === 'Escape') setOpen(false)
+-    }
+-    window.addEventListener('keydown', onKey)
+-    return () => {
+-      document.body.style.overflow = prev
+-      window.removeEventListener('keydown', onKey)
+-    }
+-  }, [open])
+-
+-  const drawer = (
+-    <div
+-      id="mobile-nav"
+-      role="dialog"
+-      aria-modal="true"
+-      aria-hidden={!open}
+-      className={`fixed inset-0 z-[100] transition-[clip-path] duration-700 ease-[cubic-bezier(0.83,0,0.17,1)] md:hidden ${
+-        open
+-          ? '[clip-path:circle(150%_at_calc(100%-2.5rem)_2.5rem)]'
+-          : '[clip-path:circle(0%_at_calc(100%-2.5rem)_2.5rem)]'
+-      }`}
+-      style={{
+-        background:
+-          'radial-gradient(120% 80% at 100% 0%, #2C5142 0%, #18302A 55%, #0F2520 100%)',
+-      }}
+-    >
+-      <div
+-        aria-hidden="true"
+-        className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-overlay"
+-        style={{
+-          backgroundImage:
+-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+-        }}
+-      />
+-
+-      <div className="relative flex h-full flex-col text-ink">
+-        <div className="border-b border-ink/15">
+-          <div className="container-page flex items-center justify-between py-5">
+-            <span className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] text-ink">
+-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+-              <span>{logoText}</span>
+-            </span>
+-            <button
+-              type="button"
+-              aria-label="Close menu"
+-              onClick={() => setOpen(false)}
+-              className="-mr-2 flex h-10 w-10 items-center justify-center"
+-            >
+-              <span className="relative block h-3 w-3">
+-                <span className="absolute left-0 top-1/2 block h-px w-3 -translate-y-1/2 rotate-45 bg-ink" />
+-                <span className="absolute left-0 top-1/2 block h-px w-3 -translate-y-1/2 -rotate-45 bg-ink" />
+-              </span>
+-            </button>
+-          </div>
+-        </div>
+-
+-        <nav className="container-page flex flex-1 flex-col justify-center gap-1 py-12">
+-          {links.map((link, i) => (
+-            <Link
+-              key={`${link.href}-${i}`}
+-              href={link.href}
+-              target={link.newTab ? '_blank' : undefined}
+-              onClick={() => setOpen(false)}
+-              style={{ transitionDelay: open ? `${150 + i * 70}ms` : '0ms' }}
+-              className={`group flex items-baseline gap-5 border-b border-ink/15 py-5 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+-                open ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+-              }`}
+-            >
+-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">
+-                0{i + 1}
+-              </span>
+-              <span className="flex-1 font-display text-[clamp(2.5rem,12vw,4rem)] font-light leading-[0.95] tracking-tightest text-ink transition-colors duration-300 group-hover:text-accent">
+-                {link.label}
+-              </span>
+-              <span
+-                aria-hidden="true"
+-                className="font-mono text-[10px] uppercase tracking-[0.3em] text-ink/40 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent"
+-              >
+-                →
+-              </span>
+-            </Link>
+-          ))}
+-        </nav>
+-
+-        <div className="border-t border-ink/15">
+-          <div
+-            className="container-page flex flex-col gap-3 py-6 font-mono text-[10px] uppercase tracking-[0.25em] text-ink/55"
+-            style={{ transitionDelay: open ? `${150 + links.length * 70}ms` : '0ms' }}
+-          >
+-            <div className="flex items-center justify-between">
+-              <span>/{locale.toUpperCase()}</span>
+-              <span className="flex items-center gap-2">
+-                <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+-                Available
+-              </span>
+-            </div>
+-            <a
+-              href="mailto:contact.shanneik@gmail.com"
+-              className="text-ink/80 transition-colors hover:text-accent"
+-            >
+-              contact.shanneik@gmail.com
+-            </a>
+-          </div>
+-        </div>
+-      </div>
+-    </div>
+-  )
+-
+   return (
+-    <>
++    <div className="sm:hidden">
+       <button
+         type="button"
+-        aria-label="Open menu"
++        aria-label={open ? 'Close menu' : 'Open menu'}
+         aria-expanded={open}
+-        aria-controls="mobile-nav"
+-        onClick={() => setOpen(true)}
+-        className="relative z-[60] -mr-2 flex h-10 w-10 items-center justify-center md:hidden"
++        onClick={() => setOpen((s) => !s)}
++        className="text-[0.95rem] text-bone/65 hover:text-accent"
+       >
+-        <span className="sr-only">Open menu</span>
+-        <span className="relative block h-2.5 w-6">
+-          <span className="absolute left-0 top-0 block h-px w-6 bg-bone" />
+-          <span className="absolute bottom-0 left-0 block h-px w-4 bg-bone" />
+-        </span>
++        {open ? 'Close' : 'Menu'}
+       </button>
+ 
+-      {mounted ? createPortal(drawer, document.body) : null}
+-    </>
++      {open && (
++        <div className="absolute inset-x-0 z-50 mt-4 border-y border-line bg-ink px-6 py-6">
++          <nav className="flex flex-col gap-4">
++            {links.map((link, i) => (
++              <Link
++                key={`${link.href}-${i}`}
++                href={link.href}
++                target={link.newTab ? '_blank' : undefined}
++                onClick={() => setOpen(false)}
++                className="text-xl text-bone hover:text-accent"
++              >
++                {link.label}
++              </Link>
++            ))}
++          </nav>
++        </div>
++      )}
++    </div>
+   )
+ }
+diff --git a/src/components/Reveal.tsx b/src/components/Reveal.tsx
+deleted file mode 100644
+index 880e7e9..0000000
+--- a/src/components/Reveal.tsx
++++ /dev/null
+@@ -1,41 +0,0 @@
+-'use client'
+-
+-import { useEffect, useRef } from 'react'
+-import clsx from 'clsx'
+-
+-type Props = {
+-  children: React.ReactNode
+-  className?: string
+-  as?: 'div' | 'section' | 'article' | 'header' | 'footer' | 'span' | 'li' | 'ul' | 'ol'
+-  delay?: 0 | 1 | 2 | 3 | 4
+-  variant?: 'fade' | 'clip'
+-}
+-
+-export function Reveal({ children, className, as: Tag = 'div', delay = 0, variant = 'fade' }: Props) {
+-  const ref = useRef<HTMLElement | null>(null)
+-
+-  useEffect(() => {
+-    const el = ref.current
+-    if (!el) return
+-    const io = new IntersectionObserver(
+-      (entries) => {
+-        entries.forEach((entry) => {
+-          if (entry.isIntersecting) {
+-            entry.target.classList.add('is-visible')
+-            io.unobserve(entry.target)
+-          }
+-        })
+-      },
+-      { threshold: 0.12, rootMargin: '0px 0px -80px 0px' },
+-    )
+-    io.observe(el)
+-    return () => io.disconnect()
+-  }, [])
+-
+-  const klass = clsx(variant === 'clip' ? 'clip-reveal' : 'reveal', className)
+-  return (
+-    <Tag ref={ref as any} className={klass} data-stagger={delay || undefined}>
+-      {children}
+-    </Tag>
+-  )
+-}
+diff --git a/src/components/ScrollIndicator.tsx b/src/components/ScrollIndicator.tsx
+deleted file mode 100644
+index 994a892..0000000
+--- a/src/components/ScrollIndicator.tsx
++++ /dev/null
+@@ -1,44 +0,0 @@
+-'use client'
+-
+-import { useEffect, useState } from 'react'
+-
+-export function ScrollIndicator() {
+-  const [visible, setVisible] = useState(false)
+-
+-  useEffect(() => {
+-    const check = () => {
+-      const overflow =
+-        document.documentElement.scrollHeight - window.innerHeight > 80
+-      const scrolled = window.scrollY > 40
+-      setVisible(overflow && !scrolled)
+-    }
+-    check()
+-    window.addEventListener('scroll', check, { passive: true })
+-    window.addEventListener('resize', check)
+-    // Re-check shortly after mount in case fonts/images push the layout.
+-    const t = setTimeout(check, 600)
+-    return () => {
+-      window.removeEventListener('scroll', check)
+-      window.removeEventListener('resize', check)
+-      clearTimeout(t)
+-    }
+-  }, [])
+-
+-  return (
+-    <div
+-      aria-hidden="true"
+-      className={`pointer-events-none fixed bottom-6 right-6 z-30 transition-opacity duration-700 ease-out-expo md:bottom-10 md:right-10 ${
+-        visible ? 'opacity-100' : 'opacity-0'
+-      }`}
+-    >
+-      <div className="flex flex-col items-center gap-4 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/65">
+-        <span className="rotate-180 [writing-mode:vertical-rl] [text-orientation:mixed]">
+-          Scroll
+-        </span>
+-        <div className="relative h-16 w-px overflow-hidden bg-bone/20">
+-          <span className="scroll-indicator-dash absolute inset-x-0 top-0 block h-5 w-px bg-accent" />
+-        </div>
+-      </div>
+-    </div>
+-  )
+-}
+diff --git a/src/components/ScrollProgress.tsx b/src/components/ScrollProgress.tsx
+deleted file mode 100644
+index f3146df..0000000
+--- a/src/components/ScrollProgress.tsx
++++ /dev/null
+@@ -1,22 +0,0 @@
+-'use client'
+-
+-import { useEffect, useRef } from 'react'
+-
+-export function ScrollProgress() {
+-  const bar = useRef<HTMLDivElement>(null)
+-  useEffect(() => {
+-    const onScroll = () => {
+-      const h = document.documentElement
+-      const p = h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight)
+-      if (bar.current) bar.current.style.transform = `scaleX(${p})`
+-    }
+-    window.addEventListener('scroll', onScroll, { passive: true })
+-    onScroll()
+-    return () => window.removeEventListener('scroll', onScroll)
+-  }, [])
+-  return (
+-    <div className="fixed left-0 top-0 z-[60] h-px w-full origin-left bg-transparent">
+-      <div ref={bar} className="h-px w-full origin-left scale-x-0 bg-accent" />
+-    </div>
+-  )
+-}
+diff --git a/src/components/SplitText.tsx b/src/components/SplitText.tsx
+deleted file mode 100644
+index 77d9af7..0000000
+--- a/src/components/SplitText.tsx
++++ /dev/null
+@@ -1,94 +0,0 @@
+-'use client'
+-
+-import { useEffect, useRef } from 'react'
+-import clsx from 'clsx'
+-
+-type Props = {
+-  text: string
+-  className?: string
+-  splitBy?: 'char' | 'word'
+-  delayStep?: number
+-  startDelay?: number
+-  /** Wrap last word in an italic accent span (matches site pattern). */
+-  accentLastWord?: boolean
+-  trigger?: 'mount' | 'scroll'
+-}
+-
+-export function SplitText({
+-  text,
+-  className,
+-  splitBy = 'char',
+-  delayStep = 30,
+-  startDelay = 0,
+-  accentLastWord = false,
+-  trigger = 'scroll',
+-}: Props) {
+-  const ref = useRef<HTMLSpanElement | null>(null)
+-
+-  useEffect(() => {
+-    const root = ref.current
+-    if (!root) return
+-    if (trigger === 'mount') {
+-      root.classList.add('is-visible')
+-      return
+-    }
+-    const io = new IntersectionObserver(
+-      (entries) => {
+-        entries.forEach((entry) => {
+-          if (entry.isIntersecting) {
+-            entry.target.classList.add('is-visible')
+-            io.unobserve(entry.target)
+-          }
+-        })
+-      },
+-      { threshold: 0.18, rootMargin: '0px 0px -60px 0px' },
+-    )
+-    io.observe(root)
+-    return () => io.disconnect()
+-  }, [trigger])
+-
+-  const words = text.split(' ')
+-
+-  return (
+-    <span ref={ref} className={clsx('split-text', className)}>
+-      {words.map((word, wi) => {
+-        const isLast = wi === words.length - 1
+-        const wordClass = isLast && accentLastWord ? 'italic text-accent' : ''
+-        if (splitBy === 'word') {
+-          return (
+-            <span key={wi} className="split-text__word">
+-              <span
+-                className={clsx('split-text__inner inline-block', wordClass)}
+-                style={{ transitionDelay: `${startDelay + wi * delayStep}ms` }}
+-              >
+-                {word}
+-              </span>
+-              {wi < words.length - 1 && <span>&nbsp;</span>}
+-            </span>
+-          )
+-        }
+-        // char split — also wrap whole word so we can space them
+-        const chars = Array.from(word)
+-        return (
+-          <span key={wi} className={clsx('split-text__word', wordClass)}>
+-            {chars.map((c, ci) => {
+-              const idx =
+-                words.slice(0, wi).reduce((s, w) => s + w.length, 0) + ci
+-              return (
+-                <span key={ci} className="split-text__char">
+-                  <span
+-                    className="split-text__inner inline-block"
+-                    style={{ transitionDelay: `${startDelay + idx * delayStep}ms` }}
+-                  >
+-                    {c}
+-                  </span>
+-                </span>
+-              )
+-            })}
+-            {wi < words.length - 1 && <span>&nbsp;</span>}
+-          </span>
+-        )
+-      })}
+-    </span>
+-  )
+-}
+diff --git a/src/components/Tilt.tsx b/src/components/Tilt.tsx
+deleted file mode 100644
+index e8337fb..0000000
+--- a/src/components/Tilt.tsx
++++ /dev/null
+@@ -1,64 +0,0 @@
+-'use client'
+-
+-import { useEffect, useRef } from 'react'
+-import clsx from 'clsx'
+-
+-type Props = {
+-  children: React.ReactNode
+-  className?: string
+-  max?: number // degrees
+-}
+-
+-/** Subtle 3D tilt that follows the cursor. */
+-export function Tilt({ children, className, max = 6 }: Props) {
+-  const wrap = useRef<HTMLDivElement>(null)
+-  const inner = useRef<HTMLDivElement>(null)
+-
+-  useEffect(() => {
+-    const el = wrap.current
+-    const target = inner.current
+-    if (!el || !target) return
+-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+-
+-    let raf = 0
+-    let trx = 0,
+-      try_ = 0,
+-      crx = 0,
+-      cry = 0
+-
+-    const onMove = (e: MouseEvent) => {
+-      const rect = el.getBoundingClientRect()
+-      const x = (e.clientX - rect.left) / rect.width - 0.5
+-      const y = (e.clientY - rect.top) / rect.height - 0.5
+-      trx = -y * max
+-      try_ = x * max
+-    }
+-    const onLeave = () => {
+-      trx = 0
+-      try_ = 0
+-    }
+-    const tick = () => {
+-      crx += (trx - crx) * 0.12
+-      cry += (try_ - cry) * 0.12
+-      target.style.transform = `perspective(900px) rotateX(${crx.toFixed(2)}deg) rotateY(${cry.toFixed(2)}deg)`
+-      raf = requestAnimationFrame(tick)
+-    }
+-
+-    el.addEventListener('mousemove', onMove)
+-    el.addEventListener('mouseleave', onLeave)
+-    raf = requestAnimationFrame(tick)
+-    return () => {
+-      el.removeEventListener('mousemove', onMove)
+-      el.removeEventListener('mouseleave', onLeave)
+-      cancelAnimationFrame(raf)
+-    }
+-  }, [max])
+-
+-  return (
+-    <div ref={wrap} className={clsx('block', className)} style={{ perspective: '900px' }}>
+-      <div ref={inner} className="will-change-transform">
+-        {children}
+-      </div>
+-    </div>
+-  )
+-}
+diff --git a/src/components/blocks/BackgroundBlock.tsx b/src/components/blocks/BackgroundBlock.tsx
+index ea23c39..56537bb 100644
+--- a/src/components/blocks/BackgroundBlock.tsx
++++ b/src/components/blocks/BackgroundBlock.tsx
+@@ -1,62 +1,34 @@
+ import { CTAButton } from '../CTAButton'
+ import { MediaImage } from '../Media'
+ import { RichTextRenderer } from '@/lib/lexical'
+-import { Reveal } from '../Reveal'
+-import { Tilt } from '../Tilt'
+-import { Magnetic } from '../Magnetic'
+ import type { Locale } from '@/lib/i18n'
+ 
+ export function BackgroundBlock({ block, locale }: { block: any; locale: Locale }) {
+   return (
+-    <section className="container-page grid gap-16 py-28 md:grid-cols-12">
+-      {/* Sticky image column */}
+-      <div className="md:col-span-5">
+-        <div className="sticky top-32">
+-          {block.image && (
+-            <Tilt max={4}>
+-              <div className="img-zoom overflow-hidden">
+-                <MediaImage
+-                  media={block.image}
+-                  className="h-auto w-full object-contain grayscale transition-all duration-700 hover:grayscale-0"
+-                  sizes="(min-width: 768px) 40vw, 100vw"
+-                  priority
+-                />
+-              </div>
+-            </Tilt>
+-          )}
+-          <div className="mt-4 flex justify-between font-mono text-[10px] uppercase tracking-[0.25em] text-bone/40">
+-            <span>Bandar Shanneik</span>
+-            <span>Senior Counsel</span>
+-          </div>
+-        </div>
+-      </div>
+-
+-      {/* Text column */}
+-      <div className="md:col-span-7 md:pl-12">
+-        <Reveal>
+-          <div className="eyebrow mb-10">02 / {block.heading || 'Background'}</div>
+-        </Reveal>
+-        <Reveal delay={1}>
+-          <h2 className="font-display text-6xl font-light leading-[0.9] tracking-display md:text-8xl">
+-            <span className="italic text-accent">A</span> practice at the{' '}
+-            <span className="italic">intersection</span> of two legal worlds.
+-          </h2>
+-        </Reveal>
++    <section className="container-page py-12 md:py-16">
++      <h2 className="text-2xl md:text-3xl">{block.heading || 'Background'}</h2>
+ 
+-        <Reveal delay={2} className="mt-12 max-w-xl text-lg leading-relaxed text-bone/75">
+-          <RichTextRenderer data={block.body} />
+-        </Reveal>
++      {block.image && (
++        <div className="mt-8 w-40 sm:w-48">
++          <MediaImage
++            media={block.image}
++            className="h-auto w-full object-cover"
++            sizes="200px"
++          />
++        </div>
++      )}
+ 
+-        {Array.isArray(block.cta) && block.cta.length > 0 && (
+-          <Reveal delay={3} className="mt-10 flex flex-wrap gap-3">
+-            {block.cta.map((c: any, i: number) => (
+-              <Magnetic key={i} strength={0.25}>
+-                <CTAButton link={c?.link} locale={locale} />
+-              </Magnetic>
+-            ))}
+-          </Reveal>
+-        )}
++      <div className="mt-8 text-bone/80 [&_p]:mb-5 [&_p:last-child]:mb-0">
++        <RichTextRenderer data={block.body} />
+       </div>
++
++      {Array.isArray(block.cta) && block.cta.length > 0 && (
++        <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
++          {block.cta.map((c: any, i: number) => (
++            <CTAButton key={i} link={c?.link} locale={locale} />
++          ))}
++        </div>
++      )}
+     </section>
+   )
+ }
+diff --git a/src/components/blocks/CTABannerBlock.tsx b/src/components/blocks/CTABannerBlock.tsx
+index be606ab..fe8cbb3 100644
+--- a/src/components/blocks/CTABannerBlock.tsx
++++ b/src/components/blocks/CTABannerBlock.tsx
+@@ -1,88 +1,19 @@
+-import Link from 'next/link'
+-import { Reveal } from '../Reveal'
+-import { SplitText } from '../SplitText'
+-import { Magnetic } from '../Magnetic'
+-import { resolveHref, type LinkData } from '@/lib/resolveLink'
++import { CTAButton } from '../CTAButton'
+ import type { Locale } from '@/lib/i18n'
+ 
+-function OnDarkButton({ link, locale }: { link: LinkData; locale: Locale }) {
+-  if (!link?.label) return null
+-  const href = resolveHref(link, locale)
+-  const arrow = link.newTab ? '↗' : '→'
+-  const className =
+-    'group relative inline-flex items-center justify-between gap-8 overflow-hidden whitespace-nowrap rounded-full border border-ink/30 px-7 py-4 font-mono text-[11px] uppercase tracking-[0.25em] text-ink transition-colors duration-500 ease-out-expo hover:border-accent hover:text-bone'
+-  const inner = (
+-    <>
+-      <span
+-        aria-hidden="true"
+-        className="absolute inset-0 -z-0 origin-bottom scale-y-0 bg-accent transition-transform duration-700 ease-out-expo group-hover:scale-y-100"
+-      />
+-      <span className="relative z-10">{link.label}</span>
+-      <span className="relative z-10 inline-flex items-center text-base leading-none transition-transform duration-500 ease-out-expo group-hover:translate-x-1">
+-        {arrow}
+-      </span>
+-    </>
+-  )
+-  if (link.type === 'external') {
+-    return (
+-      <a
+-        href={href}
+-        target={link.newTab ? '_blank' : undefined}
+-        rel={link.newTab ? 'noopener noreferrer' : undefined}
+-        className={className}
+-      >
+-        {inner}
+-      </a>
+-    )
+-  }
+-  return (
+-    <Link href={href} className={className}>
+-      {inner}
+-    </Link>
+-  )
+-}
+-
+ export function CTABannerBlock({ block, locale }: { block: any; locale: Locale }) {
+-  const words = (block.heading || '').split(' ')
+   return (
+-    <section className="border-y border-line bg-bone text-ink">
+-      <div className="container-page py-20 md:py-28">
+-        <div className="grid items-end gap-10 md:grid-cols-12">
+-          {/* Heading */}
+-          <div className="md:col-span-7">
+-            <Reveal>
+-              <div className="mb-6 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-ink/55 before:block before:h-px before:w-8 before:bg-ink/30">
+-                → Get in touch
+-              </div>
+-            </Reveal>
+-            <h2 className="font-display text-5xl font-light leading-[0.95] tracking-display text-ink md:text-6xl lg:text-7xl">
+-              <SplitText
+-                text={block.heading || ''}
+-                splitBy="char"
+-                delayStep={26}
+-                accentLastWord
+-              />
+-            </h2>
+-          </div>
+-
+-          {/* Subtext + button */}
+-          <div className="flex flex-col items-start gap-6 md:col-span-5 md:items-end">
+-            {block.subtext && (
+-              <Reveal delay={2}>
+-                <p className="max-w-xs text-sm leading-relaxed text-ink/65 md:text-right">{block.subtext}</p>
+-              </Reveal>
+-            )}
+-            <Reveal delay={3}>
+-              <div className="flex flex-wrap gap-3">
+-                {(block.cta || []).map((c: any, i: number) => (
+-                  <Magnetic key={i} strength={0.3}>
+-                    <OnDarkButton link={c?.link} locale={locale} />
+-                  </Magnetic>
+-                ))}
+-              </div>
+-            </Reveal>
++    <section className="container-page py-12 md:py-16">
++      <div className="border-t border-line pt-8">
++        <h2 className="text-2xl md:text-3xl">{block.heading || 'Get in touch'}</h2>
++        {block.subtext && <p className="mt-3 max-w-prose text-bone/70">{block.subtext}</p>}
++        {Array.isArray(block.cta) && block.cta.length > 0 && (
++          <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
++            {block.cta.map((c: any, i: number) => (
++              <CTAButton key={i} link={c?.link} locale={locale} />
++            ))}
+           </div>
+-        </div>
++        )}
+       </div>
+     </section>
+   )
+diff --git a/src/components/blocks/ContactBlock.tsx b/src/components/blocks/ContactBlock.tsx
+index c99ccea..549f395 100644
+--- a/src/components/blocks/ContactBlock.tsx
++++ b/src/components/blocks/ContactBlock.tsx
+@@ -1,56 +1,38 @@
+-import { Reveal } from '../Reveal'
+-
+ export function ContactBlock({ block }: { block: any }) {
+   return (
+-    <section className="container-page border-t border-line py-28">
+-      <div className="grid gap-12 md:grid-cols-12">
+-        <div className="md:col-span-6">
+-          <Reveal>
+-            <div className="eyebrow mb-10">→ Contact</div>
+-          </Reveal>
+-          <Reveal delay={1}>
+-            <h2 className="font-display text-7xl font-light leading-[0.88] tracking-display md:text-9xl">
+-              {block.heading?.split(' ').map((w: string, i: number, arr: string[]) => (
+-                <span key={i} className={i === arr.length - 1 ? 'italic text-accent' : ''}>
+-                  {w}
+-                  {i < arr.length - 1 ? ' ' : ''}
+-                </span>
+-              ))}
+-            </h2>
+-          </Reveal>
+-        </div>
+-        <div className="md:col-span-5 md:col-start-8">
+-          {block.intro && (
+-            <Reveal delay={1}>
+-              <p className="text-lg leading-relaxed text-bone/70">{block.intro}</p>
+-            </Reveal>
+-          )}
+-          <Reveal delay={2} className="mt-12 space-y-6 border-t border-line pt-8">
+-            {block.email && (
+-              <div>
+-                <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">Email</div>
+-                <a href={`mailto:${block.email}`} className="link-underline font-display text-3xl text-bone hover:text-accent">
+-                  {block.email}
+-                </a>
+-              </div>
+-            )}
+-            {block.phone && (
+-              <div>
+-                <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">Phone</div>
+-                <a href={`tel:${block.phone}`} className="link-underline font-display text-3xl text-bone hover:text-accent">
+-                  {block.phone}
+-                </a>
+-              </div>
+-            )}
+-            {block.address && (
+-              <div>
+-                <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">Address</div>
+-                <div className="whitespace-pre-line text-base text-bone/70">{block.address}</div>
+-              </div>
+-            )}
+-          </Reveal>
+-        </div>
+-      </div>
++    <section className="container-page py-12 md:py-16">
++      <h2 className="text-2xl md:text-3xl">{block.heading || 'Contact'}</h2>
++
++      {block.intro && <p className="mt-6 max-w-prose text-bone/80">{block.intro}</p>}
++
++      <dl className="mt-10 space-y-6">
++        {block.email && (
++          <div>
++            <dt className="text-sm italic text-bone/55">Email</dt>
++            <dd className="mt-1">
++              <a href={`mailto:${block.email}`} className="link text-lg">
++                {block.email}
++              </a>
++            </dd>
++          </div>
++        )}
++        {block.phone && (
++          <div>
++            <dt className="text-sm italic text-bone/55">Phone</dt>
++            <dd className="mt-1">
++              <a href={`tel:${block.phone}`} className="link text-lg">
++                {block.phone}
++              </a>
++            </dd>
++          </div>
++        )}
++        {block.address && (
++          <div>
++            <dt className="text-sm italic text-bone/55">Address</dt>
++            <dd className="mt-1 whitespace-pre-line text-bone/80">{block.address}</dd>
++          </div>
++        )}
++      </dl>
+     </section>
+   )
+ }
+diff --git a/src/components/blocks/ContactFormBlock.tsx b/src/components/blocks/ContactFormBlock.tsx
+index b55a5f5..854bcbe 100644
+--- a/src/components/blocks/ContactFormBlock.tsx
++++ b/src/components/blocks/ContactFormBlock.tsx
+@@ -1,71 +1,28 @@
+-import { Reveal } from '../Reveal'
+ import { ContactForm } from '../ContactForm'
+-import { MediaImage } from '../Media'
+-import { SplitText } from '../SplitText'
+ 
+ export function ContactFormBlock({ block }: { block: any }) {
+-  const hasImage = Boolean(block.image)
+   return (
+-    <section className="container-page border-t border-line py-28">
+-      <div className="grid gap-12 md:grid-cols-12">
+-        {/* Left: heading + intro + direct email + optional portrait */}
+-        <div className="md:col-span-5">
+-          <Reveal>
+-            <div className="eyebrow mb-10">→ Contact</div>
+-          </Reveal>
+-          <h2 className="font-display text-6xl font-light leading-[0.9] tracking-display md:text-7xl">
+-            <SplitText
+-              text={block.heading || 'Get in touch'}
+-              splitBy="char"
+-              delayStep={28}
+-              accentLastWord
+-            />
+-          </h2>
+-          {block.intro && (
+-            <Reveal delay={2}>
+-              <p className="mt-8 max-w-md text-base leading-relaxed text-bone/70">{block.intro}</p>
+-            </Reveal>
+-          )}
+-          {block.email && (
+-            <Reveal delay={3} className="mt-10 border-t border-line pt-6">
+-              <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/45">
+-                Or write directly
+-              </div>
+-              <a
+-                href={`mailto:${block.email}`}
+-                className="link-underline font-display text-2xl text-bone hover:text-accent"
+-              >
+-                {block.email}
+-              </a>
+-            </Reveal>
+-          )}
+-          {hasImage && (
+-            <Reveal delay={3} className="mt-12 hidden md:block">
+-              <div className="img-zoom overflow-hidden">
+-                <MediaImage
+-                  media={block.image}
+-                  className="h-[440px] w-full object-cover grayscale transition-all duration-700 hover:grayscale-0"
+-                  sizes="(min-width: 768px) 35vw, 100vw"
+-                />
+-              </div>
+-              <div className="mt-3 flex justify-between font-mono text-[10px] uppercase tracking-[0.25em] text-bone/40">
+-                <span>Bandar Shanneik</span>
+-                <span>Senior Counsel</span>
+-              </div>
+-            </Reveal>
+-          )}
+-        </div>
++    <section className="container-page py-12 md:py-16">
++      <h2 className="text-2xl md:text-3xl">{block.heading || 'Get in touch'}</h2>
+ 
+-        {/* Right: form */}
+-        <div className="md:col-span-6 md:col-start-7">
+-          <Reveal delay={1}>
+-            <ContactForm
+-              successMessage={block.successMessage}
+-              submitLabel={block.submitLabel}
+-              showSubject={block.showSubject ?? true}
+-            />
+-          </Reveal>
+-        </div>
++      {block.intro && (
++        <p className="mt-6 max-w-prose text-bone/80">{block.intro}</p>
++      )}
++
++      {block.email && (
++        <p className="mt-6">
++          <a href={`mailto:${block.email}`} className="link text-lg">
++            {block.email}
++          </a>
++        </p>
++      )}
++
++      <div className="mt-12 border-t border-line pt-12">
++        <ContactForm
++          successMessage={block.successMessage}
++          submitLabel={block.submitLabel}
++          showSubject={block.showSubject ?? true}
++        />
+       </div>
+     </section>
+   )
+diff --git a/src/components/blocks/EducationJurisdictionsBlock.tsx b/src/components/blocks/EducationJurisdictionsBlock.tsx
+index 8017313..7cdac31 100644
+--- a/src/components/blocks/EducationJurisdictionsBlock.tsx
++++ b/src/components/blocks/EducationJurisdictionsBlock.tsx
+@@ -1,91 +1,47 @@
+-import { Reveal } from '../Reveal'
+-import { SplitText } from '../SplitText'
+-
+ export function EducationJurisdictionsBlock({ block }: { block: any }) {
+-  return (
+-    <section className="container-page border-t border-line py-28">
+-      <Reveal>
+-        <div className="eyebrow mb-12">03 / Credentials</div>
+-      </Reveal>
+-
+-      <h2 className="mb-20 font-display text-6xl font-light leading-[0.9] tracking-display md:text-8xl">
+-        <SplitText text={block.heading || 'Education & Jurisdictions'} splitBy="word" delayStep={70} />
+-      </h2>
++  const education: any[] = block.education || []
++  const jurisdictions: any[] = block.jurisdictions || []
++  const languages: any[] = block.languages || []
+ 
+-      <div className="grid gap-16 md:grid-cols-12">
+-        {/* Education timeline */}
+-        <div className="md:col-span-7">
+-          <Reveal>
+-            <div className="mb-8 flex items-baseline justify-between border-b border-line pb-3">
+-              <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-bone/60">Education</h3>
+-              <span className="font-mono text-[11px] text-bone/30">
+-                {(block.education || []).length.toString().padStart(2, '0')}
+-              </span>
+-            </div>
+-          </Reveal>
++  return (
++    <section className="container-page py-12 md:py-16">
++      <h2 className="text-2xl md:text-3xl">{block.heading || 'Education & Jurisdictions'}</h2>
+ 
+-          <ul>
+-            {(block.education || []).map((entry: any, i: number) => (
+-              <Reveal as="li" key={i} delay={(Math.min(i, 3) + 1) as 1 | 2 | 3} className="group border-b border-line py-8 transition-colors hover:bg-ink-800/30">
+-                <div className="grid grid-cols-12 items-start gap-6">
+-                  <div className="col-span-1 font-mono text-xs text-bone/40">
+-                    {String(i + 1).padStart(2, '0')}
+-                  </div>
+-                  <div className="col-span-11">
+-                    <div className="font-display text-2xl leading-tight text-bone transition-colors group-hover:text-accent md:text-3xl">
+-                      {entry.institution}
+-                    </div>
+-                    {entry.detail && (
+-                      <p className="mt-3 max-w-xl text-sm leading-relaxed text-bone/60">{entry.detail}</p>
+-                    )}
+-                  </div>
+-                </div>
+-              </Reveal>
++      <div className="mt-10 space-y-10">
++        {/* Education */}
++        <div>
++          <h3 className="mb-4 text-sm italic text-bone/55">Education</h3>
++          <ul className="divide-y divide-line border-t border-line">
++            {education.map((entry: any, i: number) => (
++              <li key={i} className="py-4">
++                <div className="text-lg text-bone">{entry.institution}</div>
++                {entry.detail && (
++                  <p className="mt-1 text-bone/65">{entry.detail}</p>
++                )}
++              </li>
+             ))}
+           </ul>
+         </div>
+ 
+-        {/* Jurisdictions + languages */}
+-        <div className="space-y-12 md:col-span-5 md:pl-8">
+-          <Reveal delay={1}>
+-            <div className="mb-6 flex items-baseline justify-between border-b border-line pb-3">
+-              <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-bone/60">Jurisdictions</h3>
+-              <span className="font-mono text-[11px] text-bone/30">
+-                {(block.jurisdictions || []).length.toString().padStart(2, '0')}
+-              </span>
+-            </div>
+-            <ul>
+-              {(block.jurisdictions || []).map((j: any, i: number) => (
+-                <li
+-                  key={i}
+-                  className="flex items-center justify-between border-b border-line py-4 transition-colors hover:text-accent"
+-                >
+-                  <span className="font-display text-2xl font-light">{j.name}</span>
+-                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-bone/40">
+-                    {j.icon || 'jur'}
+-                  </span>
+-                </li>
+-              ))}
+-            </ul>
+-          </Reveal>
++        {/* Jurisdictions */}
++        {jurisdictions.length > 0 && (
++          <div>
++            <h3 className="mb-3 text-sm italic text-bone/55">Jurisdictions</h3>
++            <p className="text-lg text-bone">
++              {jurisdictions.map((j: any) => j.name).join(' · ')}
++            </p>
++          </div>
++        )}
+ 
+-          <Reveal delay={2}>
+-            <div className="mb-6 flex items-baseline justify-between border-b border-line pb-3">
+-              <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-bone/60">Languages</h3>
+-              <span className="font-mono text-[11px] text-bone/30">
+-                {(block.languages || []).length.toString().padStart(2, '0')}
+-              </span>
+-            </div>
+-            <div className="font-display text-3xl font-light leading-tight">
+-              {(block.languages || []).map((l: any, i: number, arr: any[]) => (
+-                <span key={i}>
+-                  {l.name}
+-                  {i < arr.length - 1 && <span className="mx-3 text-accent">·</span>}
+-                </span>
+-              ))}
+-            </div>
+-          </Reveal>
+-        </div>
++        {/* Languages */}
++        {languages.length > 0 && (
++          <div>
++            <h3 className="mb-3 text-sm italic text-bone/55">Languages</h3>
++            <p className="text-lg text-bone">
++              {languages.map((l: any) => l.name).join(' · ')}
++            </p>
++          </div>
++        )}
+       </div>
+     </section>
+   )
+diff --git a/src/components/blocks/HeroBlock.tsx b/src/components/blocks/HeroBlock.tsx
+index 8f904f8..9dcc7bf 100644
+--- a/src/components/blocks/HeroBlock.tsx
++++ b/src/components/blocks/HeroBlock.tsx
+@@ -1,83 +1,44 @@
+ import { CTAButton } from '../CTAButton'
+ import { MediaImage } from '../Media'
+-import { Marquee } from '../Marquee'
+-import { SplitText } from '../SplitText'
+-import { Tilt } from '../Tilt'
+-import { Magnetic } from '../Magnetic'
+-import { Reveal } from '../Reveal'
+ import type { Locale } from '@/lib/i18n'
+ 
++// Home masthead: prominent portrait, name, a one-line dual identity
++// (consultant + scholar), a short bio, and a couple of quiet links.
+ export function HeroBlock({ block, locale }: { block: any; locale: Locale }) {
+   const title: string = block.title || ''
++  const role: string = block.eyebrow || block.role || 'Cross-border legal consultant · Legal scholar'
+ 
+   return (
+-    <section className="relative flex min-h-[calc(100svh-80px)] flex-col overflow-hidden">
+-      {/* Status row */}
+-      <div className="container-page flex shrink-0 items-center justify-between border-b border-line py-3 font-mono text-[10px] uppercase tracking-[0.25em] text-bone/55">
+-        <span>© {new Date().getFullYear()} — Senior Legal Consultant</span>
+-        <span className="hidden md:inline">Germany · Middle East · Europe</span>
+-        <span className="flex items-center gap-2">
+-          <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+-          Available
+-        </span>
+-      </div>
+-
+-      {/* Title + portrait — fills remaining space */}
+-      <div className="container-page grid flex-1 items-center gap-6 py-4 md:grid-cols-12 md:gap-12 md:py-6">
+-        <div className="md:col-span-7">
+-          {block.eyebrow && <div className="eyebrow mb-6">{block.eyebrow}</div>}
+-          <h1 className="font-display font-light leading-[0.85] tracking-tightest text-bone text-[clamp(3.5rem,11vw,8.5rem)]">
+-            <SplitText text={title} splitBy="char" delayStep={28} accentLastWord trigger="mount" />
+-          </h1>
+-        </div>
++    <section className="container-wide py-12 md:py-20">
++      <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-14">
++        {block.image && (
++          <div className="w-44 shrink-0 sm:w-52 md:w-60">
++            <MediaImage
++              media={block.image}
++              className="h-auto w-full object-cover"
++              priority
++              sizes="(min-width: 768px) 240px, 50vw"
++            />
++          </div>
++        )}
+ 
+-        <div className="-mx-4 md:mx-0 md:col-span-5">
+-          {block.image && (
+-            <Tilt max={5}>
+-              <div className="img-zoom overflow-hidden">
+-                <MediaImage
+-                  media={block.image}
+-                  className="mx-auto h-[50vh] max-h-[420px] w-full max-w-[320px] object-cover object-center grayscale transition-all duration-700 hover:grayscale-0 md:h-[58vh] md:max-h-none md:max-w-none md:object-contain md:object-right"
+-                  priority
+-                  sizes="(min-width: 768px) 42vw, 80vw"
+-                />
+-              </div>
+-            </Tilt>
+-          )}
+-        </div>
+-      </div>
++        <div className="max-w-xl">
++          <h1 className="text-4xl leading-tight md:text-5xl">{title}</h1>
++          <p className="mt-3 text-lg italic text-accent">{role}</p>
+ 
+-      {/* Description band */}
+-      <div className="container-page grid shrink-0 gap-6 border-t border-line py-6 md:grid-cols-12">
+-        <div className="md:col-span-1">
+-          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">[ 01 ]</div>
+-        </div>
+-        <div className="md:col-span-7">
+           {block.body && (
+-            <Reveal delay={1}>
+-              <p className="max-w-2xl text-balance text-sm leading-relaxed text-bone/75 md:text-base">
+-                {block.body}
+-              </p>
+-            </Reveal>
++            <p className="mt-7 text-bone/80">{block.body}</p>
+           )}
+-        </div>
+-        <div className="flex items-center md:col-span-4 md:justify-end">
++
+           {Array.isArray(block.ctas) && block.ctas.length > 0 && (
+-            <Reveal delay={2} className="flex flex-wrap gap-3">
++            <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+               {block.ctas.map((c: any, i: number) => (
+-                <Magnetic key={i} strength={0.25}>
+-                  <CTAButton link={c?.link} locale={locale} />
+-                </Magnetic>
++                <CTAButton key={i} link={c?.link} locale={locale} />
+               ))}
+-            </Reveal>
++            </div>
+           )}
+         </div>
+       </div>
+-
+-      {/* Marquee tagline */}
+-      <div className="shrink-0 border-y border-line bg-bone py-1 text-ink">
+-        <Marquee items={['Cross-border counsel', 'Corporate · M&A', 'Real estate', 'Arbitration', 'Governance']} />
+-      </div>
+     </section>
+   )
+ }
+diff --git a/src/components/blocks/PracticeAreasBlock.tsx b/src/components/blocks/PracticeAreasBlock.tsx
+index d3fb557..695c4a7 100644
+--- a/src/components/blocks/PracticeAreasBlock.tsx
++++ b/src/components/blocks/PracticeAreasBlock.tsx
+@@ -1,48 +1,11 @@
+-import { Reveal } from '../Reveal'
+-import { SplitText } from '../SplitText'
+-
+ export function PracticeAreasBlock({ block }: { block: any }) {
+   const items: any[] = block.items || []
+   return (
+-    <section className="container-page border-t border-line py-28">
+-      <div className="grid gap-12 md:grid-cols-12">
+-        {/* Heading column */}
+-        <div className="md:col-span-4">
+-          <Reveal>
+-            <div className="eyebrow mb-8">05 / Areas</div>
+-            <h2 className="font-display text-5xl font-light leading-[0.95] tracking-display md:text-6xl">
+-              {block.heading || 'Practice Areas'}
+-            </h2>
+-            <div className="mt-6 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">
+-              {items.length.toString().padStart(2, '0')} disciplines
+-            </div>
+-          </Reveal>
+-        </div>
+-
+-        {/* Items — editorial display list */}
+-        <ul className="md:col-span-8 md:col-start-5">
+-          {items.map((t, i) => (
+-            <Reveal
+-              as="li"
+-              key={i}
+-              delay={(Math.min(i % 4, 3) + 1) as 1 | 2 | 3}
+-              className="group flex items-baseline justify-between gap-6 border-b border-line py-5 transition-colors"
+-            >
+-              <span className="flex items-baseline gap-6">
+-                <span className="font-mono text-[11px] tracking-[0.25em] text-bone/35">
+-                  {String(i + 1).padStart(2, '0')}
+-                </span>
+-                <span className="font-display text-3xl font-light italic leading-tight transition-colors group-hover:text-accent md:text-4xl">
+-                  {t.label}
+-                </span>
+-              </span>
+-              <span className="font-mono text-base text-bone/30 transition-all duration-500 ease-out-expo group-hover:translate-x-1 group-hover:text-accent">
+-                →
+-              </span>
+-            </Reveal>
+-          ))}
+-        </ul>
+-      </div>
++    <section className="container-page py-12 md:py-16">
++      <h3 className="mb-4 text-sm italic text-bone/55">{block.heading || 'Practice areas'}</h3>
++      <p className="text-lg leading-relaxed text-bone">
++        {items.map((t: any) => t.label).join(' · ')}
++      </p>
+     </section>
+   )
+ }
+diff --git a/src/components/blocks/ResearchProfileCardBlock.tsx b/src/components/blocks/ResearchProfileCardBlock.tsx
+index 4f863a1..6b5a7af 100644
+--- a/src/components/blocks/ResearchProfileCardBlock.tsx
++++ b/src/components/blocks/ResearchProfileCardBlock.tsx
+@@ -1,23 +1,9 @@
+-import { MediaImage } from '../Media'
+-import { Reveal } from '../Reveal'
+-
+ export function ResearchProfileCardBlock({ block }: { block: any }) {
+   return (
+-    <Reveal>
+-      <div className="border border-line bg-ink-800/40 p-8">
+-        <div className="mb-6 flex items-start justify-between">
+-          <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">
+-            {block.heading || 'Research Profile'}
+-          </div>
+-          {block.logo && (
+-            <MediaImage media={block.logo} className="h-8 w-auto object-contain opacity-80" sizes="120px" />
+-          )}
+-        </div>
+-        {block.role && <div className="font-display text-3xl font-light text-bone">{block.role}</div>}
+-        {block.body && (
+-          <p className="mt-4 text-sm leading-relaxed text-bone/60">{block.body}</p>
+-        )}
+-      </div>
+-    </Reveal>
++    <section className="container-page py-12 md:py-16">
++      <h3 className="mb-3 text-sm italic text-bone/55">{block.heading || 'Research profile'}</h3>
++      {block.role && <p className="text-xl text-bone">{block.role}</p>}
++      {block.body && <p className="mt-4 max-w-prose text-bone/80">{block.body}</p>}
++    </section>
+   )
+ }
+diff --git a/src/components/blocks/ResearchTimelineBlock.tsx b/src/components/blocks/ResearchTimelineBlock.tsx
+index 137a5e0..9833bbc 100644
+--- a/src/components/blocks/ResearchTimelineBlock.tsx
++++ b/src/components/blocks/ResearchTimelineBlock.tsx
+@@ -1,7 +1,5 @@
+-import { Reveal } from '../Reveal'
+-
+ const kindLabel: Record<string, string> = {
+-  'peer-reviewed': 'Peer-reviewed',
++  'peer-reviewed': 'Peer-reviewed article',
+   'book-chapter': 'Book chapter',
+   'legal-article': 'Legal article',
+   'working-paper': 'Working paper',
+@@ -42,41 +40,25 @@ export function ResearchTimelineBlock({ block }: { block: any }) {
+   const entries = entriesFromBlock(block)
+   return (
+     <div>
+-      <Reveal>
+-        <div className="mb-8 flex items-baseline justify-between border-b border-line pb-3">
+-          <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-bone/60">
+-            {block.heading || 'Selected Publications'}
+-          </h3>
+-          <span className="font-mono text-[11px] text-bone/30">
+-            {entries.length.toString().padStart(2, '0')}
+-          </span>
+-        </div>
+-      </Reveal>
+-      <ul>
++      {block.heading && (
++        <h3 className="mb-4 text-sm italic text-bone/55">{block.heading}</h3>
++      )}
++      <ul className="divide-y divide-line border-t border-line">
+         {entries.map((e, i) => (
+-          <Reveal
+-            as="li"
+-            key={i}
+-            delay={((i % 3) + 1) as 1 | 2 | 3}
+-            className="group grid grid-cols-12 gap-6 border-b border-line py-8 transition-colors hover:bg-ink-800/40"
+-          >
+-            <div className="col-span-2 font-mono text-sm text-accent">{e.year}</div>
+-            <div className="col-span-10">
+-              <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">
+-                {kindLabel[e.kind] || 'Publication'}
+-              </div>
+-              <h4 className="font-display text-2xl font-light leading-snug transition-colors group-hover:text-accent md:text-3xl">
+-                {e.title}
+-              </h4>
++          <li key={i} className="grid grid-cols-[3.5rem_1fr] gap-x-5 py-6">
++            <div className="text-bone/45">{e.year}</div>
++            <div>
++              <div className="text-sm italic text-bone/55">{kindLabel[e.kind] || 'Publication'}</div>
++              <h4 className="mt-1 text-lg leading-snug text-bone">{e.title}</h4>
+               {(e.venue || e.status) && (
+-                <div className="mt-3 text-sm text-bone/60">
+-                  {e.venue && <span className="text-bone/80">{e.venue}</span>}
+-                  {e.venue && e.status && ' — '}
++                <p className="mt-1 text-bone/65">
++                  {e.venue}
++                  {e.venue && e.status && ', '}
+                   {e.status && <span className="italic">{e.status}</span>}
+-                </div>
++                </p>
+               )}
+             </div>
+-          </Reveal>
++          </li>
+         ))}
+       </ul>
+     </div>
+@@ -85,7 +67,7 @@ export function ResearchTimelineBlock({ block }: { block: any }) {
+ 
+ export function ResearchTimelineSection({ block }: { block: any }) {
+   return (
+-    <section className="container-page border-t border-line py-28">
++    <section className="container-page py-12 md:py-16">
+       <ResearchTimelineBlock block={block} />
+     </section>
+   )
+diff --git a/src/components/blocks/RichTextBlock.tsx b/src/components/blocks/RichTextBlock.tsx
+index b3828c6..9917a59 100644
+--- a/src/components/blocks/RichTextBlock.tsx
++++ b/src/components/blocks/RichTextBlock.tsx
+@@ -1,21 +1,11 @@
+ import { RichTextRenderer } from '@/lib/lexical'
+-import { Reveal } from '../Reveal'
+ 
+ export function RichTextBlock({ block }: { block: any }) {
+-  const centered = block.alignment === 'center'
+   return (
+-    <section className="container-page border-t border-line py-28">
+-      <div className={centered ? 'mx-auto max-w-3xl text-center' : 'grid gap-12 md:grid-cols-12'}>
+-        {block.heading && (
+-          <Reveal className={centered ? '' : 'md:col-span-4'}>
+-            <h2 className="font-display text-5xl font-light leading-[0.95] tracking-display md:text-7xl">
+-              {block.heading}
+-            </h2>
+-          </Reveal>
+-        )}
+-        <Reveal delay={1} className={centered ? 'mt-8' : 'text-lg leading-relaxed text-bone/75 md:col-span-7 md:col-start-6'}>
+-          <RichTextRenderer data={block.content} />
+-        </Reveal>
++    <section className="container-page py-12 md:py-16">
++      {block.heading && <h2 className="mb-6 text-2xl md:text-3xl">{block.heading}</h2>}
++      <div className="max-w-prose text-bone/80 [&_p]:mb-5 [&_p:last-child]:mb-0">
++        <RichTextRenderer data={block.content} />
+       </div>
+     </section>
+   )
+diff --git a/src/components/blocks/ServiceCardsBlock.tsx b/src/components/blocks/ServiceCardsBlock.tsx
+index e21c90d..361311d 100644
+--- a/src/components/blocks/ServiceCardsBlock.tsx
++++ b/src/components/blocks/ServiceCardsBlock.tsx
+@@ -1,80 +1,19 @@
+-import { Reveal } from '../Reveal'
+-import { SplitText } from '../SplitText'
+-
+ export function ServiceCardsBlock({ block }: { block: any }) {
+   const cards: any[] = block.cards || []
+   return (
+-    <section className="container-page border-t border-line py-28">
+-      {/* Header: heading left, intro right */}
+-      <div className="grid gap-12 md:grid-cols-12">
+-        <div className="md:col-span-5">
+-          <Reveal>
+-            <div className="eyebrow mb-8">04 / Services</div>
+-          </Reveal>
+-          <h2 className="font-display text-6xl font-light leading-[0.9] tracking-display md:text-8xl">
+-            <SplitText
+-              text={block.heading || 'Legal Services'}
+-              splitBy="word"
+-              delayStep={70}
+-              accentLastWord
+-            />
+-          </h2>
+-        </div>
+-        <div className="md:col-span-6 md:col-start-7 md:pt-8">
+-          {block.intro && (
+-            <Reveal delay={1}>
+-              <p className="text-base leading-relaxed text-bone/70 md:text-lg">{block.intro}</p>
+-            </Reveal>
+-          )}
+-        </div>
+-      </div>
+-
+-      {/* Service list — hover-expanding editorial rows */}
+-      <ul className="mt-24 border-t border-line">
+-        {cards.map((c, i) => (
+-          <Reveal
+-            as="li"
+-            key={i}
+-            delay={((i % 3) + 1) as 1 | 2 | 3}
+-            className="group relative isolate border-b border-line"
+-          >
+-            {/* Hover background swipe */}
+-            <span
+-              aria-hidden="true"
+-              className="absolute inset-0 -z-10 origin-left scale-x-0 bg-bone/[0.04] transition-transform duration-700 ease-out-expo group-hover:scale-x-100"
+-            />
+-            <div className="grid items-start gap-6 px-2 py-10 md:grid-cols-12 md:gap-12 md:py-14">
+-              {/* Number */}
+-              <div className="md:col-span-1">
+-                <div className="font-mono text-[11px] uppercase tracking-[0.3em] text-bone/40 transition-colors group-hover:text-accent">
+-                  {String(i + 1).padStart(2, '0')}
+-                </div>
+-              </div>
++    <section className="container-page py-12 md:py-16">
++      <h2 className="text-2xl md:text-3xl">{block.heading || 'Areas of practice'}</h2>
+ 
+-              {/* Title */}
+-              <div className="md:col-span-5">
+-                <h3 className="font-display text-4xl font-light leading-[0.95] tracking-display text-bone transition-colors group-hover:text-accent md:text-6xl">
+-                  <span className="inline-block transition-transform duration-700 ease-out-expo group-hover:-translate-y-1">
+-                    {c.title}
+-                  </span>
+-                </h3>
+-              </div>
++      {block.intro && (
++        <p className="mt-6 max-w-prose text-bone/80">{block.intro}</p>
++      )}
+ 
+-              {/* Body */}
+-              <div className="md:col-span-5">
+-                {c.body && (
+-                  <p className="text-base leading-relaxed text-bone/70 md:text-lg">{c.body}</p>
+-                )}
+-              </div>
+-
+-              {/* Arrow */}
+-              <div className="hidden md:col-span-1 md:flex md:justify-end">
+-                <span className="font-mono text-2xl text-bone/40 transition-all duration-500 ease-out-expo group-hover:translate-x-1 group-hover:text-accent">
+-                  →
+-                </span>
+-              </div>
+-            </div>
+-          </Reveal>
++      <ul className="mt-10 divide-y divide-line border-t border-line">
++        {cards.map((c, i) => (
++          <li key={i} className="py-6">
++            <h3 className="text-xl text-bone">{c.title}</h3>
++            {c.body && <p className="mt-2 max-w-prose text-bone/65">{c.body}</p>}
++          </li>
+         ))}
+       </ul>
+     </section>
+diff --git a/src/components/blocks/TagBoxesBlock.tsx b/src/components/blocks/TagBoxesBlock.tsx
+index 935f68e..665f881 100644
+--- a/src/components/blocks/TagBoxesBlock.tsx
++++ b/src/components/blocks/TagBoxesBlock.tsx
+@@ -1,21 +1,11 @@
+-import { Reveal } from '../Reveal'
+-
+ export function TagBoxesBlock({ block }: { block: any }) {
+   const items: any[] = block.items || []
+   return (
+-    <Reveal>
+-      <div className="border border-line p-8">
+-        <div className="mb-6 font-mono text-[10px] uppercase tracking-[0.3em] text-bone/40">
+-          {block.heading || 'Areas of Interest'}
+-        </div>
+-        <ul className="flex flex-wrap gap-2">
+-          {items.map((t, i) => (
+-            <li key={i} className="tag transition-colors hover:border-accent hover:text-accent">
+-              {t.label}
+-            </li>
+-          ))}
+-        </ul>
+-      </div>
+-    </Reveal>
++    <section className="container-page py-12 md:py-16">
++      <h3 className="mb-3 text-sm italic text-bone/55">{block.heading || 'Areas of interest'}</h3>
++      <p className="text-lg leading-relaxed text-bone">
++        {items.map((t: any) => t.label).join(' · ')}
++      </p>
++    </section>
+   )
+ }
+diff --git a/src/components/blocks/index.tsx b/src/components/blocks/index.tsx
+index 1aca904..21979d3 100644
+--- a/src/components/blocks/index.tsx
++++ b/src/components/blocks/index.tsx
+@@ -6,7 +6,7 @@ import { EducationJurisdictionsBlock } from './EducationJurisdictionsBlock'
+ import { ServiceCardsBlock } from './ServiceCardsBlock'
+ import { PracticeAreasBlock } from './PracticeAreasBlock'
+ import { CTABannerBlock } from './CTABannerBlock'
+-import { ResearchTimelineSection, ResearchTimelineBlock } from './ResearchTimelineBlock'
++import { ResearchTimelineSection } from './ResearchTimelineBlock'
+ import { ResearchProfileCardBlock } from './ResearchProfileCardBlock'
+ import { TagBoxesBlock } from './TagBoxesBlock'
+ import { ContactBlock } from './ContactBlock'
+@@ -14,83 +14,41 @@ import { ContactFormBlock } from './ContactFormBlock'
+ 
+ type Block = { blockType: string; [k: string]: any }
+ 
+-function isResearchSidebar(block: Block) {
+-  return block.blockType === 'researchProfileCard' || block.blockType === 'tagBoxes'
+-}
+-
++// One quiet column, top to bottom. No special pairings, no decoration —
++// whitespace separates the ideas.
+ export function BlockRenderer({ blocks, locale }: { blocks: Block[]; locale: Locale }) {
+-  const out: React.ReactNode[] = []
+-  let i = 0
+-  while (i < blocks.length) {
+-    const b = blocks[i]
+-    // Pair a researchTimeline with adjacent profile card / tag boxes into a two-column layout
+-    if (b.blockType === 'researchTimeline') {
+-      const sidebars: Block[] = []
+-      let j = i + 1
+-      while (j < blocks.length && isResearchSidebar(blocks[j])) {
+-        sidebars.push(blocks[j])
+-        j++
+-      }
+-      if (sidebars.length > 0) {
+-        out.push(
+-          <section key={i} className="container-page border-t border-line py-28">
+-            <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr]">
+-              <ResearchTimelineBlock block={b} />
+-              <div className="space-y-6 lg:pt-12">
+-                {sidebars.map((s, k) =>
+-                  s.blockType === 'researchProfileCard' ? (
+-                    <ResearchProfileCardBlock key={k} block={s} />
+-                  ) : (
+-                    <TagBoxesBlock key={k} block={s} />
+-                  ),
+-                )}
+-              </div>
+-            </div>
+-          </section>,
+-        )
+-        i = j
+-        continue
+-      }
+-    }
+-    switch (b.blockType) {
+-      case 'hero':
+-        out.push(<HeroBlock key={i} block={b} locale={locale} />)
+-        break
+-      case 'richText':
+-        out.push(<RichTextBlock key={i} block={b} />)
+-        break
+-      case 'background':
+-        out.push(<BackgroundBlock key={i} block={b} locale={locale} />)
+-        break
+-      case 'educationJurisdictions':
+-        out.push(<EducationJurisdictionsBlock key={i} block={b} />)
+-        break
+-      case 'serviceCards':
+-        out.push(<ServiceCardsBlock key={i} block={b} />)
+-        break
+-      case 'practiceAreas':
+-        out.push(<PracticeAreasBlock key={i} block={b} />)
+-        break
+-      case 'ctaBanner':
+-        out.push(<CTABannerBlock key={i} block={b} locale={locale} />)
+-        break
+-      case 'researchTimeline':
+-        out.push(<ResearchTimelineSection key={i} block={b} />)
+-        break
+-      case 'researchProfileCard':
+-        out.push(<ResearchProfileCardBlock key={i} block={b} />)
+-        break
+-      case 'tagBoxes':
+-        out.push(<TagBoxesBlock key={i} block={b} />)
+-        break
+-      case 'contact':
+-        out.push(<ContactBlock key={i} block={b} />)
+-        break
+-      case 'contactForm':
+-        out.push(<ContactFormBlock key={i} block={b} />)
+-        break
+-    }
+-    i++
+-  }
+-  return <>{out}</>
++  return (
++    <>
++      {blocks.map((b, i) => {
++        switch (b.blockType) {
++          case 'hero':
++            return <HeroBlock key={i} block={b} locale={locale} />
++          case 'richText':
++            return <RichTextBlock key={i} block={b} />
++          case 'background':
++            return <BackgroundBlock key={i} block={b} locale={locale} />
++          case 'educationJurisdictions':
++            return <EducationJurisdictionsBlock key={i} block={b} />
++          case 'serviceCards':
++            return <ServiceCardsBlock key={i} block={b} />
++          case 'practiceAreas':
++            return <PracticeAreasBlock key={i} block={b} />
++          case 'ctaBanner':
++            return <CTABannerBlock key={i} block={b} locale={locale} />
++          case 'researchTimeline':
++            return <ResearchTimelineSection key={i} block={b} />
++          case 'researchProfileCard':
++            return <ResearchProfileCardBlock key={i} block={b} />
++          case 'tagBoxes':
++            return <TagBoxesBlock key={i} block={b} />
++          case 'contact':
++            return <ContactBlock key={i} block={b} />
++          case 'contactForm':
++            return <ContactFormBlock key={i} block={b} />
++          default:
++            return null
++        }
++      })}
++    </>
++  )
+ }
+diff --git a/tailwind.config.ts b/tailwind.config.ts
+index 03b7ae7..08413d8 100644
+--- a/tailwind.config.ts
++++ b/tailwind.config.ts
+@@ -5,49 +5,30 @@ const config: Config = {
+   theme: {
+     extend: {
+       colors: {
+-        // Token aliases (kept stable so we don't rewrite every component).
+-        // ink = page background family (cream)
++        // Two colours on a white canvas: near-black ink + one warm accent.
++        // ink = background (white), bone = text (near-black), accent = terracotta.
+         ink: {
+-          DEFAULT: '#F5EFE4',
+-          900: '#F5EFE4',
+-          800: '#EFE7D6',
+-          700: '#E5DCC5',
+-          600: '#D6CBB0',
++          DEFAULT: '#FFFFFF',
++          800: '#FAF8F4',
++          700: '#F3F0EA',
++          600: '#E6E2DA',
+         },
+-        // bone = foreground text (forest)
+         bone: {
+-          DEFAULT: '#1F3A2F',
+-          50: '#2C5142',
+-          100: '#1F3A2F',
+-          200: '#15281F',
+-          300: '#0E1B14',
++          DEFAULT: '#1C1B19',
++          50: '#403E3A',
+         },
+-        sand: {
+-          DEFAULT: '#A89B7E',
+-          dim: '#6E6754',
+-        },
+-        gold: {
+-          DEFAULT: '#B5985A',
+-          dim: '#8E743D',
+-        },
+-        accent: '#B5985A',
+-        topbar: '#8B1F6E',
++        accent: '#9A4A2F',
++        line: '#E6E2DA',
+       },
+       fontFamily: {
+-        display: ['var(--font-display)', 'Fraunces', 'Georgia', 'serif'],
+-        sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
+-        mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],
+-      },
+-      letterSpacing: {
+-        tightest: '-0.04em',
+-        display: '-0.025em',
++        // A single typeface everywhere — these aliases all resolve to it.
++        display: ['var(--font-serif)', 'Georgia', 'serif'],
++        sans: ['var(--font-serif)', 'Georgia', 'serif'],
++        serif: ['var(--font-serif)', 'Georgia', 'serif'],
++        mono: ['var(--font-serif)', 'Georgia', 'serif'],
+       },
+       maxWidth: {
+-        page: '1440px',
+-      },
+-      transitionTimingFunction: {
+-        'out-quart': 'cubic-bezier(0.25, 1, 0.5, 1)',
+-        'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
++        page: '42rem',
+       },
+     },
+   },
+-- 
+2.43.0
+

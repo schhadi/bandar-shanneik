@@ -43,10 +43,10 @@ export default buildConfig({
   globals: [Header, Footer, SiteSettings],
   localization: {
     locales: [
-      { label: 'English', code: 'en' },
       { label: 'Deutsch', code: 'de' },
+      { label: 'English', code: 'en' },
     ],
-    defaultLocale: 'en',
+    defaultLocale: 'de',
     fallback: true,
   },
   secret: process.env.PAYLOAD_SECRET || 'dev-secret-change-me',
