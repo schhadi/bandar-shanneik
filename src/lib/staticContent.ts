@@ -215,24 +215,83 @@ const pagesSource: Record<string, any> = {
       {
         blockType: 'expertise',
         heading: L('Fachgebiete', 'Areas of Expertise'),
+        lead: L(
+          'Über ein Jahrzehnt grenzüberschreitende juristische Praxis – für Unternehmen, Investoren und Privatpersonen im deutschen, englischen und emiratischen Recht.',
+          'Over a decade of cross-border legal practice — for companies, investors and private clients across German, English and Emirati law.',
+        ),
         intro: L(
-          'Bandars juristischer Hintergrund umfasst Gesellschafts- und Handelsrecht, Immobilienrecht, Schiedsverfahren und Governance im deutschen, englischen und VAE-Recht. Er ist Senior Counsel bei Daburon & Partners.',
-          "Bandar's legal background spans corporate and commercial matters, real estate, arbitration and governance across German, English and UAE law. He is Senior Counsel at Daburon & Partners.",
+          'Bandars Tätigkeit umfasst Gesellschafts- und Handelsrecht, M&A, Immobilien, Schiedsverfahren und Governance – mit wachsendem Schwerpunkt auf Datenschutz und neuen Technologien. Als in drei Rechtsordnungen qualifizierter Jurist verbindet er eine zivilrechtliche Grundlage mit der Praxis des Common Law und langjähriger Erfahrung in der Golfregion. Komplexe, rechtsordnungsübergreifende Fragen übersetzt er in klare, wirtschaftlich orientierte Beratung. Er ist Senior Counsel bei Daburon & Partners.',
+          "Bandar's work spans corporate and commercial law, M&A, real estate, arbitration and governance — with a growing focus on data protection and emerging technology. Qualified across three legal systems, he pairs a civil-law foundation with common-law practice and long experience in the Gulf, turning complex, multi-jurisdictional questions into clear, commercially aware advice. He is Senior Counsel at Daburon & Partners.",
         ),
         jurisdictions: [
           { name: L('Deutschland', 'Germany') },
           { name: L('England & Wales', 'England & Wales') },
           { name: L('Vereinigte Arabische Emirate', 'United Arab Emirates') },
         ],
-        items: [
-          { label: L('Gesellschaftsrecht', 'Corporate Law') },
-          { label: L('Handelsverträge', 'Commercial Contracts') },
-          { label: L('Fusionen & Übernahmen', 'Mergers & Acquisitions') },
-          { label: L('Immobilienrecht', 'Real Estate') },
-          { label: L('Schiedsverfahren', 'Arbitration') },
-          { label: L('Governance', 'Governance') },
-          { label: L('Arbeitsrecht', 'Employment Law') },
-          { label: L('Steuerrecht', 'Tax') },
+        areas: [
+          {
+            title: L('Gesellschaftsrecht', 'Corporate Law'),
+            description: L(
+              'Gründung, Strukturierung, Gesellschaftervereinbarungen und laufende gesellschaftsrechtliche Fragen.',
+              'Formation, structuring, shareholder arrangements and ongoing corporate matters.',
+            ),
+          },
+          {
+            title: L('Handelsverträge', 'Commercial Contracts'),
+            description: L(
+              'Gestaltung und Verhandlung grenzüberschreitender Handelsverträge – von Liefer- und Vertriebsverträgen bis zu komplexen Einzelvereinbarungen.',
+              'Drafting and negotiating cross-border commercial agreements, from supply and distribution to bespoke arrangements.',
+            ),
+          },
+          {
+            title: L('Fusionen & Übernahmen', 'Mergers & Acquisitions'),
+            description: L(
+              'Share- und Asset-Deals, Due Diligence und Transaktionsbegleitung über Rechtsordnungen hinweg.',
+              'Share and asset deals, due diligence and transaction support across jurisdictions.',
+            ),
+          },
+          {
+            title: L('Immobilienrecht', 'Real Estate'),
+            description: L(
+              'Erwerb, Veräußerung und Strukturierung von Immobilieninvestitionen – mit besonderer Tiefe in den VAE.',
+              'Acquisition, disposal and structuring of real-estate investments, with particular depth in the UAE.',
+            ),
+          },
+          {
+            title: L('Schiedsverfahren', 'Arbitration'),
+            description: L(
+              'Wirtschaftliche Streitbeilegung und Schiedsverfahren, einschließlich Fragen von Gerichtsstand und anwendbarem Recht.',
+              'Commercial dispute resolution and arbitration, including questions of forum and governing law.',
+            ),
+          },
+          {
+            title: L('Governance', 'Governance'),
+            description: L(
+              'Corporate Governance, Compliance-Strukturen und Beratung von Geschäftsführung und Gremien.',
+              'Corporate governance, compliance frameworks and advising boards and management.',
+            ),
+          },
+          {
+            title: L('Arbeitsrecht', 'Employment Law'),
+            description: L(
+              'Arbeitsrechtliche Fragen im deutschen und im Golf-Kontext.',
+              'Employment and labour matters across German and Gulf frameworks.',
+            ),
+          },
+          {
+            title: L('Steuerrecht', 'Tax'),
+            description: L(
+              'Steuerlich bewusste Strukturierung für Unternehmen und Privatpersonen.',
+              'Tax-aware structuring for companies and private clients.',
+            ),
+          },
+          {
+            title: L('Datenschutz & Technologie', 'Data Protection & Technology'),
+            description: L(
+              'Datenschutz-Compliance sowie rechtliche Fragen rund um KI und neue Technologien.',
+              'Data protection compliance and the legal questions raised by AI and emerging technology.',
+            ),
+          },
         ],
       },
     ],

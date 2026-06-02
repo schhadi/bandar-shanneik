@@ -385,6 +385,10 @@ export interface Page {
           }
         | {
             heading?: string | null;
+            /**
+             * Bold opening statement under the heading.
+             */
+            lead?: string | null;
             intro?: string | null;
             jurisdictions?:
               | {
@@ -392,9 +396,10 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
-            items?:
+            areas?:
               | {
-                  label: string;
+                  title: string;
+                  description?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -904,6 +909,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               heading?: T;
+              lead?: T;
               intro?: T;
               jurisdictions?:
                 | T
@@ -911,10 +917,11 @@ export interface PagesSelect<T extends boolean = true> {
                     name?: T;
                     id?: T;
                   };
-              items?:
+              areas?:
                 | T
                 | {
-                    label?: T;
+                    title?: T;
+                    description?: T;
                     id?: T;
                   };
               id?: T;

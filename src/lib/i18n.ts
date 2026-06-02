@@ -27,6 +27,8 @@ export function t<K extends keyof (typeof dict)['en']>(locale: Locale, key: K) {
 export const labels = {
   de: {
     affiliation: 'Zugehörigkeit',
+    admittedIn: 'Zugelassen in',
+    practiceAreas: 'Tätigkeitsfelder',
     jurisdictions: 'Rechtsordnungen',
     languages: 'Sprachen',
     researchAreas: 'Forschungsschwerpunkte',
@@ -40,6 +42,8 @@ export const labels = {
   },
   en: {
     affiliation: 'Affiliation',
+    admittedIn: 'Admitted in',
+    practiceAreas: 'Practice areas',
     jurisdictions: 'Jurisdictions',
     languages: 'Languages',
     researchAreas: 'Research areas',

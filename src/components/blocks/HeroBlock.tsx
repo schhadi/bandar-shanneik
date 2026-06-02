@@ -83,16 +83,23 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
 
         {nav.length > 0 && (
           <nav className="mt-8 grid grid-cols-2 gap-2.5 md:mt-10 md:max-w-xs">
-            {nav.map((link, i) => (
-              <Link
-                key={i}
-                href={link.href}
-                target={link.newTab ? '_blank' : undefined}
-                className="rounded-xl border border-line px-4 py-2.5 text-sm text-bone transition-colors hover:border-bone hover:text-accent"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {nav.map((link, i) => {
+              // Centre the last item when the count is odd so it doesn't sit
+              // alone on the left of the row.
+              const isLoneLast = i === nav.length - 1 && nav.length % 2 === 1
+              return (
+                <Link
+                  key={i}
+                  href={link.href}
+                  target={link.newTab ? '_blank' : undefined}
+                  className={`rounded-xl border border-line px-4 py-2.5 text-sm text-bone transition-colors hover:border-bone hover:text-accent ${
+                    isLoneLast ? 'col-span-2 w-2/5 justify-self-center' : ''
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
           </nav>
         )}
       </div>

@@ -11,6 +11,12 @@ export const Expertise: Block = {
       defaultValue: 'Areas of Expertise',
     },
     {
+      name: 'lead',
+      type: 'textarea',
+      localized: true,
+      admin: { description: 'Bold opening statement under the heading.' },
+    },
+    {
       name: 'intro',
       type: 'textarea',
       localized: true,
@@ -29,16 +35,12 @@ export const Expertise: Block = {
       ],
     },
     {
-      name: 'items',
+      name: 'areas',
       type: 'array',
       labels: { singular: 'Area', plural: 'Areas' },
       fields: [
-        {
-          name: 'label',
-          type: 'text',
-          localized: true,
-          required: true,
-        },
+        { name: 'title', type: 'text', localized: true, required: true },
+        { name: 'description', type: 'textarea', localized: true },
       ],
     },
   ],
