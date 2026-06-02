@@ -85,7 +85,7 @@ export function ContactForm({
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-6" noValidate>
+    <form onSubmit={onSubmit} className="space-y-5" noValidate>
       <input
         type="text"
         name="website"
@@ -95,7 +95,7 @@ export function ContactForm({
         className="absolute left-[-9999px] h-0 w-0 opacity-0"
       />
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-5 md:grid-cols-2">
         <label className="field">
           <span className="field-label">Name *</span>
           <input
@@ -132,7 +132,7 @@ export function ContactForm({
         <textarea
           name="message"
           required
-          rows={5}
+          rows={4}
           className="field-textarea"
           placeholder="A few details about your enquiry…"
         />

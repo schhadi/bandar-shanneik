@@ -679,11 +679,11 @@ video {
 .top-6 {
   top: 1.5rem;
 }
-.z-\[100\] {
-  z-index: 100;
-}
 .z-20 {
   z-index: 20;
+}
+.z-\[100\] {
+  z-index: 100;
 }
 .col-span-10 {
   grid-column: span 10 / span 10;
@@ -786,8 +786,8 @@ video {
 .h-\[100svh\] {
   height: 100svh;
 }
-.h-\[44svh\] {
-  height: 44svh;
+.h-\[60svh\] {
+  height: 60svh;
 }
 .h-auto {
   height: auto;
@@ -795,11 +795,11 @@ video {
 .h-full {
   height: 100%;
 }
-.h-\[50svh\] {
-  height: 50svh;
-}
 .min-h-0 {
   min-height: 0px;
+}
+.min-h-\[calc\(100svh-73px\)\] {
+  min-height: calc(100svh - 73px);
 }
 .min-h-screen {
   min-height: 100vh;
@@ -885,6 +885,9 @@ video {
 .gap-2 {
   gap: 0.5rem;
 }
+.gap-2\.5 {
+  gap: 0.625rem;
+}
 .gap-3 {
   gap: 0.75rem;
 }
@@ -899,9 +902,6 @@ video {
 }
 .gap-8 {
   gap: 2rem;
-}
-.gap-2\.5 {
-  gap: 0.625rem;
 }
 .gap-x-12 {
   -moz-column-gap: 3rem;
@@ -925,6 +925,11 @@ video {
   margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
+.space-y-5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}
 .space-y-6 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -943,12 +948,6 @@ video {
 }
 .rounded {
   border-radius: 0.25rem;
-}
-.rounded-lg {
-  border-radius: 0.5rem;
-}
-.rounded-2xl {
-  border-radius: 1rem;
 }
 .rounded-xl {
   border-radius: 0.75rem;
@@ -974,10 +973,6 @@ video {
   -o-object-fit: cover;
      object-fit: cover;
 }
-.object-\[50\%_60\%\] {
-  -o-object-position: 50% 60%;
-     object-position: 50% 60%;
-}
 .object-\[50\%_28\%\] {
   -o-object-position: 50% 28%;
      object-position: 50% 28%;
@@ -993,6 +988,10 @@ video {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
 .py-16 {
   padding-top: 4rem;
   padding-bottom: 4rem;
@@ -1000,6 +999,10 @@ video {
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+.py-2\.5 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
 }
 .py-20 {
   padding-top: 5rem;
@@ -1009,10 +1012,6 @@ video {
   padding-top: 6rem;
   padding-bottom: 6rem;
 }
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -1020,10 +1019,6 @@ video {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
-}
-.py-2\.5 {
-  padding-top: 0.625rem;
-  padding-bottom: 0.625rem;
 }
 .pb-12 {
   padding-bottom: 3rem;
@@ -1132,12 +1127,6 @@ video {
   --tw-text-opacity: 1;
   color: rgb(17 17 17 / var(--tw-text-opacity, 1));
 }
-.text-bone\/35 {
-  color: rgb(17 17 17 / 0.35);
-}
-.text-bone\/45 {
-  color: rgb(17 17 17 / 0.45);
-}
 .text-bone\/50 {
   color: rgb(17 17 17 / 0.5);
 }
@@ -1183,36 +1172,25 @@ video {
 .border-line {
     border-color: var(--line);
   }
-
 .hover\:border-bone:hover {
   --tw-border-opacity: 1;
   border-color: rgb(17 17 17 / var(--tw-border-opacity, 1));
 }
-
 .hover\:bg-ink-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(242 241 236 / var(--tw-bg-opacity, 1));
 }
-
 .hover\:text-accent:hover {
   --tw-text-opacity: 1;
   color: rgb(140 130 117 / var(--tw-text-opacity, 1));
 }
-
 .hover\:text-bone:hover {
   --tw-text-opacity: 1;
   color: rgb(17 17 17 / var(--tw-text-opacity, 1));
 }
-
 .disabled\:opacity-50:disabled {
   opacity: 0.5;
 }
-
-.group:hover .group-hover\:text-accent {
-  --tw-text-opacity: 1;
-  color: rgb(140 130 117 / var(--tw-text-opacity, 1));
-}
-
 @media (min-width: 768px) {
 
   .md\:right-12 {
@@ -1275,10 +1253,6 @@ video {
     margin-top: 1.5rem;
   }
 
-  .md\:mt-5 {
-    margin-top: 1.25rem;
-  }
-
   .md\:flex {
     display: flex;
   }
@@ -1293,14 +1267,6 @@ video {
 
   .md\:w-1\/2 {
     width: 50%;
-  }
-
-  .md\:max-w-lg {
-    max-width: 32rem;
-  }
-
-  .md\:max-w-sm {
-    max-width: 24rem;
   }
 
   .md\:max-w-xs {
@@ -1348,6 +1314,11 @@ video {
   .md\:py-10 {
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
+  }
+
+  .md\:py-12 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 
   .md\:py-24 {
@@ -1412,7 +1383,6 @@ video {
     line-height: 1.75rem;
   }
 }
-
 @media (min-width: 1024px) {
 
   .lg\:right-16 {

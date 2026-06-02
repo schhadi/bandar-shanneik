@@ -33,7 +33,7 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
       </div>
 
       {/* Photo — full left half of the screen, edge to edge */}
-      <div className="relative h-[50svh] w-full shrink-0 md:h-full md:w-1/2 md:shrink">
+      <div className="relative h-[60svh] w-full shrink-0 md:h-full md:w-1/2 md:shrink">
         {block.image && (
           <MediaImage
             media={block.image}
