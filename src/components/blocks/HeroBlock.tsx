@@ -18,12 +18,19 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
     <section className="relative flex h-[100svh] flex-col overflow-hidden md:flex-row">
       <style>{`html, body { overflow: hidden; height: 100svh; }`}</style>
 
-      {/* Language switcher — fixed to the top-right of the screen */}
-      {showLanguageSwitcher && (
-        <div className="absolute right-6 top-6 z-20 md:right-12 lg:right-16">
-          <LanguageSwitcher locale={locale} />
-        </div>
-      )}
+      {/* LinkedIn + language switcher — fixed to the top-right of the screen */}
+      <div className="absolute right-6 top-6 z-20 flex items-center gap-4 md:right-12 lg:right-16">
+        <a
+          href={linkedinUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          className="inline-flex h-8 w-8 items-center justify-center text-bone/55 hover:text-accent"
+        >
+          <Icon name="linkedin" className="h-4 w-4" />
+        </a>
+        {showLanguageSwitcher && <LanguageSwitcher locale={locale} />}
+      </div>
 
       {/* Photo — full left half of the screen, edge to edge */}
       <div className="relative h-[50svh] w-full shrink-0 md:h-full md:w-1/2 md:shrink">
@@ -53,32 +60,19 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
         )}
 
         {nav.length > 0 && (
-          <nav className="mt-8 grid grid-cols-2 gap-3 md:mt-10 md:max-w-lg ">
+          <nav className="mt-8 grid grid-cols-2 gap-2.5 md:mt-10 md:max-w-xs">
             {nav.map((link, i) => (
               <Link
                 key={i}
                 href={link.href}
                 target={link.newTab ? '_blank' : undefined}
-                className="group flex items-center justify-between rounded-2xl border border-line px-4 py-4 text-base text-bone transition-colors hover:border-bone hover:text-accent"
+                className="rounded-xl border border-line px-4 py-2.5 text-sm text-bone transition-colors hover:border-bone hover:text-accent"
               >
-                <span>{link.label}</span>
-                <Icon name="arrow" className="h-4 w-4 text-bone/35 group-hover:text-accent" />
+                {link.label}
               </Link>
             ))}
           </nav>
         )}
-
-        <div className="mt-8 flex items-center gap-5">
-          <a
-            href={linkedinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="inline-flex h-8 w-8 items-center justify-center text-bone/45 hover:text-bone"
-          >
-            <Icon name="linkedin" className="h-4 w-4" />
-          </a>
-        </div>
       </div>
     </section>
   )
