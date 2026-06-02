@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation'
-import { SiteHeader } from '@/components/Header'
 import { isLocale } from '@/lib/i18n'
 
 export default async function LocaleLayout({
@@ -11,10 +10,5 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
-  return (
-    <>
-      <SiteHeader locale={locale} />
-      <main>{children}</main>
-    </>
-  )
+  return <>{children}</>
 }

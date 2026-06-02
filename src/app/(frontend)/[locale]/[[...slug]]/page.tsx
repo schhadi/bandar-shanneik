@@ -5,6 +5,7 @@ import { getPayload } from '@/lib/payload'
 import { isLocale, LOCALES, type Locale } from '@/lib/i18n'
 import { getStaticPage, staticPages } from '@/lib/staticContent'
 import { BlockRenderer } from '@/components/blocks'
+import { SiteHeader } from '@/components/Header'
 
 // Pages are statically cached indefinitely and invalidated on demand by
 // Payload afterChange/afterDelete hooks (see src/lib/revalidate.ts).
@@ -65,5 +66,13 @@ export default async function Page({ params }: Args) {
   const page = await fetchPage(locale, slugStr)
   if (!page) notFound()
   const blocks: any[] = (page as any).blocks || []
-  return <BlockRenderer blocks={blocks} locale={locale} />
+  const isHome = slugStr === 'home'
+  return (
+    <>
+      {!isHome && <SiteHeader locale={locale} />}
+      <main>
+        <BlockRenderer blocks={blocks} locale={locale} />
+      </main>
+    </>
+  )
 }
