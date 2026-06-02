@@ -12,19 +12,35 @@ type Position = {
 
 export function ResearchIntroBlock({ block, locale }: { block: any; locale: Locale }) {
   const l = labels[locale]
+  const heading: string | undefined = block.heading
   const position: Position = block.position || {}
   const project = position.project
 
   return (
-    <section className="container-page pb-12 pt-20 md:pb-16 md:pt-28">
-      <div className="grid gap-12 md:grid-cols-12 md:gap-16">
-        <div className="md:col-span-4">
+    <section className="container-page pb-12 pt-16 md:pb-16 md:pt-24">
+      <div className="grid gap-10 md:grid-cols-12 md:gap-16">
+        {/* Left: heading + subtext */}
+        <div className="md:col-span-7">
+          {heading && (
+            <h1 className="text-4xl font-medium leading-tight md:text-5xl">{heading}</h1>
+          )}
+          {block.body && (
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-bone/75 md:mt-6 md:text-lg">
+              {block.body}
+            </p>
+          )}
+        </div>
+
+        {/* Right: current affiliation */}
+        <div className="md:col-span-4 md:col-start-9">
           <div className="text-sm uppercase tracking-wider text-accent">{l.currentPosition}</div>
-          <h1 className="mt-3 text-2xl font-medium leading-snug md:text-3xl">
+          <h2 className="mt-3 text-xl font-medium leading-snug md:text-2xl">
             {position.role}
             {position.role && position.institution ? ',' : ''}
-            {position.institution && <span className="block text-bone/80">{position.institution}</span>}
-          </h1>
+            {position.institution && (
+              <span className="block text-bone/80">{position.institution}</span>
+            )}
+          </h2>
           {project?.label && (
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-bone/70">
               {l.affiliatedPrefix}
@@ -45,12 +61,6 @@ export function ResearchIntroBlock({ block, locale }: { block: any; locale: Loca
             </p>
           )}
         </div>
-
-        {block.body && (
-          <div className="md:col-span-7 md:col-start-6">
-            <p className="text-lg leading-relaxed text-bone/80 md:text-xl">{block.body}</p>
-          </div>
-        )}
       </div>
     </section>
   )

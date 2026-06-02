@@ -83,7 +83,7 @@ const headerSource = {
   showLanguageSwitcher: true,
   nav: [
     { link: { label: L('Über mich', 'About'), type: 'internal', page: { slug: 'about' }, variant: 'plain' } },
-    { link: { label: L('Expertise', 'Expertise'), type: 'internal', page: { slug: 'expertise' }, variant: 'plain' } },
+    { link: { label: L('Beratung', 'Advisory'), type: 'internal', page: { slug: 'advisory' }, variant: 'plain' } },
     { link: { label: L('Forschung', 'Research'), type: 'internal', page: { slug: 'research' }, variant: 'plain' } },
     { link: { label: L('Vorträge', 'Speaking'), type: 'internal', page: { slug: 'speaking' }, variant: 'plain' } },
     { link: { label: L('Kontakt', 'Contact'), type: 'internal', page: { slug: 'contact' }, variant: 'plain' } },
@@ -161,60 +161,20 @@ const pagesSource: Record<string, any> = {
           'Seit über einem Jahrzehnt berate ich zu grenzüberschreitenden gesellschaftsrechtlichen Fragen in der Golfregion – mit einer Praxis, die civil-law- und common-law-Rechtsordnungen umspannt. In jüngerer Zeit habe ich mich zunehmend der Wissenschaft zugewandt. Meine Forschung liegt an der Schnittstelle von Recht und seinen Auswirkungen auf Menschen, Kulturen und Gesellschaften.\n\nÜber die juristische Welt hinaus begeistere ich mich für interkulturellen Austausch und internationale Beziehungen.',
           "I've spent over a decade advising on cross-border corporate matters across the Gulf, with a practice spanning civil and common law jurisdictions. More recently, I've turned increasingly toward academia. My research sits at the intersection of law and its impact on people, cultures, and societies.\n\nBeyond the legal world, I'm passionate about cross-cultural exchange and international relations.",
         ),
-      },
-      {
-        blockType: 'aboutTwoColumn',
-        legal: {
-          heading: L('Recht', 'Legal'),
-          body: L(
-            'Bandar Shanneik ist ein voll qualifizierter deutscher Jurist, dessen Tätigkeit Gesellschafts- und Handelsrecht, Immobilienrecht, Schiedsverfahren und Governance umfasst. Er berät Unternehmen, Investoren und Privatpersonen in der deutschen, englischen und emiratischen Rechtsordnung mit einem praxisnahen, wirtschaftlich orientierten Ansatz.',
-            'Bandar Shanneik is a fully qualified German lawyer whose practice spans corporate and commercial matters, real estate, arbitration and governance. He advises companies, investors and private clients across the German, English and Emirati legal systems with a practical, commercially aware approach.',
-          ),
-          role: L('Senior Counsel', 'Senior Counsel'),
-          firmName: 'Daburon & Partners',
-          firmUrl: 'https://daburon-partners.com',
-          jurisdictions: [
-            { name: L('Deutschland', 'Germany') },
-            { name: L('England & Wales', 'England & Wales') },
-            { name: L('Vereinigte Arabische Emirate', 'United Arab Emirates') },
-          ],
-          languages: [
-            { name: L('Deutsch', 'German') },
-            { name: L('Arabisch', 'Arabic') },
-            { name: L('Englisch', 'English') },
-          ],
-          cvUrl: '#',
-        },
-        academic: {
-          heading: L('Wissenschaft', 'Academic'),
-          body: L(
-            'Seine Forschung untersucht, wie rechtliche Rahmenbedingungen Migration, Ehe, Geschlecht und die Anerkennung von Familien prägen und von ihnen geprägt werden — mit einem Schwerpunkt auf grenzüberschreitenden Herausforderungen und dem Schutz von Rechten in Kontexten von Flucht, Vielfalt und gesellschaftlichem Wandel.',
-            'His research examines how legal frameworks shape and are shaped by migration, marriage, gender and family recognition — with a focus on cross-border challenges and the protection of rights in contexts of displacement, diversity and social change.',
-          ),
-          role: L('Research Fellow', 'Research Fellow'),
-          institution: 'SOAS University of London',
-          projectName: 'RELI-GENE',
-          projectUrl: 'https://religene.eu',
-          researchAreas: [
-            { name: L('Rechtsvergleichung', 'Comparative law') },
-            { name: L('Migration', 'Migration') },
-            { name: L('Geschlecht & Familienanerkennung', 'Gender & family recognition') },
-            { name: L('Menschenrechte', 'Human rights') },
-          ],
-        },
+        cvUrl: '#',
       },
     ],
   },
-  expertise: {
-    title: L('Expertise', 'Expertise'),
+  advisory: {
+    title: L('Beratung', 'Advisory'),
     description: L(
-      'Juristische Expertise in den Bereichen Gesellschafts- und Handelsrecht, Immobilien, Schiedsverfahren und Governance.',
-      'Areas of legal expertise across corporate, commercial, real estate, arbitration and governance matters.',
+      'Rechtsberatung in den Bereichen Gesellschafts- und Handelsrecht, Immobilien, Schiedsverfahren und Governance.',
+      'Legal advisory across corporate, commercial, real estate, arbitration and governance matters.',
     ),
     blocks: [
       {
         blockType: 'expertise',
-        heading: L('Fachgebiete', 'Areas of Expertise'),
+        heading: L('Beratung', 'Advisory'),
         lead: L(
           'Über ein Jahrzehnt grenzüberschreitende juristische Praxis – für Unternehmen, Investoren und Privatpersonen im deutschen, englischen und emiratischen Recht.',
           'Over a decade of cross-border legal practice — for companies, investors and private clients across German, English and Emirati law.',
@@ -305,6 +265,7 @@ const pagesSource: Record<string, any> = {
     blocks: [
       {
         blockType: 'researchIntro',
+        heading: L('Akademische Forschung', 'Academic Research'),
         position: {
           role: L('Research Fellow', 'Research Fellow'),
           institution: L('SOAS University of London', 'SOAS University of London'),
@@ -318,8 +279,8 @@ const pagesSource: Record<string, any> = {
           },
         },
         body: L(
-          'Meine Forschung untersucht, wie rechtliche Rahmenbedingungen Migration, Ehe, Geschlecht und die Anerkennung von Familien prägen und von ihnen geprägt werden. Ich konzentriere mich auf grenzüberschreitende rechtliche Herausforderungen und den Schutz von Rechten in Kontexten von Flucht, Vielfalt und gesellschaftlichem Wandel. Die Arbeit verbindet Rechtswissenschaft und gelebte Erfahrung über europäische und nahöstliche Rechtsordnungen hinweg.',
-          'My research examines how legal frameworks shape and are shaped by migration, marriage, gender and family recognition. I focus on cross-border legal challenges and the protection of rights in contexts of displacement, diversity and social change. The work bridges legal scholarship and lived experience across European and Middle Eastern jurisdictions.',
+          'Meine Forschung untersucht, wie rechtliche Rahmenbedingungen Migration, Ehe, Geschlecht und die Anerkennung von Familien prägen und von ihnen geprägt werden – über europäische und nahöstliche Rechtsordnungen hinweg.',
+          'My research examines how legal frameworks shape and are shaped by migration, marriage, gender and family recognition — across European and Middle Eastern jurisdictions.',
         ),
       },
       {

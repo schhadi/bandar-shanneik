@@ -18,5 +18,10 @@ export const AboutIntro: Block = {
       localized: true,
       admin: { description: 'Separate paragraphs with a blank line.' },
     },
+    {
+      name: 'cvUrl',
+      type: 'text',
+      admin: { description: 'URL or path to CV file. Shows a "Download CV" link when set.' },
+    },
   ],
 }

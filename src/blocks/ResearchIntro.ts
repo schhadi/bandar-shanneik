@@ -5,6 +5,12 @@ export const ResearchIntro: Block = {
   labels: { singular: 'Research intro', plural: 'Research intros' },
   fields: [
     {
+      name: 'heading',
+      type: 'text',
+      localized: true,
+      defaultValue: 'Academic Research',
+    },
+    {
       name: 'position',
       type: 'group',
       fields: [

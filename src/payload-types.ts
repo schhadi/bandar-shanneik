@@ -291,6 +291,10 @@ export interface Page {
              * Separate paragraphs with a blank line.
              */
             body?: string | null;
+            /**
+             * URL or path to CV file. Shows a "Download CV" link when set.
+             */
+            cvUrl?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'aboutIntro';
@@ -480,6 +484,7 @@ export interface Page {
             blockType: 'researchTimeline';
           }
         | {
+            heading?: string | null;
             position?: {
               role?: string | null;
               institution?: string | null;
@@ -822,6 +827,7 @@ export interface PagesSelect<T extends boolean = true> {
               lead?: T;
               image?: T;
               body?: T;
+              cvUrl?: T;
               id?: T;
               blockName?: T;
             };
@@ -998,6 +1004,7 @@ export interface PagesSelect<T extends boolean = true> {
         researchIntro?:
           | T
           | {
+              heading?: T;
               position?:
                 | T
                 | {

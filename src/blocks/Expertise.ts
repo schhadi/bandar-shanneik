@@ -2,13 +2,13 @@ import type { Block } from 'payload'
 
 export const Expertise: Block = {
   slug: 'expertise',
-  labels: { singular: 'Expertise', plural: 'Expertise' },
+  labels: { singular: 'Advisory', plural: 'Advisory' },
   fields: [
     {
       name: 'heading',
       type: 'text',
       localized: true,
-      defaultValue: 'Areas of Expertise',
+      defaultValue: 'Advisory',
     },
     {
       name: 'lead',

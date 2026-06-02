@@ -11,7 +11,7 @@ export function ContactFormBlock({ block, locale }: { block: any; locale: Locale
   const l = labels[locale]
   const note: ProfessionalNote | undefined = block.professionalNote
   return (
-    <section className="container-page flex min-h-[calc(100svh-73px)] items-center py-10 md:py-12">
+    <section className="container-page pb-16 pt-16 md:pb-24 md:pt-24">
       <div className="grid w-full gap-8 md:grid-cols-12 md:gap-16">
         <div className="md:col-span-5">
           <h2 className="text-3xl font-medium leading-tight md:text-5xl">

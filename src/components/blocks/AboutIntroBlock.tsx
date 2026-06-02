@@ -1,16 +1,18 @@
 import { MediaImage } from '../Media'
+import { labels, type Locale } from '@/lib/i18n'
 
-export function AboutIntroBlock({ block }: { block: any }) {
+export function AboutIntroBlock({ block, locale }: { block: any; locale: Locale }) {
   const greeting: string | undefined = block.greeting
   const lead: string | undefined = block.lead
   const image = block.image
+  const cvUrl: string | undefined = block.cvUrl
   const paragraphs: string[] = String(block.body || '')
     .split(/\n{2,}/)
     .map((p) => p.trim())
     .filter(Boolean)
 
   return (
-    <section className="container-page pt-10 md:pt-16">
+    <section className="container-page pt-16 md:pt-24">
       <div className="grid items-center gap-8 md:grid-cols-12 md:gap-12">
         {/* Left: greeting + prose, kept tight together */}
         <div className="order-2 md:order-none md:col-span-7">
@@ -28,6 +30,16 @@ export function AboutIntroBlock({ block }: { block: any }) {
                 <p key={i}>{p}</p>
               ))}
             </div>
+          )}
+          {cvUrl && (
+            <a
+              href={cvUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-underline mt-6 inline-block text-sm text-bone"
+            >
+              {labels[locale].downloadCv}
+            </a>
           )}
         </div>
 

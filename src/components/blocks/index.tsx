@@ -29,7 +29,7 @@ export function BlockRenderer({ blocks, locale }: { blocks: Block[]; locale: Loc
           case 'richText':
             return <RichTextBlock key={i} block={b} />
           case 'aboutIntro':
-            return <AboutIntroBlock key={i} block={b} />
+            return <AboutIntroBlock key={i} block={b} locale={locale} />
           case 'aboutTwoColumn':
             return <AboutTwoColumnBlock key={i} block={b} locale={locale} />
           case 'background':

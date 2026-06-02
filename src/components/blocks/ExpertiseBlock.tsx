@@ -9,7 +9,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 
 export function ExpertiseBlock({ block, locale }: { block: any; locale: Locale }) {
   const l = labels[locale]
-  const heading: string = block.heading || 'Areas of Expertise'
+  const heading: string = block.heading || 'Advisory'
   const lead: string | undefined = block.lead
   const intro: string | undefined = block.intro
   const jurisdictions: Jurisdiction[] = block.jurisdictions || []
