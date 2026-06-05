@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { getPayload } from '@/lib/payload'
 import { isLocale, LOCALES, type Locale } from '@/lib/i18n'
 import { getStaticPage, staticPages } from '@/lib/staticContent'
+import { buildPageMetadata, structuredData } from '@/lib/seo'
 import { BlockRenderer } from '@/components/blocks'
 import { SiteHeader } from '@/components/Header'
 
@@ -51,12 +52,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const slugStr = (slug?.join('/') || 'home')
   const page = await fetchPage(locale, slugStr)
   if (!page) return {}
-  const seo: any = (page as any).seo || {}
-  const fallbackDescription = 'description' in page ? page.description : undefined
-  return {
-    title: seo.title || page.title,
-    description: seo.description || fallbackDescription,
-  }
+  return buildPageMetadata(locale, slugStr, page)
 }
 
 export default async function Page({ params }: Args) {
@@ -69,6 +65,11 @@ export default async function Page({ params }: Args) {
   const isHome = slugStr === 'home'
   return (
     <>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData(locale)) }}
+      />
       {!isHome && <SiteHeader locale={locale} />}
       <main>
         <BlockRenderer blocks={blocks} locale={locale} />

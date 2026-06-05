@@ -1,10 +1,20 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import { SITE_NAME, SITE_URL } from '@/lib/seo'
 import '../globals.css'
 
 export const metadata: Metadata = {
-  title: 'Bandar Shanneik',
-  description: 'Bandar Shanneik — legal expert and academic.',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Bandar Shanneik – Deutschsprachiger Anwalt in den VAE',
+    template: '%s',
+  },
+  description:
+    'Bandar Shanneik — deutschsprachiger Anwalt in den VAE / German-speaking lawyer in the UAE.',
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  robots: { index: true, follow: true },
 }
 
 export default function FrontendLayout({ children }: { children: React.ReactNode }) {

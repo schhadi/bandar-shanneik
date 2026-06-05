@@ -133,10 +133,10 @@ const pagesSource: Record<string, any> = {
       {
         blockType: 'hero',
         title: L('Bandar Shanneik', 'Bandar Shanneik'),
-        descriptor: L('Jurist & Akademiker', 'Lawyer & Legal Scholar'),
+        descriptor: L('Deutschsprachiger Anwalt in den VAE', 'German-Speaking Lawyer in the UAE'),
         subheading: L(
-          'An der Schnittstelle von juristischer Praxis und Wissenschaft – über Deutschland, England und die VAE hinweg.',
-          'At the intersection of legal practice and academia — across Germany, England and the UAE.',
+          'Deutschsprachiger Anwalt in den Vereinigten Arabischen Emiraten – Beratung im deutschen, englischen und VAE-Recht über Deutschland, England und die Golfregion hinweg.',
+          'A German-speaking lawyer in the United Arab Emirates — advising across German, English and UAE law, from Germany to England and the Gulf.',
         ),
         image: portrait,
       },

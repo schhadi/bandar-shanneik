@@ -1,4 +1,0 @@
-{
-  "/(payload)/admin/[[...segments]]/page": "app/(payload)/admin/[[...segments]]/page.js",
-  "/(frontend)/[locale]/[[...slug]]/page": "app/(frontend)/[locale]/[[...slug]]/page.js"
-}
