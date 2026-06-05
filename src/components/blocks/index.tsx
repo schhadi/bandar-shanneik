@@ -1,4 +1,6 @@
+import type { ReactNode } from 'react'
 import type { Locale } from '@/lib/i18n'
+import { Reveal } from '../Reveal'
 import { HeroBlock } from './HeroBlock'
 import { RichTextBlock } from './RichTextBlock'
 import { AboutTwoColumnBlock } from './AboutTwoColumnBlock'
@@ -23,53 +25,66 @@ export function BlockRenderer({ blocks, locale }: { blocks: Block[]; locale: Loc
   return (
     <>
       {blocks.map((b, i) => {
+        // The hero owns its own on-load entrance; everything else eases in on
+        // scroll. The leading content block reveals with no stagger so it
+        // doesn't feel sluggish above the fold.
         switch (b.blockType) {
           case 'hero':
             return <HeroBlock key={i} block={b} locale={locale} />
           case 'richText':
-            return <RichTextBlock key={i} block={b} />
+            return wrap(i, <RichTextBlock block={b} />)
           case 'aboutIntro':
-            return <AboutIntroBlock key={i} block={b} locale={locale} />
+            return wrap(i, <AboutIntroBlock block={b} locale={locale} />)
           case 'aboutTwoColumn':
-            return <AboutTwoColumnBlock key={i} block={b} locale={locale} />
+            return wrap(i, <AboutTwoColumnBlock block={b} locale={locale} />)
           case 'background':
-            return <BackgroundBlock key={i} block={b} locale={locale} />
+            return wrap(i, <BackgroundBlock block={b} locale={locale} />)
           case 'educationJurisdictions':
-            return <EducationJurisdictionsBlock key={i} block={b} />
+            return wrap(i, <EducationJurisdictionsBlock block={b} />)
           case 'serviceCards':
-            return <ServiceCardsBlock key={i} block={b} />
+            return wrap(i, <ServiceCardsBlock block={b} />)
           case 'practiceAreas':
-            return <PracticeAreasBlock key={i} block={b} />
+            return wrap(i, <PracticeAreasBlock block={b} />)
           case 'expertise':
-            return <ExpertiseBlock key={i} block={b} locale={locale} />
+            return wrap(i, <ExpertiseBlock block={b} locale={locale} />)
           case 'speaking':
-            return <SpeakingBlock key={i} block={b} />
+            return wrap(i, <SpeakingBlock block={b} />)
           case 'ctaBanner':
-            return <CTABannerBlock key={i} block={b} locale={locale} />
+            return wrap(i, <CTABannerBlock block={b} locale={locale} />)
           case 'researchTimeline':
-            return <ResearchTimelineSection key={i} block={b} />
+            return wrap(i, <ResearchTimelineSection block={b} />)
           case 'researchIntro':
-            return <ResearchIntroBlock key={i} block={b} locale={locale} />
+            return wrap(i, <ResearchIntroBlock block={b} locale={locale} />)
           case 'researchProfileCard':
-            return (
-              <section key={i} className="container-page py-16 md:py-24">
+            return wrap(
+              i,
+              <section className="container-page py-16 md:py-24">
                 <ResearchProfileCardBlock block={b} />
-              </section>
+              </section>,
             )
           case 'tagBoxes':
-            return (
-              <section key={i} className="container-page py-16 md:py-24">
+            return wrap(
+              i,
+              <section className="container-page py-16 md:py-24">
                 <TagBoxesBlock block={b} />
-              </section>
+              </section>,
             )
           case 'contact':
-            return <ContactBlock key={i} block={b} />
+            return wrap(i, <ContactBlock block={b} />)
           case 'contactForm':
-            return <ContactFormBlock key={i} block={b} locale={locale} />
+            return wrap(i, <ContactFormBlock block={b} locale={locale} />)
           default:
             return null
         }
       })}
     </>
+  )
+}
+
+function wrap(i: number, node: ReactNode) {
+  return (
+    <Reveal key={i} delay={i === 0 ? 0 : 60}>
+      {node}
+    </Reveal>
   )
 }

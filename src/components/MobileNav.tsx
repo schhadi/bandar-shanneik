@@ -51,8 +51,10 @@ export function MobileNav({
       role="dialog"
       aria-modal="true"
       aria-hidden={!open}
-      hidden={!open}
-      className="fixed inset-0 z-[100] bg-ink text-bone md:hidden"
+      inert={!open}
+      className={`fixed inset-0 z-[100] bg-ink text-bone transition-opacity duration-300 ease-out md:hidden ${
+        open ? 'opacity-100' : 'pointer-events-none opacity-0'
+      }`}
     >
       <div className="container-page flex items-center justify-between py-6">
         <span className="text-sm font-medium">{logoText}</span>
@@ -60,7 +62,7 @@ export function MobileNav({
           type="button"
           aria-label="Close menu"
           onClick={() => setOpen(false)}
-          className="-mr-1 inline-flex h-8 w-8 items-center justify-center text-bone hover:text-accent"
+          className="-mr-1 inline-flex h-8 w-8 items-center justify-center text-bone transition-colors hover:text-accent"
         >
           <Icon name="close" className="h-6 w-6" />
         </button>
@@ -73,7 +75,10 @@ export function MobileNav({
             href={link.href}
             target={link.newTab ? '_blank' : undefined}
             onClick={() => setOpen(false)}
-            className="text-2xl text-bone hover:text-accent"
+            style={{ transitionDelay: open ? `${80 + i * 55}ms` : '0ms' }}
+            className={`text-2xl text-bone transition-[transform,opacity,color] duration-500 ease-out hover:text-accent ${
+              open ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
+            }`}
           >
             {link.label}
           </Link>
@@ -82,7 +87,10 @@ export function MobileNav({
           href={linkedinUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-2 text-sm text-bone/70 hover:text-accent"
+          style={{ transitionDelay: open ? `${80 + links.length * 55}ms` : '0ms' }}
+          className={`mt-4 inline-flex items-center gap-2 text-sm text-bone/70 transition-[transform,opacity,color] duration-500 ease-out hover:text-accent ${
+            open ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
+          }`}
         >
           <Icon name="linkedin" className="h-4 w-4" />
           LinkedIn

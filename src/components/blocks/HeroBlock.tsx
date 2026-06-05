@@ -14,6 +14,8 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
   const subheading: string | undefined = block.subheading
   const linkedinUrl: string = block.linkedinUrl || LINKEDIN_URL
   const { nav, showLanguageSwitcher } = await getHeaderData(locale)
+  // Entrance stagger picks up where the name lines leave off.
+  const baseDelay = 150 + nameLines.length * 90
   // Contact is reachable from the header/footer; keep the home boxes focused.
   const navLinks = nav.filter((link) => !link.href.replace(/\/$/, '').endsWith('/contact'))
 
@@ -22,13 +24,16 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
       <style>{`html, body { overflow: hidden; height: 100svh; }`}</style>
 
       {/* LinkedIn + language switcher — desktop: fixed to the top-right of the screen */}
-      <div className="absolute right-6 top-6 z-20 hidden items-center gap-4 md:flex md:right-12 lg:right-16">
+      <div
+        className="anim-fade absolute right-6 top-6 z-20 hidden items-center gap-4 md:flex md:right-12 lg:right-16"
+        style={{ animationDelay: '700ms' }}
+      >
         <a
           href={linkedinUrl}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
-          className="inline-flex h-8 w-8 items-center justify-center text-bone/55 hover:text-accent"
+          className="inline-flex h-8 w-8 items-center justify-center text-bone/55 transition-colors hover:text-accent"
         >
           <Icon name="linkedin" className="h-4 w-4" />
         </a>
@@ -40,7 +45,7 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
         {block.image && (
           <MediaImage
             media={block.image}
-            className="h-full w-full object-cover object-[50%_22%] md:object-[50%_60%]"
+            className="anim-image h-full w-full object-cover object-[50%_22%] md:object-[50%_60%]"
             priority
             sizes="(min-width: 768px) 50vw, 100vw"
           />
@@ -52,7 +57,11 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
         <div className="flex items-start justify-between gap-4">
           <h1 className="text-[clamp(2.5rem,6vw,5.5rem)] font-semibold leading-[0.92] tracking-[-0.035em]">
             {nameLines.map((w, i) => (
-              <span key={i} className="block">
+              <span
+                key={i}
+                className="anim-rise block"
+                style={{ animationDelay: `${150 + i * 90}ms` }}
+              >
                 {w}
               </span>
             ))}
@@ -65,7 +74,7 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="inline-flex h-8 w-8 items-center justify-center text-bone/55 hover:text-accent"
+              className="inline-flex h-8 w-8 items-center justify-center text-bone/55 transition-colors hover:text-accent"
             >
               <Icon name="linkedin" className="h-4 w-4" />
             </a>
@@ -73,12 +82,18 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
           </div>
         </div>
         {descriptor && (
-          <p className="mt-5 text-sm uppercase tracking-wider text-accent md:mt-6">
+          <p
+            className="anim-rise mt-5 text-sm uppercase tracking-wider text-accent md:mt-6"
+            style={{ animationDelay: `${baseDelay}ms` }}
+          >
             {descriptor}
           </p>
         )}
         {subheading && (
-          <p className="mt-3 max-w-sm text-base leading-relaxed text-bone/70 md:text-lg">
+          <p
+            className="anim-rise mt-3 max-w-sm text-base leading-relaxed text-bone/70 md:text-lg"
+            style={{ animationDelay: `${baseDelay + 110}ms` }}
+          >
             {subheading}
           </p>
         )}
@@ -94,7 +109,8 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
                   key={i}
                   href={link.href}
                   target={link.newTab ? '_blank' : undefined}
-                  className={`rounded-xl border border-line px-4 py-2.5 text-sm text-bone transition-colors hover:border-bone hover:text-accent ${
+                  style={{ animationDelay: `${baseDelay + 240 + i * 70}ms` }}
+                  className={`anim-fade rounded-xl border border-line px-4 py-2.5 text-sm text-bone transition-[transform,border-color,color] duration-300 ease-out hover:-translate-y-0.5 hover:border-bone hover:text-accent ${
                     isLoneLast ? 'col-span-2 w-2/5 justify-self-center' : ''
                   }`}
                 >

@@ -13,7 +13,10 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
   return (
     <header className="border-b border-line">
       <div className="container-page flex items-center justify-between py-6">
-        <Link href={`/${locale}`} className="text-sm font-medium tracking-tight">
+        <Link
+          href={`/${locale}`}
+          className="text-sm font-medium tracking-tight transition-colors hover:text-accent"
+        >
           {logoText}
         </Link>
 
@@ -23,7 +26,7 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
               key={i}
               href={link.href}
               target={link.newTab ? '_blank' : undefined}
-              className="text-sm text-bone hover:text-accent"
+              className="text-sm text-bone transition-colors hover:text-accent"
             >
               {link.label}
             </Link>
@@ -36,7 +39,7 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            className="hidden text-bone/70 hover:text-accent md:inline-flex"
+            className="hidden text-bone/70 transition-colors hover:text-accent md:inline-flex"
           >
             <Icon name="linkedin" className="h-4 w-4" />
           </a>

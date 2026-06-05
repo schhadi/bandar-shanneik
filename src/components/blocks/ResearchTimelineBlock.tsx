@@ -37,10 +37,15 @@ export function ResearchTimelineBlock({ block }: { block: any }) {
       </h3>
       <ul className="space-y-3">
         {entries.map((e, i) => (
-          <li key={i} className="grid grid-cols-12 gap-4 text-base leading-snug">
-            <div className="col-span-2 text-bone/55 md:col-span-1">{e.year}</div>
+          <li
+            key={i}
+            className="group -mx-3 grid grid-cols-12 gap-4 rounded-lg px-3 py-2 text-base leading-snug transition-[background-color,transform] duration-300 ease-out hover:translate-x-1.5 hover:bg-ink-800"
+          >
+            <div className="col-span-2 text-bone/55 transition-colors group-hover:text-bone/80 md:col-span-1">
+              {e.year}
+            </div>
             <div className="col-span-10 md:col-span-11">
-              <span className="text-bone">{e.title}</span>
+              <span className="text-bone transition-colors group-hover:text-accent">{e.title}</span>
               {e.venue && <span className="text-bone/70"> — {e.venue}</span>}
               {e.status && <span className="text-bone/55 italic"> ({e.status})</span>}
             </div>

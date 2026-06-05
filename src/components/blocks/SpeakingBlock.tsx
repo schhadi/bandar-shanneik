@@ -40,10 +40,17 @@ export function SpeakingBlock({ block }: { block: any }) {
             )}
             <ul className="space-y-5">
               {(group.items || []).map((item, i) => (
-                <li key={i} className="grid grid-cols-12 gap-x-4 gap-y-1">
-                  <div className="col-span-12 text-sm text-bone/55 md:col-span-2">{item.date}</div>
+                <li
+                  key={i}
+                  className="group -mx-3 grid grid-cols-12 gap-x-4 gap-y-1 rounded-lg px-3 py-2 transition-[background-color,transform] duration-300 ease-out hover:translate-x-1.5 hover:bg-ink-800"
+                >
+                  <div className="col-span-12 text-sm text-bone/55 transition-colors group-hover:text-bone/80 md:col-span-2">
+                    {item.date}
+                  </div>
                   <div className="col-span-12 md:col-span-10">
-                    <p className="text-base leading-snug text-bone">{item.title}</p>
+                    <p className="text-base leading-snug text-bone transition-colors group-hover:text-accent">
+                      {item.title}
+                    </p>
                     {(item.event || item.location) && (
                       <p className="mt-1 text-sm text-bone/60">
                         {item.event}

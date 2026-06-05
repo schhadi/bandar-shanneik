@@ -54,11 +54,29 @@
   }
 
   .link-underline {
-    @apply underline-offset-4 hover:text-accent hover:underline;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    padding-bottom: 2px;
+    transition:
+      background-size 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      color 0.3s ease;
+  }
+  .link-underline:hover {
+    @apply text-accent;
+    background-size: 100% 1px;
   }
 
   .btn-outline {
-    @apply inline-flex items-center gap-2 border border-bone/30 px-5 py-3 text-sm transition-colors hover:border-bone hover:text-accent;
+    @apply inline-flex items-center gap-2 border border-bone/30 px-5 py-3 text-sm hover:border-bone hover:text-accent;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease,
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn-outline:hover {
+    transform: translateY(-2px);
   }
 
   .field {
@@ -82,5 +100,102 @@
   }
   .text-dim {
     color: var(--fg-dim);
+  }
+}
+
+/* ───────────────────────── Motion ─────────────────────────
+   Restrained, minimalist motion: content eases up + fades in.
+   All of it is disabled for reduced-motion and no-JS users. */
+
+@layer utilities {
+  /* Scroll-triggered reveal (driven by the <Reveal> client component). */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* On-load entrance animations (used above the fold, e.g. the hero). */
+  .anim-rise {
+    opacity: 0;
+    animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .anim-fade {
+    opacity: 0;
+    animation: fade-in 1s ease both;
+  }
+  .anim-image {
+    animation: image-reveal 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes image-reveal {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Honour user + environment preferences. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .anim-rise,
+  .anim-fade,
+  .anim-image {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* No-JS fallback: never leave reveal content stuck invisible. */
+@media (scripting: none) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Site-wide calm for anyone who asks to reduce motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
