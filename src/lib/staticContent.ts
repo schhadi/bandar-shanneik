@@ -183,6 +183,12 @@ const pagesSource: Record<string, any> = {
           'Bandars Tätigkeit umfasst Gesellschafts- und Handelsrecht, M&A, Immobilien, Schiedsverfahren und Governance – mit wachsendem Schwerpunkt auf Datenschutz und neuen Technologien. Als in drei Rechtsordnungen qualifizierter Jurist verbindet er eine zivilrechtliche Grundlage mit der Praxis des Common Law und langjähriger Erfahrung in der Golfregion. Komplexe, rechtsordnungsübergreifende Fragen übersetzt er in klare, wirtschaftlich orientierte Beratung. Er ist Senior Counsel bei Daburon & Partners.',
           "Bandar's work spans corporate and commercial law, M&A, real estate, arbitration and governance — with a growing focus on data protection and emerging technology. Qualified across three legal systems, he pairs a civil-law foundation with common-law practice and long experience in the Gulf, turning complex, multi-jurisdictional questions into clear, commercially aware advice. He is Senior Counsel at Daburon & Partners.",
         ),
+        position: {
+          label: L('Aktuelle Position', 'Current position'),
+          title: L('Of Counsel', 'Of Counsel'),
+          firm: L('Daburon & Partners', 'Daburon & Partners'),
+          linkUrl: 'https://daburon-partners.com/en/home',
+        },
         jurisdictions: [
           { name: L('Deutschland', 'Germany') },
           { name: L('England & Wales', 'England & Wales') },
@@ -412,6 +418,7 @@ const pagesSource: Record<string, any> = {
           ),
           linkLabel: L('Daburon & Partners', 'Daburon & Partners'),
           linkUrl: 'https://daburon-partners.com/en/home',
+          email: 'bandar@daburon-partners.com',
         },
       },
     ],

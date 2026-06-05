@@ -394,6 +394,15 @@ export interface Page {
              */
             lead?: string | null;
             intro?: string | null;
+            /**
+             * Current position card shown top-right of the heading.
+             */
+            position?: {
+              label?: string | null;
+              title?: string | null;
+              firm?: string | null;
+              linkUrl?: string | null;
+            };
             jurisdictions?:
               | {
                   name: string;
@@ -547,6 +556,10 @@ export interface Page {
               intro?: string | null;
               linkLabel?: string | null;
               linkUrl?: string | null;
+              /**
+               * Professional email, rendered as a mailto link.
+               */
+              email?: string | null;
             };
             /**
              * Optional portrait shown beside the form on desktop.
@@ -917,6 +930,14 @@ export interface PagesSelect<T extends boolean = true> {
               heading?: T;
               lead?: T;
               intro?: T;
+              position?:
+                | T
+                | {
+                    label?: T;
+                    title?: T;
+                    firm?: T;
+                    linkUrl?: T;
+                  };
               jurisdictions?:
                 | T
                 | {
@@ -1071,6 +1092,7 @@ export interface PagesSelect<T extends boolean = true> {
                     intro?: T;
                     linkLabel?: T;
                     linkUrl?: T;
+                    email?: T;
                   };
               image?: T;
               id?: T;

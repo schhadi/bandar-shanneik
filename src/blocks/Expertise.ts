@@ -22,6 +22,17 @@ export const Expertise: Block = {
       localized: true,
     },
     {
+      name: 'position',
+      type: 'group',
+      admin: { description: 'Current position card shown top-right of the heading.' },
+      fields: [
+        { name: 'label', type: 'text', localized: true },
+        { name: 'title', type: 'text', localized: true },
+        { name: 'firm', type: 'text', localized: true },
+        { name: 'linkUrl', type: 'text' },
+      ],
+    },
+    {
       name: 'jurisdictions',
       type: 'array',
       labels: { singular: 'Jurisdiction', plural: 'Jurisdictions' },

@@ -38,6 +38,7 @@ export const labels = {
     affiliatedPrefix: 'Verbunden mit dem Projekt ',
     affiliatedSuffix: '',
     orWriteDirectly: 'Oder schreiben Sie direkt',
+    orByEmail: 'oder per E-Mail an',
     atConnector: ' bei ',
   },
   en: {
@@ -53,6 +54,7 @@ export const labels = {
     affiliatedPrefix: 'Affiliated with the ',
     affiliatedSuffix: ' project',
     orWriteDirectly: 'Or write directly',
+    orByEmail: 'or by email at',
     atConnector: ' at ',
   },
 } as const

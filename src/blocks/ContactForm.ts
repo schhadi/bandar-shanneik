@@ -45,6 +45,7 @@ export const ContactForm: Block = {
         { name: 'intro', type: 'textarea', localized: true },
         { name: 'linkLabel', type: 'text', localized: true },
         { name: 'linkUrl', type: 'text' },
+        { name: 'email', type: 'text', admin: { description: 'Professional email, rendered as a mailto link.' } },
       ],
     },
     {

@@ -14,17 +14,44 @@ export function ExpertiseBlock({ block, locale }: { block: any; locale: Locale }
   const intro: string | undefined = block.intro
   const jurisdictions: Jurisdiction[] = block.jurisdictions || []
   const areas: Area[] = block.areas || []
+  const position = block.position as
+    | { label?: string; title?: string; firm?: string; linkUrl?: string }
+    | undefined
 
   return (
     <section className="container-page py-16 md:py-24">
       {/* Opening */}
-      <div className="max-w-3xl">
-        <h1 className="text-4xl font-medium leading-tight md:text-5xl">{heading}</h1>
-        {lead && (
-          <p className="mt-6 text-xl font-medium leading-snug text-bone md:text-2xl">{lead}</p>
-        )}
-        {intro && (
-          <p className="mt-5 text-base leading-relaxed text-bone/75 md:text-lg">{intro}</p>
+      <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between md:gap-12">
+        <div className="max-w-3xl">
+          <h1 className="text-4xl font-medium leading-tight md:text-5xl">{heading}</h1>
+          {lead && (
+            <p className="mt-6 text-xl font-medium leading-snug text-bone md:text-2xl">{lead}</p>
+          )}
+          {intro && (
+            <p className="mt-5 text-base leading-relaxed text-bone/75 md:text-lg">{intro}</p>
+          )}
+        </div>
+
+        {position?.title && (
+          <aside className="shrink-0 self-start border border-line bg-bone/[0.02] p-6 md:mt-2 md:w-64">
+            {position.label && (
+              <div className="text-xs uppercase tracking-wider text-accent">{position.label}</div>
+            )}
+            <div className="mt-3 text-xl font-medium leading-snug text-bone">{position.title}</div>
+            {position.firm &&
+              (position.linkUrl ? (
+                <a
+                  href={position.linkUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-underline mt-2 inline-block text-sm text-bone/80"
+                >
+                  {position.firm}
+                </a>
+              ) : (
+                <div className="mt-2 text-sm text-bone/80">{position.firm}</div>
+              ))}
+          </aside>
         )}
       </div>
 

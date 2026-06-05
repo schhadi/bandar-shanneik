@@ -5,6 +5,7 @@ type ProfessionalNote = {
   intro?: string
   linkLabel?: string
   linkUrl?: string
+  email?: string
 }
 
 export function ContactFormBlock({ block, locale }: { block: any; locale: Locale }) {
@@ -31,7 +32,24 @@ export function ContactFormBlock({ block, locale }: { block: any; locale: Locale
               >
                 {note.linkLabel}
               </a>
+              {note.email ? (
+                <>
+                  {' '}
+                  {l.orByEmail}{' '}
+                  <a href={`mailto:${note.email}`} className="link-underline text-bone">
+                    {note.email}
+                  </a>
+                </>
+              ) : null}
               .
+            </p>
+          )}
+          {!note?.linkLabel && note?.email && (
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-bone/65">
+              {l.orByEmail}{' '}
+              <a href={`mailto:${note.email}`} className="link-underline text-bone">
+                {note.email}
+              </a>
             </p>
           )}
           {block.email && (
