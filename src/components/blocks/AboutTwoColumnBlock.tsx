@@ -26,7 +26,7 @@ function ColumnHeading({ children }: { children: React.ReactNode }) {
 }
 
 function MetaLabel({ children }: { children: React.ReactNode }) {
-  return <div className="mb-2 text-xs uppercase tracking-wider text-accent">{children}</div>
+  return <div className="mb-2 text-sm font-semibold uppercase tracking-wider text-accent">{children}</div>
 }
 
 export function AboutTwoColumnBlock({ block, locale }: { block: any; locale: Locale }) {
@@ -92,7 +92,7 @@ export function AboutTwoColumnBlock({ block, locale }: { block: any; locale: Loc
                   href={legal.cvUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="link-underline text-sm text-bone"
+                  className="btn-primary"
                 >
                   {lbl.downloadCv}
                 </a>

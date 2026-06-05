@@ -1,10 +1,15 @@
+import Image from 'next/image'
 import { labels, type Locale } from '@/lib/i18n'
+import { ExpertiseAreas } from './ExpertiseAreas'
 
 type Area = { title?: string; description?: string }
 type Jurisdiction = { name?: string }
+type Membership = { name?: string }
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
-  return <div className="mb-4 text-xs uppercase tracking-wider text-accent">{children}</div>
+  return (
+    <div className="mb-4 text-sm font-semibold uppercase tracking-wider text-accent">{children}</div>
+  )
 }
 
 export function ExpertiseBlock({ block, locale }: { block: any; locale: Locale }) {
@@ -14,8 +19,9 @@ export function ExpertiseBlock({ block, locale }: { block: any; locale: Locale }
   const intro: string | undefined = block.intro
   const jurisdictions: Jurisdiction[] = block.jurisdictions || []
   const areas: Area[] = block.areas || []
+  const memberships: Membership[] = block.memberships || []
   const position = block.position as
-    | { label?: string; title?: string; firm?: string; linkUrl?: string }
+    | { label?: string; title?: string; firm?: string; blurb?: string; linkUrl?: string }
     | undefined
 
   return (
@@ -33,24 +39,42 @@ export function ExpertiseBlock({ block, locale }: { block: any; locale: Locale }
         </div>
 
         {position?.title && (
-          <aside className="shrink-0 self-start border border-line bg-bone/[0.02] p-6 md:mt-2 md:w-64">
+          <aside className="shrink-0 self-start md:mt-2 md:w-72">
             {position.label && (
-              <div className="text-xs uppercase tracking-wider text-accent">{position.label}</div>
+              <div className="text-base font-semibold uppercase tracking-wider text-accent">
+                {position.label}
+              </div>
             )}
-            <div className="mt-3 text-xl font-medium leading-snug text-bone">{position.title}</div>
-            {position.firm &&
-              (position.linkUrl ? (
-                <a
-                  href={position.linkUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="link-underline mt-2 inline-block text-sm text-bone/80"
-                >
-                  {position.firm}
-                </a>
-              ) : (
-                <div className="mt-2 text-sm text-bone/80">{position.firm}</div>
-              ))}
+            <h2 className="mt-3 text-xl font-medium leading-snug text-bone md:text-2xl">
+              {position.title}
+            </h2>
+            {position.firm && (
+              <div className="mt-5 rounded-2xl border border-line bg-white p-6 text-center shadow-[0_1px_3px_rgba(17,17,17,0.05)]">
+                <Image
+                  src="/daburon-partners-logo.jpg"
+                  alt={position.firm}
+                  width={1560}
+                  height={300}
+                  className="mx-auto h-auto w-full max-w-[220px]"
+                />
+                {position.blurb && (
+                  <p className="mt-5 border-t border-line pt-5 text-sm leading-relaxed text-bone/65">
+                    {position.blurb}
+                  </p>
+                )}
+                {position.linkUrl && (
+                  <a
+                    href={position.linkUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-underline mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent"
+                  >
+                    daburon-partners.com
+                    <span aria-hidden="true">→</span>
+                  </a>
+                )}
+              </div>
+            )}
           </aside>
         )}
       </div>
@@ -69,17 +93,22 @@ export function ExpertiseBlock({ block, locale }: { block: any; locale: Locale }
         </div>
       )}
 
-      {/* Practice areas with descriptions */}
+      {/* Practice areas — click a heading to reveal its description */}
       {areas.length > 0 && (
         <div className="mt-14 md:mt-20">
           <Eyebrow>{l.practiceAreas}</Eyebrow>
-          <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 md:gap-y-10 lg:grid-cols-3">
-            {areas.map((a, i) => (
-              <div key={i}>
-                <h3 className="text-lg font-medium leading-snug text-bone md:text-xl">{a.title}</h3>
-                {a.description && (
-                  <p className="mt-2 text-sm leading-relaxed text-bone/70">{a.description}</p>
-                )}
+          <ExpertiseAreas areas={areas} />
+        </div>
+      )}
+
+      {/* Memberships */}
+      {memberships.length > 0 && (
+        <div className="mt-14 md:mt-20">
+          <Eyebrow>{l.memberships}</Eyebrow>
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-8">
+            {memberships.map((m, i) => (
+              <div key={i} className="text-base text-bone md:text-lg">
+                {m.name}
               </div>
             ))}
           </div>

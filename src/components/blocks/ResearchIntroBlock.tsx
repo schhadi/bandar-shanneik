@@ -15,25 +15,35 @@ export function ResearchIntroBlock({ block, locale }: { block: any; locale: Loca
   const heading: string | undefined = block.heading
   const position: Position = block.position || {}
   const project = position.project
+  const bodyParagraphs: string[] = String(block.body || '')
+    .split(/\n{2,}/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+  const projectParagraphs: string[] = String(block.projectBody || '')
+    .split(/\n{2,}/)
+    .map((p) => p.trim())
+    .filter(Boolean)
 
   return (
-    <section className="container-page pb-12 pt-16 md:pb-16 md:pt-24">
+    <section className="container-page pb-2 pt-16 md:pb-4 md:pt-24">
       <div className="grid gap-10 md:grid-cols-12 md:gap-16">
         {/* Left: heading + subtext */}
         <div className="md:col-span-7">
           {heading && (
             <h1 className="text-4xl font-medium leading-tight md:text-5xl">{heading}</h1>
           )}
-          {block.body && (
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-bone/75 md:mt-6 md:text-lg">
-              {block.body}
-            </p>
+          {bodyParagraphs.length > 0 && (
+            <div className="mt-5 max-w-xl space-y-4 text-base leading-relaxed text-bone/75 md:mt-6 md:text-lg">
+              {bodyParagraphs.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
           )}
         </div>
 
         {/* Right: current affiliation */}
         <div className="md:col-span-4 md:col-start-9">
-          <div className="text-sm uppercase tracking-wider text-accent">{l.currentPosition}</div>
+          <div className="text-base font-semibold uppercase tracking-wider text-accent">{l.currentPosition}</div>
           <h2 className="mt-3 text-xl font-medium leading-snug md:text-2xl">
             {position.role}
             {position.role && position.institution ? ',' : ''}
@@ -59,6 +69,13 @@ export function ResearchIntroBlock({ block, locale }: { block: any; locale: Loca
               {l.affiliatedSuffix}
               {project.note ? <> — {project.note}</> : null}.
             </p>
+          )}
+          {projectParagraphs.length > 0 && (
+            <div className="mt-4 max-w-sm space-y-3 text-sm leading-relaxed text-bone/70">
+              {projectParagraphs.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
           )}
         </div>
       </div>

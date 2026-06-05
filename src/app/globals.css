@@ -9,7 +9,7 @@
     --bg: #fafaf7;
     --fg: #111111;
     --fg-dim: #6b6b66;
-    --accent: #0e6e63;
+    --accent: #1d3557;
     --line: rgba(17, 17, 17, 0.12);
   }
 
@@ -77,6 +77,17 @@
   }
   .btn-outline:hover {
     transform: translateY(-2px);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-accent px-5 py-3 text-sm font-medium text-ink;
+    transition:
+      background-color 0.3s ease,
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    background-color: #16284a;
   }
 
   .field {

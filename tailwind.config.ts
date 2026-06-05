@@ -17,8 +17,8 @@ const config: Config = {
           100: '#111111',
           200: '#0A0A0A',
         },
-        // deep teal / petrol accent — subheadings, links, hovers
-        accent: '#0E6E63',
+        // navy accent — subheadings, links, hovers
+        accent: '#1D3557',
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],

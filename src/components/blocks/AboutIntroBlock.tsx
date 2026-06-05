@@ -36,7 +36,7 @@ export function AboutIntroBlock({ block, locale }: { block: any; locale: Locale 
               href={cvUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="link-underline mt-6 inline-block text-sm text-bone"
+              className="btn-primary mt-6"
             >
               {labels[locale].downloadCv}
             </a>

@@ -401,6 +401,7 @@ export interface Page {
               label?: string | null;
               title?: string | null;
               firm?: string | null;
+              blurb?: string | null;
               linkUrl?: string | null;
             };
             jurisdictions?:
@@ -413,6 +414,12 @@ export interface Page {
               | {
                   title: string;
                   description?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            memberships?:
+              | {
+                  name: string;
                   id?: string | null;
                 }[]
               | null;
@@ -504,6 +511,10 @@ export interface Page {
               };
             };
             body?: string | null;
+            /**
+             * Description of the current project, shown under the affiliation card.
+             */
+            projectBody?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'researchIntro';
@@ -936,6 +947,7 @@ export interface PagesSelect<T extends boolean = true> {
                     label?: T;
                     title?: T;
                     firm?: T;
+                    blurb?: T;
                     linkUrl?: T;
                   };
               jurisdictions?:
@@ -949,6 +961,12 @@ export interface PagesSelect<T extends boolean = true> {
                 | {
                     title?: T;
                     description?: T;
+                    id?: T;
+                  };
+              memberships?:
+                | T
+                | {
+                    name?: T;
                     id?: T;
                   };
               id?: T;
@@ -1040,6 +1058,7 @@ export interface PagesSelect<T extends boolean = true> {
                         };
                   };
               body?: T;
+              projectBody?: T;
               id?: T;
               blockName?: T;
             };

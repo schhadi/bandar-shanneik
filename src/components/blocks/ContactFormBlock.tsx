@@ -11,6 +11,10 @@ type ProfessionalNote = {
 export function ContactFormBlock({ block, locale }: { block: any; locale: Locale }) {
   const l = labels[locale]
   const note: ProfessionalNote | undefined = block.professionalNote
+  const introParagraphs: string[] = String(block.intro || '')
+    .split(/\n{2,}/)
+    .map((p) => p.trim())
+    .filter(Boolean)
   return (
     <section className="container-page pb-16 pt-16 md:pb-24 md:pt-24">
       <div className="grid w-full gap-8 md:grid-cols-12 md:gap-16">
@@ -18,8 +22,12 @@ export function ContactFormBlock({ block, locale }: { block: any; locale: Locale
           <h2 className="text-3xl font-medium leading-tight md:text-5xl">
             {block.heading || 'Get in touch'}
           </h2>
-          {block.intro && (
-            <p className="mt-4 max-w-md text-base leading-relaxed text-bone/80">{block.intro}</p>
+          {introParagraphs.length > 0 && (
+            <div className="mt-4 max-w-md space-y-4 text-base leading-relaxed text-bone/80">
+              {introParagraphs.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
           )}
           {note?.linkLabel && note.linkUrl && (
             <p className="mt-4 max-w-md text-sm leading-relaxed text-bone/65">
@@ -54,7 +62,7 @@ export function ContactFormBlock({ block, locale }: { block: any; locale: Locale
           )}
           {block.email && (
             <div className="mt-6">
-              <div className="mb-1 text-sm uppercase tracking-wider text-accent">
+              <div className="mb-1 text-base font-semibold uppercase tracking-wider text-accent">
                 {l.orWriteDirectly}
               </div>
               <a

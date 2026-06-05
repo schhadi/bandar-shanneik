@@ -83,7 +83,7 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
         </div>
         {descriptor && (
           <p
-            className="anim-rise mt-5 text-sm uppercase tracking-wider text-accent md:mt-6"
+            className="anim-rise mt-5 text-base font-semibold uppercase tracking-wider text-accent md:mt-6"
             style={{ animationDelay: `${baseDelay}ms` }}
           >
             {descriptor}

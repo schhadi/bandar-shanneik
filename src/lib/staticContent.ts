@@ -158,8 +158,8 @@ const pagesSource: Record<string, any> = {
           'I am an international lawyer and legal scholar.',
         ),
         body: L(
-          'Seit über einem Jahrzehnt berate ich zu grenzüberschreitenden gesellschaftsrechtlichen Fragen in der Golfregion – mit einer Praxis, die civil-law- und common-law-Rechtsordnungen umspannt. In jüngerer Zeit habe ich mich zunehmend der Wissenschaft zugewandt. Meine Forschung liegt an der Schnittstelle von Recht und seinen Auswirkungen auf Menschen, Kulturen und Gesellschaften.\n\nÜber die juristische Welt hinaus begeistere ich mich für interkulturellen Austausch und internationale Beziehungen.',
-          "I've spent over a decade advising on cross-border corporate matters across the Gulf, with a practice spanning civil and common law jurisdictions. More recently, I've turned increasingly toward academia. My research sits at the intersection of law and its impact on people, cultures, and societies.\n\nBeyond the legal world, I'm passionate about cross-cultural exchange and international relations.",
+          'Seit über einem Jahrzehnt bin ich in der Anwaltspraxis tätig und berate zu grenzüberschreitenden gesellschaftsrechtlichen Fragen in der Golfregion – über civil-law- und common-law-Rechtsordnungen hinweg. In jüngerer Zeit habe ich mich neben der Praxis zunehmend der Wissenschaft zugewandt. Meine Forschung befasst sich mit dem Verhältnis von Recht und seinen Auswirkungen auf Menschen, Kulturen und Gesellschaften.\n\nÜber die juristische Welt hinaus begeistere ich mich für interkulturellen Austausch und internationale Beziehungen.',
+          "I've spent over a decade in private practice advising on cross-border corporate matters across the Gulf region, working across both civil law and common law jurisdictions. More recently, alongside practice, I have increasingly turned towards academia. My research focuses on the relationship between law and its impact on people, cultures, and societies.\n\nBeyond the legal world, I'm passionate about cross-cultural exchange and international relations.",
         ),
         cvUrl: '#',
       },
@@ -176,88 +176,63 @@ const pagesSource: Record<string, any> = {
         blockType: 'expertise',
         heading: L('Beratung', 'Advisory'),
         lead: L(
-          'Über ein Jahrzehnt grenzüberschreitende juristische Praxis – für Unternehmen, Investoren und Privatpersonen im deutschen, englischen und emiratischen Recht.',
-          'Over a decade of cross-border legal practice — for companies, investors and private clients across German, English and Emirati law.',
+          'Ich berate Unternehmen, Investoren und Gründer in Rechtsfragen, die Grenzen und Rechtsordnungen überschreiten.',
+          'I advise companies, investors and entrepreneurs on legal matters that cross borders and jurisdictions.',
         ),
         intro: L(
-          'Bandars Tätigkeit umfasst Gesellschafts- und Handelsrecht, M&A, Immobilien, Schiedsverfahren und Governance – mit wachsendem Schwerpunkt auf Datenschutz und neuen Technologien. Als in drei Rechtsordnungen qualifizierter Jurist verbindet er eine zivilrechtliche Grundlage mit der Praxis des Common Law und langjähriger Erfahrung in der Golfregion. Komplexe, rechtsordnungsübergreifende Fragen übersetzt er in klare, wirtschaftlich orientierte Beratung. Er ist Senior Counsel bei Daburon & Partners.',
-          "Bandar's work spans corporate and commercial law, M&A, real estate, arbitration and governance — with a growing focus on data protection and emerging technology. Qualified across three legal systems, he pairs a civil-law foundation with common-law practice and long experience in the Gulf, turning complex, multi-jurisdictional questions into clear, commercially aware advice. He is Senior Counsel at Daburon & Partners.",
+          'Ich bin Of Counsel bei Daburon & Partners Legal Consultancy LLP, einer in den VAE ansässigen Kanzlei, die internationale und regionale Mandanten in den Bereichen Gesellschafts-, Handels- und Immobilienrecht sowie Streitbeilegung berät. Mein Schwerpunkt liegt auf grenzüberschreitenden gesellschafts- und handelsrechtlichen Transaktionen, Joint Ventures, Markteintrittsprojekten und internationaler Schiedsgerichtsbarkeit. Ich berate regelmäßig Mandanten, die in der gesamten Golfregion tätig sind, in Angelegenheiten mit mehreren Rechtsordnungen und verbinde dabei civil-law- und common-law-Perspektiven zu wirtschaftlich praxisnahen Lösungen.',
+          'I am Of Counsel at Daburon & Partners Legal Consultancy LLP, a UAE-based law firm advising international and regional clients on corporate, commercial, real estate, and dispute resolution matters. My work focuses on cross-border corporate and commercial transactions, joint ventures, market entry projects, and international arbitration. I regularly advise clients operating across the Gulf region on matters involving multiple jurisdictions, combining civil law and common law perspectives to provide commercially practical solutions.',
         ),
         position: {
           label: L('Aktuelle Position', 'Current position'),
           title: L('Of Counsel', 'Of Counsel'),
-          firm: L('Daburon & Partners', 'Daburon & Partners'),
-          linkUrl: 'https://daburon-partners.com/en/home',
+          firm: L('Daburon & Partners Legal Consultancy LLP', 'Daburon & Partners Legal Consultancy LLP'),
+          blurb: L(
+            'Internationale Kanzlei mit Sitz in den Vereinigten Arabischen Emiraten. Beratung in Unternehmensrecht, Schiedsgerichtsbarkeit und mehr.',
+            'International law firm based in the United Arab Emirates. Advising on corporate law, arbitration and more.',
+          ),
+          linkUrl: 'https://www.daburon-partners.com/en/home',
         },
         jurisdictions: [
           { name: L('Deutschland', 'Germany') },
-          { name: L('England & Wales', 'England & Wales') },
+          { name: L('England und Wales', 'England and Wales') },
           { name: L('Vereinigte Arabische Emirate', 'United Arab Emirates') },
         ],
         areas: [
           {
-            title: L('Gesellschaftsrecht', 'Corporate Law'),
+            title: L('Internationale Schiedsgerichtsbarkeit', 'International Arbitration'),
             description: L(
-              'Gründung, Strukturierung, Gesellschaftervereinbarungen und laufende gesellschaftsrechtliche Fragen.',
-              'Formation, structuring, shareholder arrangements and ongoing corporate matters.',
+              'Strategische Beratung und Vertretung in grenzüberschreitenden Streitigkeiten in den Bereichen Handel, Bau, Ingenieurwesen und Gesellschaftsrecht.',
+              'Strategic advice and representation in cross-border commercial, construction, engineering, and corporate disputes.',
             ),
           },
           {
-            title: L('Handelsverträge', 'Commercial Contracts'),
+            title: L('Gesellschafts- & Handelsrecht', 'Corporate & Commercial'),
             description: L(
-              'Gestaltung und Verhandlung grenzüberschreitender Handelsverträge – von Liefer- und Vertriebsverträgen bis zu komplexen Einzelvereinbarungen.',
-              'Drafting and negotiating cross-border commercial agreements, from supply and distribution to bespoke arrangements.',
+              'Gesellschaftsrechtliche Strukturierung, Governance, Handelsverträge, Joint Ventures und Markteintrittsprojekte.',
+              'Corporate structuring, governance, commercial contracts, joint ventures, and market entry projects.',
             ),
           },
           {
             title: L('Fusionen & Übernahmen', 'Mergers & Acquisitions'),
             description: L(
-              'Share- und Asset-Deals, Due Diligence und Transaktionsbegleitung über Rechtsordnungen hinweg.',
-              'Share and asset deals, due diligence and transaction support across jurisdictions.',
+              'Transaktionsstrukturierung, Due Diligence, Investitionstransaktionen, Erwerbe, Veräußerungen und Restrukturierungen.',
+              'Transaction structuring, due diligence, investment transactions, acquisitions, disposals, and restructurings.',
             ),
           },
           {
-            title: L('Immobilienrecht', 'Real Estate'),
+            title: L('Venture Capital & Start-ups', 'Venture Capital & Startups'),
             description: L(
-              'Erwerb, Veräußerung und Strukturierung von Immobilieninvestitionen – mit besonderer Tiefe in den VAE.',
-              'Acquisition, disposal and structuring of real-estate investments, with particular depth in the UAE.',
+              'Gründervereinbarungen, Finanzierungsrunden, Gesellschaftervereinbarungen und Transaktionen in der Wachstumsphase.',
+              'Founder arrangements, investment rounds, shareholder agreements, and growth-stage transactions.',
             ),
           },
-          {
-            title: L('Schiedsverfahren', 'Arbitration'),
-            description: L(
-              'Wirtschaftliche Streitbeilegung und Schiedsverfahren, einschließlich Fragen von Gerichtsstand und anwendbarem Recht.',
-              'Commercial dispute resolution and arbitration, including questions of forum and governing law.',
-            ),
-          },
-          {
-            title: L('Governance', 'Governance'),
-            description: L(
-              'Corporate Governance, Compliance-Strukturen und Beratung von Geschäftsführung und Gremien.',
-              'Corporate governance, compliance frameworks and advising boards and management.',
-            ),
-          },
-          {
-            title: L('Arbeitsrecht', 'Employment Law'),
-            description: L(
-              'Arbeitsrechtliche Fragen im deutschen und im Golf-Kontext.',
-              'Employment and labour matters across German and Gulf frameworks.',
-            ),
-          },
-          {
-            title: L('Steuerrecht', 'Tax'),
-            description: L(
-              'Steuerlich bewusste Strukturierung für Unternehmen und Privatpersonen.',
-              'Tax-aware structuring for companies and private clients.',
-            ),
-          },
-          {
-            title: L('Datenschutz & Technologie', 'Data Protection & Technology'),
-            description: L(
-              'Datenschutz-Compliance sowie rechtliche Fragen rund um KI und neue Technologien.',
-              'Data protection compliance and the legal questions raised by AI and emerging technology.',
-            ),
-          },
+        ],
+        memberships: [
+          { name: L('Deutsche Institution für Schiedsgerichtsbarkeit (DIS)', 'German Arbitration Institute (DIS)') },
+          { name: L('Vienna International Arbitral Centre (VIAC)', 'Vienna International Arbitral Centre (VIAC)') },
+          { name: L('Deutsch-Jordanische Gesellschaft e.V.', 'German Jordanian Society (Deutsch-Jordanische Gesellschaft e.V.)') },
+          { name: L('Deutsch-Arabische Freundschaftsgesellschaft (DAFG)', 'German-Arab Friendship Association (DAFG)') },
         ],
       },
     ],
@@ -285,8 +260,12 @@ const pagesSource: Record<string, any> = {
           },
         },
         body: L(
-          'Meine Forschung untersucht, wie rechtliche Rahmenbedingungen Migration, Ehe, Geschlecht und die Anerkennung von Familien prägen und von ihnen geprägt werden – über europäische und nahöstliche Rechtsordnungen hinweg.',
-          'My research examines how legal frameworks shape and are shaped by migration, marriage, gender and family recognition — across European and Middle Eastern jurisdictions.',
+          'Meine Forschung untersucht, wie Rechtssysteme Entscheidungen treffen, Normen auslegen und auf gesellschaftlichen und technologischen Wandel reagieren.\n\nAusgehend von juristischer Praxis und akademischer Forschung arbeite ich an der Schnittstelle von künstlicher Intelligenz und Recht, vergleichender Rechtswissenschaft, Migrationsrecht und der Anerkennung von Familien. Ein wiederkehrendes Thema meiner Arbeit ist das Zusammenspiel von formalen Rechtsnormen, institutionellen Strukturen und menschlicher Entscheidungsfindung.',
+          'My research explores how legal systems make decisions, interpret norms and respond to social and technological change.\n\nDrawing on both professional legal practice and academic inquiry, I work across the fields of artificial intelligence and law, comparative legal studies, migration law and family recognition. A recurring theme in my work is the interaction between formal legal rules, institutional structures and human decision-making.',
+        ),
+        projectBody: L(
+          'Als Research Fellow an der SOAS University of London wirke ich am ERC-geförderten Projekt RELI-GENE mit, das das Verhältnis von Religion, Geschlecht und Familienbeziehungen in transnationalen Kontexten untersucht. Meine Forschung befasst sich mit der rechtlichen Behandlung grenzüberschreitender Familienbeziehungen nach deutschem, englischem und emiratischem Recht, mit besonderem Augenmerk auf Anerkennung, Migration und das Zusammenspiel von religiösen Normen und staatlichen Rechtsordnungen.',
+          'As a Research Fellow at SOAS University of London, I contribute to the ERC-funded RELI-GENE project, which explores the relationship between religion, gender, and family relations in transnational settings. My research examines the legal treatment of cross-border family relationships under German, English, and UAE law, with a particular focus on recognition, migration, and the interaction between religious norms and state legal systems.',
         ),
       },
       {
@@ -310,8 +289,8 @@ const pagesSource: Record<string, any> = {
         image: speakingImage,
         heading: L('Vorträge & öffentliches Engagement', 'Speaking & Public Engagement'),
         intro: L(
-          'Eine Auswahl von Vorträgen, Workshops, Podiumsdiskussionen und Webinaren zu Recht und Wirtschaft – mit einem Schwerpunkt auf der MENA-Region.',
-          'A selection of talks, workshops, panel discussions and webinars on law and business — with a focus on the MENA region.',
+          'Ich spreche regelmäßig auf Konferenzen, Wirtschaftsforen, an Universitäten und bei Fachveranstaltungen über rechtliche, regulatorische und politische Entwicklungen, die internationale Wirtschaft und Gesellschaft betreffen.\n\nMeine Vorträge verbinden praktische juristische Erfahrung aus dem Nahen Osten mit breiteren akademischen Perspektiven auf Recht, Technologie und gesellschaftlichen Wandel.',
+          'I regularly speak at conferences, business forums, universities and professional events on legal, regulatory and policy developments affecting international business and society.\n\nMy presentations combine practical legal experience from the Middle East with broader academic perspectives on law, technology and social change.',
         ),
         groups: [
           {
@@ -401,8 +380,8 @@ const pagesSource: Record<string, any> = {
         blockType: 'contactForm',
         heading: L('Kontakt aufnehmen', 'Get in touch'),
         intro: L(
-          'Für Forschungskooperationen oder allgemeine Anfragen nehmen Sie gerne Kontakt auf.',
-          'For research collaboration or general enquiries, get in touch.',
+          'Ich freue mich stets über den Austausch mit Wissenschaftlerinnen und Wissenschaftlern, Juristinnen und Juristen, Studierenden sowie Fachleuten, die sich für Recht, Technologie, internationale Beziehungen und grenzüberschreitende Rechtsfragen interessieren.\n\nFür Forschungskooperationen, Vortragsanfragen oder allgemeine Anliegen nehmen Sie gerne über das Kontaktformular oder per E-Mail (siehe unten) Kontakt auf.',
+          'I am always happy to connect with fellow academics, legal practitioners, students, and professionals interested in law, technology, international affairs, and cross-border legal issues.\n\nFor research collaborations, speaking engagements, or general enquiries, please feel free to get in touch via the contact form or at the email below.',
         ),
         email: 'contact.shanneik@gmail.com',
         submitLabel: L('Nachricht senden', 'Send message'),

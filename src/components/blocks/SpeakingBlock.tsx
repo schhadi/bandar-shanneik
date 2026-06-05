@@ -5,7 +5,10 @@ type Group = { title?: string; items?: Item[] }
 
 export function SpeakingBlock({ block }: { block: any }) {
   const heading: string | undefined = block.heading
-  const intro: string | undefined = block.intro
+  const introParagraphs: string[] = String(block.intro || '')
+    .split(/\n{2,}/)
+    .map((p) => p.trim())
+    .filter(Boolean)
   const groups: Group[] = block.groups || []
   const image = block.image
 
@@ -16,8 +19,12 @@ export function SpeakingBlock({ block }: { block: any }) {
           {heading && (
             <h1 className="text-4xl font-medium leading-tight md:text-5xl">{heading}</h1>
           )}
-          {intro && (
-            <p className="mt-4 text-base leading-relaxed text-bone/80 md:text-lg">{intro}</p>
+          {introParagraphs.length > 0 && (
+            <div className="mt-4 space-y-4 text-base leading-relaxed text-bone/80 md:text-lg">
+              {introParagraphs.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
           )}
         </div>
 
@@ -36,7 +43,7 @@ export function SpeakingBlock({ block }: { block: any }) {
         {groups.map((group, gi) => (
           <div key={gi}>
             {group.title && (
-              <h2 className="mb-5 text-sm uppercase tracking-wider text-accent">{group.title}</h2>
+              <h2 className="mb-5 text-base font-semibold uppercase tracking-wider text-accent">{group.title}</h2>
             )}
             <ul className="space-y-5">
               {(group.items || []).map((item, i) => (

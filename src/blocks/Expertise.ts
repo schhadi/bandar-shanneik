@@ -29,6 +29,7 @@ export const Expertise: Block = {
         { name: 'label', type: 'text', localized: true },
         { name: 'title', type: 'text', localized: true },
         { name: 'firm', type: 'text', localized: true },
+        { name: 'blurb', type: 'textarea', localized: true },
         { name: 'linkUrl', type: 'text' },
       ],
     },
@@ -52,6 +53,19 @@ export const Expertise: Block = {
       fields: [
         { name: 'title', type: 'text', localized: true, required: true },
         { name: 'description', type: 'textarea', localized: true },
+      ],
+    },
+    {
+      name: 'memberships',
+      type: 'array',
+      labels: { singular: 'Membership', plural: 'Memberships' },
+      fields: [
+        {
+          name: 'name',
+          type: 'text',
+          localized: true,
+          required: true,
+        },
       ],
     },
   ],

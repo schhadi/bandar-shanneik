@@ -32,5 +32,11 @@ export const ResearchIntro: Block = {
       type: 'textarea',
       localized: true,
     },
+    {
+      name: 'projectBody',
+      type: 'textarea',
+      localized: true,
+      admin: { description: 'Description of the current project, shown under the affiliation card.' },
+    },
   ],
 }
