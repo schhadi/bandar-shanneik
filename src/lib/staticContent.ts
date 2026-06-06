@@ -161,7 +161,7 @@ const pagesSource: Record<string, any> = {
           'Seit über einem Jahrzehnt bin ich in der Anwaltspraxis tätig und berate zu grenzüberschreitenden gesellschaftsrechtlichen Fragen in der Golfregion – über civil-law- und common-law-Rechtsordnungen hinweg. In jüngerer Zeit habe ich mich neben der Praxis zunehmend der Wissenschaft zugewandt. Meine Forschung befasst sich mit dem Verhältnis von Recht und seinen Auswirkungen auf Menschen, Kulturen und Gesellschaften.\n\nÜber die juristische Welt hinaus begeistere ich mich für interkulturellen Austausch und internationale Beziehungen.',
           "I've spent over a decade in private practice advising on cross-border corporate matters across the Gulf region, working across both civil law and common law jurisdictions. More recently, alongside practice, I have increasingly turned towards academia. My research focuses on the relationship between law and its impact on people, cultures, and societies.\n\nBeyond the legal world, I'm passionate about cross-cultural exchange and international relations.",
         ),
-        cvUrl: '#',
+        cvUrl: '/bandar-shanneik-cv.pdf',
       },
     ],
   },
