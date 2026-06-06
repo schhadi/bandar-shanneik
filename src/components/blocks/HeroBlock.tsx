@@ -41,7 +41,7 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
       </div>
 
       {/* Photo — full left half of the screen, edge to edge */}
-      <div className="relative h-[46svh] w-full shrink-0 md:h-full md:w-1/2 md:shrink">
+      <div className="relative h-[50svh] w-full shrink-0 md:h-full md:w-1/2 md:shrink">
         {block.image && (
           <MediaImage
             media={block.image}
@@ -53,7 +53,7 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
       </div>
 
       {/* Content — right half */}
-      <div className="flex min-h-0 flex-1 flex-col justify-start px-6 py-6 md:w-1/2 md:justify-center md:px-12 md:py-10 lg:px-16">
+      <div className="flex min-h-0 flex-1 flex-col justify-center pt-0 px-6 py-5 mt-0 md:w-1/2 md:px-12 md:py-10 lg:px-16">
         <div className="flex items-start justify-between gap-4">
           <h1 className="text-[clamp(2.5rem,6vw,5.5rem)] font-semibold leading-[0.92] tracking-[-0.035em]">
             {nameLines.map((w, i) => (
@@ -83,7 +83,7 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
         </div>
         {descriptor && (
           <p
-            className="anim-rise mt-5 text-base font-semibold uppercase tracking-wider text-accent md:mt-6"
+            className="anim-rise mt-4 text-sm font-semibold uppercase tracking-wider text-accent md:mt-6 md:text-base"
             style={{ animationDelay: `${baseDelay}ms` }}
           >
             {descriptor}
@@ -91,7 +91,7 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
         )}
         {subheading && (
           <p
-            className="anim-rise mt-3 max-w-sm text-base leading-relaxed text-bone/70 md:text-lg"
+            className="anim-rise mt-2 max-w-sm text-sm leading-snug text-bone/70 md:mt-3 md:text-lg md:leading-relaxed"
             style={{ animationDelay: `${baseDelay + 110}ms` }}
           >
             {subheading}
@@ -99,7 +99,7 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
         )}
 
         {navLinks.length > 0 && (
-          <nav className="mt-8 grid grid-cols-2 gap-2.5 md:mt-10 md:max-w-xs">
+          <nav className="mt-5 grid grid-cols-2 gap-2.5 md:mt-10 md:max-w-xs">
             {navLinks.map((link, i) => {
               // Centre the last item when the count is odd so it doesn't sit
               // alone on the left of the row.
