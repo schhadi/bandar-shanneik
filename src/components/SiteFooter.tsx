@@ -4,7 +4,7 @@ export function SiteFooter() {
       <p className="text-xs text-bone/40">
         Designed &amp; built by{' '}
         <a
-          href="https://hadischarbrodt.com"
+          href="https://hadi-website-roan.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
           className="link-underline text-bone/60 transition-colors hover:text-bone"
