@@ -7,6 +7,7 @@ import { getStaticPage, staticPages } from '@/lib/staticContent'
 import { buildPageMetadata, structuredData } from '@/lib/seo'
 import { BlockRenderer } from '@/components/blocks'
 import { SiteHeader } from '@/components/Header'
+import { SiteFooter } from '@/components/SiteFooter'
 
 // Pages are statically cached indefinitely and invalidated on demand by
 // Payload afterChange/afterDelete hooks (see src/lib/revalidate.ts).
@@ -74,6 +75,7 @@ export default async function Page({ params }: Args) {
       <main>
         <BlockRenderer blocks={blocks} locale={locale} />
       </main>
+      <SiteFooter />
     </>
   )
 }
