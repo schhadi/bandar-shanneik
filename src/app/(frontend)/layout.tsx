@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Analytics } from '@vercel/analytics/next'
 import { SITE_NAME, SITE_URL } from '@/lib/seo'
 import '../globals.css'
 
@@ -17,21 +16,10 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
+// The <html>/<body> document is rendered by the per-locale layout
+// (src/app/(frontend)/[locale]/layout.tsx) so that the `lang` attribute
+// reflects the actual locale (de/en). Routes outside a locale segment — the
+// root redirect and the global not-found — render their own <html>.
 export default function FrontendLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="de">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
-        />
-      </head>
-      <body className="bg-ink text-bone antialiased">
-        {children}
-        <Analytics />
-      </body>
-    </html>
-  )
+  return children
 }

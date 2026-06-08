@@ -205,6 +205,7 @@ export function structuredData(locale: Locale) {
         image: `${SITE_URL}${portrait.url}`,
         jobTitle,
         description,
+        email: 'bandar@daburon-partners.com',
         knowsLanguage: ['de', 'en', 'ar'],
         hasOccupation: {
           '@type': 'Occupation',
@@ -227,11 +228,18 @@ export function structuredData(locale: Locale) {
           areaServed: { '@type': 'Country', name: 'United Arab Emirates' },
         },
         areaServed: [
+          { '@type': 'City', name: 'Dubai' },
+          { '@type': 'City', name: 'Abu Dhabi' },
           { '@type': 'Country', name: 'United Arab Emirates' },
           { '@type': 'Country', name: 'Germany' },
           { '@type': 'Country', name: 'United Kingdom' },
         ],
         alumniOf: { '@type': 'CollegeOrUniversity', name: 'SOAS University of London' },
+        affiliation: {
+          '@type': 'Organization',
+          name: 'RELI-GENE',
+          url: 'https://religene.eu',
+        },
         sameAs: [
           'https://www.linkedin.com/in/bandar-shanneik',
           'https://www.daburon-partners.com/en/home',
