@@ -1,7 +1,7 @@
 export function SiteFooter() {
   return (
     <footer className="container-page py-10">
-      <p className="text-xs text-bone/40">
+      <p className="text-right text-xs text-bone/40">
         Designed &amp; built by{' '}
         <a
           href="https://studio-hadi.com"

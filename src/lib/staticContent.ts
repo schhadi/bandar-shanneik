@@ -380,16 +380,10 @@ const pagesSource: Record<string, any> = {
         blockType: 'contactForm',
         heading: L('Kontakt aufnehmen', 'Get in touch'),
         intro: L(
-          'Ich freue mich stets über den Austausch mit Wissenschaftlerinnen und Wissenschaftlern, Juristinnen und Juristen, Studierenden sowie Fachleuten, die sich für Recht, Technologie, internationale Beziehungen und grenzüberschreitende Rechtsfragen interessieren.\n\nFür Forschungskooperationen, Vortragsanfragen oder allgemeine Anliegen nehmen Sie gerne über das Kontaktformular oder per E-Mail (siehe unten) Kontakt auf.',
-          'I am always happy to connect with fellow academics, legal practitioners, students, and professionals interested in law, technology, international affairs, and cross-border legal issues.\n\nFor research collaborations, speaking engagements, or general enquiries, please feel free to get in touch via the contact form or at the email below.',
+          'Ich freue mich stets über den Austausch mit Wissenschaftlerinnen und Wissenschaftlern, Juristinnen und Juristen, Studierenden sowie Fachleuten, die sich für Recht, Technologie, internationale Beziehungen und grenzüberschreitende Rechtsfragen interessieren.\n\nFür Forschungskooperationen, Vortragsanfragen oder allgemeine Anliegen nehmen Sie gerne über die unten stehenden Kontaktdaten Kontakt auf.',
+          'I am always happy to connect with fellow academics, legal practitioners, students, and professionals interested in law, technology, international affairs, and cross-border legal issues.\n\nFor research collaborations, speaking engagements, or general enquiries, please feel free to reach out using the details below.',
         ),
         email: 'contact.shanneik@gmail.com',
-        submitLabel: L('Nachricht senden', 'Send message'),
-        successMessage: L(
-          'Vielen Dank. Ihre Nachricht ist eingegangen — Bandar wird sich direkt bei Ihnen melden.',
-          'Thank you. Your message has been received — Bandar will reply directly.',
-        ),
-        showSubject: true,
         professionalNote: {
           intro: L(
             'Für berufliche Rechtsangelegenheiten wenden Sie sich bitte an',

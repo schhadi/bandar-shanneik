@@ -71,7 +71,6 @@ export interface Config {
     media: Media;
     pages: Page;
     publications: Publication;
-    submissions: Submission;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -83,7 +82,6 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     publications: PublicationsSelect<false> | PublicationsSelect<true>;
-    submissions: SubmissionsSelect<false> | SubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -554,12 +552,9 @@ export interface Page {
             heading?: string | null;
             intro?: string | null;
             /**
-             * Shown next to the form as a direct email link.
+             * General enquiries email, rendered as a mailto link.
              */
             email?: string | null;
-            successMessage?: string | null;
-            submitLabel?: string | null;
-            showSubject?: boolean | null;
             /**
              * Optional note directing professional matters elsewhere.
              */
@@ -612,30 +607,6 @@ export interface Publication {
   createdAt: string;
 }
 /**
- * Messages submitted through the contact form.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "submissions".
- */
-export interface Submission {
-  id: number;
-  name: string;
-  email: string;
-  subject?: string | null;
-  message: string;
-  /**
-   * Captured automatically.
-   */
-  meta?: {
-    locale?: string | null;
-    pageSlug?: string | null;
-    userAgent?: string | null;
-  };
-  status?: ('new' | 'replied' | 'archived') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -674,10 +645,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'publications';
         value: number | Publication;
-      } | null)
-    | ({
-        relationTo: 'submissions';
-        value: number | Submission;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1102,9 +1069,6 @@ export interface PagesSelect<T extends boolean = true> {
               heading?: T;
               intro?: T;
               email?: T;
-              successMessage?: T;
-              submitLabel?: T;
-              showSubject?: T;
               professionalNote?:
                 | T
                 | {
@@ -1132,26 +1096,6 @@ export interface PublicationsSelect<T extends boolean = true> {
   venue?: T;
   status?: T;
   doi?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "submissions_select".
- */
-export interface SubmissionsSelect<T extends boolean = true> {
-  name?: T;
-  email?: T;
-  subject?: T;
-  message?: T;
-  meta?:
-    | T
-    | {
-        locale?: T;
-        pageSlug?: T;
-        userAgent?: T;
-      };
-  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -40,6 +40,8 @@ export const labels = {
     affiliatedSuffix: '',
     orWriteDirectly: 'Oder schreiben Sie direkt',
     orByEmail: 'oder per E-Mail an',
+    generalEnquiries: 'Allgemeine Anfragen',
+    professionalMatters: 'Berufliche Rechtsangelegenheiten',
     atConnector: ' bei ',
   },
   en: {
@@ -57,6 +59,8 @@ export const labels = {
     affiliatedSuffix: ' project',
     orWriteDirectly: 'Or write directly',
     orByEmail: 'or by email at',
+    generalEnquiries: 'General enquiries',
+    professionalMatters: 'Professional legal matters',
     atConnector: ' at ',
   },
 } as const

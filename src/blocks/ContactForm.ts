@@ -18,24 +18,7 @@ export const ContactForm: Block = {
     {
       name: 'email',
       type: 'text',
-      admin: { description: 'Shown next to the form as a direct email link.' },
-    },
-    {
-      name: 'successMessage',
-      type: 'text',
-      localized: true,
-      defaultValue: 'Thank you. Your message has been sent.',
-    },
-    {
-      name: 'submitLabel',
-      type: 'text',
-      localized: true,
-      defaultValue: 'Send message',
-    },
-    {
-      name: 'showSubject',
-      type: 'checkbox',
-      defaultValue: true,
+      admin: { description: 'General enquiries email, rendered as a mailto link.' },
     },
     {
       name: 'professionalNote',

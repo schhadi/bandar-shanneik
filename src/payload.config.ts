@@ -10,7 +10,6 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Publications } from './collections/Publications'
-import { Submissions } from './collections/Submissions'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
 import { SiteSettings } from './globals/SiteSettings'
@@ -39,7 +38,7 @@ export default buildConfig({
     },
   },
   editor: lexicalEditor({}),
-  collections: [Users, Media, Pages, Publications, Submissions],
+  collections: [Users, Media, Pages, Publications],
   globals: [Header, Footer, SiteSettings],
   localization: {
     locales: [

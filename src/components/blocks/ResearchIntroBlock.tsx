@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { labels, type Locale } from '@/lib/i18n'
 
 type Position = {
@@ -43,14 +44,26 @@ export function ResearchIntroBlock({ block, locale }: { block: any; locale: Loca
 
         {/* Right: current affiliation */}
         <div className="md:col-span-4 md:col-start-9">
-          <div className="text-base font-semibold uppercase tracking-wider text-accent">{l.currentPosition}</div>
-          <h2 className="mt-3 text-xl font-medium leading-snug md:text-2xl">
-            {position.role}
-            {position.role && position.institution ? ',' : ''}
-            {position.institution && (
-              <span className="block text-bone/80">{position.institution}</span>
-            )}
-          </h2>
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <div className="text-base font-semibold uppercase tracking-wider text-accent">{l.currentPosition}</div>
+              <h2 className="mt-3 text-xl font-medium leading-snug md:text-2xl">
+                {position.role}
+                {position.role && position.institution ? ',' : ''}
+                {position.institution && (
+                  <span className="block text-bone/80">{position.institution}</span>
+                )}
+              </h2>
+            </div>
+            {/* RELI-GENE — the project behind the SOAS fellowship */}
+            <Image
+              src="/RELI-GENE-logo.png"
+              alt="RELI-GENE"
+              width={660}
+              height={654}
+              className="h-auto w-[91px] shrink-0 -translate-x-0.5"
+            />
+          </div>
           {project?.label && (
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-bone/70">
               {l.affiliatedPrefix}
