@@ -4,7 +4,9 @@
 
 @layer base {
   :root {
-    --font-sans: 'Inter', system-ui, sans-serif;
+    /* --font-sans is provided by next/font (see src/lib/fonts.ts), applied as
+       a className on each <html>. No hardcoded value here so the next/font
+       variable always wins regardless of stylesheet order. */
 
     --bg: #fafaf7;
     --fg: #111111;
@@ -16,7 +18,7 @@
   html {
     background: var(--bg);
     color: var(--fg);
-    font-family: var(--font-sans);
+    font-family: var(--font-sans, system-ui, sans-serif);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
