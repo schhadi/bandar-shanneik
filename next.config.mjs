@@ -10,6 +10,10 @@ const nextConfig = {
   outputFileTracingRoot: __dirname,
   images: {
     remotePatterns: [],
+    // Serve modern formats and stop the optimizer from softening portraits at
+    // the default quality of 75.
+    formats: ['image/avif', 'image/webp'],
+    qualities: [75, 90],
   },
 }
 

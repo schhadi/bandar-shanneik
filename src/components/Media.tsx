@@ -16,11 +16,13 @@ export function MediaImage({
   className,
   sizes = '100vw',
   priority,
+  quality = 90,
 }: {
   media: MediaProp
   className?: string
   sizes?: string
   priority?: boolean
+  quality?: number
 }) {
   if (!media || typeof media === 'string') return null
   if (!media.url) return null
@@ -41,6 +43,7 @@ export function MediaImage({
       className={className}
       sizes={sizes}
       priority={priority}
+      quality={quality}
     />
   )
 }
