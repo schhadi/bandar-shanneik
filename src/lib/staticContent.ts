@@ -54,11 +54,11 @@ export function localize<T = any>(value: any, locale: Locale): T {
 }
 
 export const portrait = {
-  filename: 'DSCF2537.JPG',
-  url: '/media/DSCF2537.JPG',
+  filename: '91e7509c-53a8-49f0-8fab-71b00ebe2eb3.JPG',
+  url: '/media/91e7509c-53a8-49f0-8fab-71b00ebe2eb3.JPG',
   alt: 'Portrait of Bandar Shanneik',
-  width: 3840,
-  height: 5760,
+  width: 2080,
+  height: 3120,
 }
 
 export const speakingImage = {
@@ -70,11 +70,11 @@ export const speakingImage = {
 }
 
 export const aboutImage = {
-  filename: 'DSCF2705.JPG',
-  url: '/media/DSCF2705.JPG',
+  filename: 'af6a4ed9-3dd5-43ec-a6c3-06e3a1342f1f.JPG',
+  url: '/media/af6a4ed9-3dd5-43ec-a6c3-06e3a1342f1f.JPG',
   alt: 'Portrait of Bandar Shanneik',
-  width: 3840,
-  height: 5760,
+  width: 2080,
+  height: 3120,
 }
 
 // Header source (markers for localized nav labels).
