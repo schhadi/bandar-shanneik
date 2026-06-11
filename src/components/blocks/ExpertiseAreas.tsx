@@ -45,7 +45,7 @@ export function ExpertiseAreas({ areas }: { areas: Area[] }) {
             >
               <div className="overflow-hidden">
                 {a.description && (
-                  <p className="max-w-2xl pb-5 text-sm leading-relaxed text-bone/70 md:text-base">
+                  <p className="max-w-2xl pb-5 text-justify text-sm leading-relaxed text-bone/70 md:text-base">
                     {a.description}
                   </p>
                 )}

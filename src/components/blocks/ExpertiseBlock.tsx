@@ -33,10 +33,14 @@ export function ExpertiseBlock({ block, locale }: { block: any; locale: Locale }
         <div className="max-w-3xl">
           <h1 className="text-4xl font-medium leading-tight md:text-5xl">{heading}</h1>
           {lead && (
-            <p className="mt-6 text-xl font-medium leading-snug text-bone md:text-2xl">{lead}</p>
+            <p className="mt-6 text-justify text-xl font-medium leading-snug text-bone md:text-2xl">
+              {lead}
+            </p>
           )}
           {intro && (
-            <p className="mt-5 text-base leading-relaxed text-bone/75 md:text-lg">{intro}</p>
+            <p className="mt-5 text-justify text-base leading-relaxed text-bone/75 md:text-lg">
+              {intro}
+            </p>
           )}
         </div>
 
