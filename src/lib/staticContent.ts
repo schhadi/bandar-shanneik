@@ -70,8 +70,8 @@ export const speakingImage = {
 }
 
 export const aboutImage = {
-  filename: 'DSCF2705.JPG',
-  url: '/media/DSCF2705.JPG',
+  filename: 'DSCF2611.JPG',
+  url: '/media/DSCF2611.JPG',
   alt: 'Portrait of Bandar Shanneik',
   width: 3840,
   height: 5760,
