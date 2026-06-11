@@ -139,9 +139,7 @@ export function ExpertiseBlock({ block, locale }: { block: any; locale: Locale }
                     ·
                   </span>
                 )}
-                <span dir="auto" lang={lang.native === 'العربية' ? 'ar' : undefined}>
-                  {lang.native}
-                </span>
+                <span>{lang.name}</span>
               </span>
             ))}
           </div>

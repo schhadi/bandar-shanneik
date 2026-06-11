@@ -24,7 +24,7 @@ export function ContactFormBlock({ block, locale }: { block: any; locale: Locale
           {block.heading || 'Get in touch'}
         </h2>
         {introParagraphs.length > 0 && (
-          <div className="mt-5 space-y-4 text-base leading-relaxed text-bone/80 md:text-lg">
+          <div className="mt-5 space-y-4 text-justify text-base leading-relaxed text-bone/80 md:text-lg">
             {introParagraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}

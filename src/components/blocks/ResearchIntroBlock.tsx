@@ -34,7 +34,7 @@ export function ResearchIntroBlock({ block, locale }: { block: any; locale: Loca
             <h1 className="text-4xl font-medium leading-tight md:text-5xl">{heading}</h1>
           )}
           {bodyParagraphs.length > 0 && (
-            <div className="mt-5 max-w-xl space-y-4 text-base leading-relaxed text-bone/75 md:mt-6 md:text-lg">
+            <div className="mt-5 max-w-xl space-y-4 text-justify text-base leading-relaxed text-bone/75 md:mt-6 md:text-lg">
               {bodyParagraphs.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
@@ -84,7 +84,7 @@ export function ResearchIntroBlock({ block, locale }: { block: any; locale: Loca
             </p>
           )}
           {projectParagraphs.length > 0 && (
-            <div className="mt-4 max-w-sm space-y-3 text-sm leading-relaxed text-bone/70">
+            <div className="mt-4 max-w-sm space-y-3 text-justify text-sm leading-relaxed text-bone/70">
               {projectParagraphs.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}

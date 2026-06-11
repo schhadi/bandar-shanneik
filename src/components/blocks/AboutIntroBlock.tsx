@@ -22,10 +22,10 @@ export function AboutIntroBlock({ block, locale }: { block: any; locale: Locale 
             </h1>
           )}
           {lead && (
-            <p className="mt-6 text-xl font-medium leading-snug text-bone md:text-2xl">{lead}</p>
+            <p className="mt-6 text-justify text-xl font-medium leading-snug text-bone md:text-2xl">{lead}</p>
           )}
           {paragraphs.length > 0 && (
-            <div className="mt-5 space-y-4 text-base leading-relaxed text-bone/75 md:text-lg">
+            <div className="mt-5 space-y-4 text-justify text-base leading-relaxed text-bone/75 md:text-lg">
               {paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}

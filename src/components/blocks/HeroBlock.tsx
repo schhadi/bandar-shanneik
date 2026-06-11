@@ -91,7 +91,7 @@ export async function HeroBlock({ block, locale }: { block: any; locale: Locale 
         )}
         {subheading && (
           <p
-            className="anim-rise mt-2 max-w-sm text-sm leading-snug text-bone/70 md:mt-3 md:text-lg md:leading-relaxed"
+            className="anim-rise mt-2 max-w-sm text-justify text-sm leading-snug text-bone/70 md:mt-3 md:text-lg md:leading-relaxed"
             style={{ animationDelay: `${baseDelay + 110}ms` }}
           >
             {subheading}

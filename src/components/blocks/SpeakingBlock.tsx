@@ -20,7 +20,7 @@ export function SpeakingBlock({ block }: { block: any }) {
             <h1 className="text-4xl font-medium leading-tight md:text-5xl">{heading}</h1>
           )}
           {introParagraphs.length > 0 && (
-            <div className="mt-4 space-y-4 text-base leading-relaxed text-bone/80 md:text-lg">
+            <div className="mt-4 space-y-4 text-justify text-base leading-relaxed text-bone/80 md:text-lg">
               {introParagraphs.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
