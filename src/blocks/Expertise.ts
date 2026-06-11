@@ -68,5 +68,20 @@ export const Expertise: Block = {
         },
       ],
     },
+    {
+      name: 'languages',
+      type: 'array',
+      labels: { singular: 'Language', plural: 'Languages' },
+      admin: { description: 'Working languages shown as native-script endonyms.' },
+      fields: [
+        {
+          name: 'native',
+          type: 'text',
+          required: true,
+          admin: { description: 'Endonym in its own script, e.g. Deutsch, English, العربية.' },
+        },
+        { name: 'name', type: 'text', localized: true, required: true },
+      ],
+    },
   ],
 }

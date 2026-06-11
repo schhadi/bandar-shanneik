@@ -19,7 +19,7 @@ export function ExpertiseAreas({ areas }: { areas: Area[] }) {
               type="button"
               aria-expanded={isOpen}
               onClick={() => setOpen((s) => ({ ...s, [i]: !s[i] }))}
-              className="group flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:text-accent"
+              className="group -mx-3 flex w-full items-center justify-between gap-4 rounded-lg px-3 py-5 text-left transition-[background-color,transform,color] duration-300 ease-out hover:translate-x-1.5 hover:bg-ink-800 hover:text-accent"
             >
               <h3 className="text-lg font-medium leading-snug text-bone transition-colors group-hover:text-accent md:text-xl">
                 {a.title}

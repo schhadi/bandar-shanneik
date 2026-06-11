@@ -234,6 +234,11 @@ const pagesSource: Record<string, any> = {
           { name: L('Deutsch-Jordanische Gesellschaft e.V.', 'German Jordanian Society (Deutsch-Jordanische Gesellschaft e.V.)') },
           { name: L('Deutsch-Arabische Freundschaftsgesellschaft (DAFG)', 'German-Arab Friendship Association (DAFG)') },
         ],
+        languages: [
+          { native: 'Deutsch', name: L('Deutsch', 'German') },
+          { native: 'English', name: L('Englisch', 'English') },
+          { native: 'العربية', name: L('Arabisch', 'Arabic') },
+        ],
       },
     ],
   },

@@ -421,6 +421,19 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            /**
+             * Working languages shown as native-script endonyms.
+             */
+            languages?:
+              | {
+                  /**
+                   * Endonym in its own script, e.g. Deutsch, English, العربية.
+                   */
+                  native: string;
+                  name: string;
+                  id?: string | null;
+                }[]
+              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'expertise';
@@ -933,6 +946,13 @@ export interface PagesSelect<T extends boolean = true> {
               memberships?:
                 | T
                 | {
+                    name?: T;
+                    id?: T;
+                  };
+              languages?:
+                | T
+                | {
+                    native?: T;
                     name?: T;
                     id?: T;
                   };

@@ -5,6 +5,7 @@ import { ExpertiseAreas } from './ExpertiseAreas'
 type Area = { title?: string; description?: string }
 type Jurisdiction = { name?: string }
 type Membership = { name?: string }
+type Language = { native?: string; name?: string }
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -20,6 +21,7 @@ export function ExpertiseBlock({ block, locale }: { block: any; locale: Locale }
   const jurisdictions: Jurisdiction[] = block.jurisdictions || []
   const areas: Area[] = block.areas || []
   const memberships: Membership[] = block.memberships || []
+  const languages: Language[] = block.languages || []
   const position = block.position as
     | { label?: string; title?: string; firm?: string; blurb?: string; linkUrl?: string }
     | undefined
@@ -83,9 +85,12 @@ export function ExpertiseBlock({ block, locale }: { block: any; locale: Locale }
       {jurisdictions.length > 0 && (
         <div className="mt-12 md:mt-16">
           <Eyebrow>{l.admittedIn}</Eyebrow>
-          <div className="grid gap-4 sm:grid-cols-3 sm:gap-8">
+          <div className="grid gap-1 sm:grid-cols-3 sm:gap-4">
             {jurisdictions.map((j, i) => (
-              <div key={i} className="text-lg text-bone md:text-xl">
+              <div
+                key={i}
+                className="-mx-3 rounded-lg px-3 py-2 text-lg text-bone transition-[background-color,transform,color] duration-300 ease-out hover:translate-x-1.5 hover:bg-ink-800 hover:text-accent md:text-xl"
+              >
                 {j.name}
               </div>
             ))}
@@ -105,11 +110,35 @@ export function ExpertiseBlock({ block, locale }: { block: any; locale: Locale }
       {memberships.length > 0 && (
         <div className="mt-14 md:mt-20">
           <Eyebrow>{l.memberships}</Eyebrow>
-          <div className="grid gap-4 sm:grid-cols-2 sm:gap-8">
+          <div className="grid gap-1 sm:grid-cols-2 sm:gap-4">
             {memberships.map((m, i) => (
-              <div key={i} className="text-base text-bone md:text-lg">
+              <div
+                key={i}
+                className="-mx-3 rounded-lg px-3 py-2 text-base text-bone transition-[background-color,transform,color] duration-300 ease-out hover:translate-x-1.5 hover:bg-ink-800 hover:text-accent md:text-lg"
+              >
                 {m.name}
               </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Languages — subtle inline row of native-script endonyms */}
+      {languages.length > 0 && (
+        <div className="mt-14 md:mt-20">
+          <Eyebrow>{l.languages}</Eyebrow>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-base text-bone/70 md:text-lg">
+            {languages.map((lang, i) => (
+              <span key={i} className="flex items-center gap-x-3">
+                {i > 0 && (
+                  <span aria-hidden="true" className="text-bone/25">
+                    ·
+                  </span>
+                )}
+                <span dir="auto" lang={lang.native === 'العربية' ? 'ar' : undefined}>
+                  {lang.native}
+                </span>
+              </span>
             ))}
           </div>
         </div>
